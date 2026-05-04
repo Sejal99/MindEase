@@ -11,6 +11,7 @@ import InstantHelpScreen from '../screens/InstantHelpScreen';
 import GroundingScreen from '../screens/GroundingScreen';
 import BrainDumpScreen from '../screens/BrainDumpScreen';
 import MovementScreen from '../screens/MovementScreen';
+import PMRScreen from '../screens/PMRScreen';
 import FeedbackScreen from '../screens/FeedbackScreen';
 import HistoryScreen from '../screens/HistoryScreen';
 import InsightsScreen from '../screens/InsightsScreen';
@@ -28,6 +29,7 @@ export type RootStackParamList = {
   GroundingScreen: { trigger: string; intensity: number };
   BrainDumpScreen: { trigger: string; intensity: number };
   MovementScreen: { trigger: string; intensity: number };
+  PMRScreen: { trigger: string; intensity: number };
   Feedback: { trigger: string; intensity: number; action: ActionType };
   History: undefined;
   Insights: undefined;
@@ -95,6 +97,11 @@ const AppNavigator: React.FC = () => {
           name="MovementScreen"
           component={MovementScreen}
           options={{ title: 'Movement Reset' }}
+        />
+        <Stack.Screen
+          name="PMRScreen"
+          component={PMRScreen}
+          options={{ title: 'Progressive Muscle Relaxation' }}
         />
         <Stack.Screen
           name="Feedback"

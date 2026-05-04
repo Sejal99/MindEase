@@ -53,6 +53,13 @@ const ACTIONS: {
     emoji: '🏃',
     duration: '2 min',
   },
+  {
+    id: 'pmr',
+    title: 'Progressive Muscle Relaxation',
+    description: 'Release tension by tensing and relaxing muscle groups',
+    emoji: '💪',
+    duration: '5 min',
+  },
 ];
 
 const ActionSelectionScreen: React.FC<ActionSelectionScreenProps> = ({ navigation, route }) => {
@@ -73,6 +80,9 @@ const ActionSelectionScreen: React.FC<ActionSelectionScreenProps> = ({ navigatio
       case 'movement':
         navigation.navigate('MovementScreen', { trigger, intensity });
         break;
+      case 'pmr':
+        navigation.navigate('PMRScreen', { trigger, intensity });
+        break;
     }
   };
 
@@ -84,7 +94,7 @@ const ActionSelectionScreen: React.FC<ActionSelectionScreenProps> = ({ navigatio
           Select a technique to help you right now
         </AppText>
         <AppText variant="caption" style={styles.progress}>
-          Completed: {getCompletedCount()}/4
+          Completed: {getCompletedCount()}/5
         </AppText>
       </View>
 

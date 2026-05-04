@@ -241,6 +241,7 @@ export const getActionCounts = (events: StressEvent[]): Record<ActionType, numbe
     grounding: 0,
     brainDump: 0,
     movement: 0,
+    pmr: 0,
   };
 
   events.forEach((event) => {

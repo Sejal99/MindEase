@@ -6,6 +6,7 @@ export const formatActionName = (action: ActionType): string => {
     grounding: 'Grounding',
     brainDump: 'Brain Dump',
     movement: 'Movement',
+    pmr: 'PMR',
   };
   return actionNames[action] || action;
 };

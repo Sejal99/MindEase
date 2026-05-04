@@ -2,7 +2,7 @@ export type TriggerType = 'work' | 'overthinking' | 'social' | 'health' | 'other
 
 export type EffectivenessType = 'yes' | 'neutral' | 'no';
 
-export type ActionType = 'breathing' | 'grounding' | 'brainDump' | 'movement';
+export type ActionType = 'breathing' | 'grounding' | 'brainDump' | 'movement' | 'pmr';
 
 export interface StressEvent {
   id: string;
