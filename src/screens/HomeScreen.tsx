@@ -506,7 +506,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
 // ─── Styles ───────────────────────────────────────────────────────────────────
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: "#080D18" },
+  container: { flex: 1, backgroundColor: "#BDB5D5" },
   content: { padding: 20, paddingBottom: 40 },
 
   // Header
@@ -600,7 +600,7 @@ const styles = StyleSheet.create({
   },
   heroSub: { fontSize: 13, color: "#3D4F6E", lineHeight: 19 },
   heroRight: { alignItems: "center", gap: 12 },
-  heroEmoji: { fontSize: 36 },
+  heroEmoji: { fontSize: 20,  },
   heroArrowBox: {
     backgroundColor: "#2563EB",
     borderRadius: 12,

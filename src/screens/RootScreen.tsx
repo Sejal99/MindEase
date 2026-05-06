@@ -66,7 +66,7 @@ const RootScreen: React.FC = () => {
         initialRouteName={hasCompletedOnboarding ? "Home" : "Onboarding"}
         screenOptions={{
           headerStyle: {
-            backgroundColor: "#111827",
+            backgroundColor: "#40287b",
           },
           headerTintColor: "#F9FAFB",
           headerTitleStyle: {
