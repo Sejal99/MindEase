@@ -17,6 +17,7 @@ import HistoryScreen from "./HistoryScreen";
 import InsightsScreen from "./InsightsScreen";
 import AchievementsScreen from "./AchievementsScreen";
 import SessionSummaryScreen from "./SessionSummaryScreen";
+import NotificationSettingsScreen from "./NotificationSettingsScreen";
 import { ActionType } from "../models/types";
 import { Achievement, UserStats } from "../models/types";
 import useHomeViewModel from "../viewmodels/homeViewModel";
@@ -38,6 +39,7 @@ export type RootStackParamList = {
   Insights: undefined;
   Achievements: { achievements: Achievement[]; userStats: UserStats };
   SessionSummary: undefined;
+  NotificationSettings: undefined;
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -146,6 +148,11 @@ const RootScreen: React.FC = () => {
           name="PMRScreen"
           component={PMRScreen}
           options={{ title: "PMR" }}
+        />
+        <Stack.Screen
+          name="NotificationSettings"
+          component={NotificationSettingsScreen}
+          options={{ title: "Notifications" }}
         />
       </Stack.Navigator>
     </NavigationContainer>

@@ -5,16 +5,13 @@ import { NotificationService } from './src/services/NotificationService';
 
 const App: React.FC = () => {
   useEffect(() => {
-    NotificationService.initialize();
-    NotificationService.requestPermissions();
-    
-    // Show notification on app launch
-    setTimeout(() => {
-      NotificationService.scheduleImmediateNotification(
-        'Welcome to MindEase!',
-        'How are you feeling today?'
-      );
-    }, 2000);
+    const setup = async () => {
+      await NotificationService.initialize();
+      await NotificationService.requestPermissions();
+      await NotificationService.rescheduleAllNotifications();
+      await NotificationService.cancelInactivityReminder();
+    };
+    setup();
   }, []);
 
   return (

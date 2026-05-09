@@ -498,6 +498,13 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
           <AppText style={styles.bottomNavEmoji}>🏆</AppText>
           <AppText style={styles.bottomNavLabel}>Awards</AppText>
         </Pressable>
+        <Pressable
+          style={styles.bottomNavBtn}
+          onPress={() => navigation.navigate("NotificationSettings")}
+        >
+          <AppText style={styles.bottomNavEmoji}>🔔</AppText>
+          <AppText style={styles.bottomNavLabel}>Alerts</AppText>
+        </Pressable>
       </View>
     </ScrollView>
   );

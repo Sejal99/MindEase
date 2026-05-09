@@ -4,7 +4,7 @@ import { Text, StyleSheet, TextStyle } from 'react-native';
 interface AppTextProps {
   children: React.ReactNode;
   variant?: 'h1' | 'h2' | 'h3' | 'body' | 'caption';
-  style?: TextStyle;
+  style?: TextStyle | TextStyle[];
   color?: string;
 }
 

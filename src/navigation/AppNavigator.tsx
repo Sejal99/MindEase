@@ -35,6 +35,7 @@ export type RootStackParamList = {
   Insights: undefined;
   Achievements: { achievements: Achievement[]; userStats: UserStats };
   SessionSummary: undefined;
+  NotificationSettings: undefined;
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
