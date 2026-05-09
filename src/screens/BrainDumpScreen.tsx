@@ -3,18 +3,19 @@ import {
   View,
   StyleSheet,
   TextInput,
-  Animated,
   Pressable,
   KeyboardAvoidingView,
   Platform,
   ScrollView,
-  Easing,
 } from "react-native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RouteProp } from "@react-navigation/native";
 import { RootStackParamList } from "../navigation/AppNavigator";
 import AppText from "../components/atoms/AppText";
-import Button from "../components/atoms/Button";
+import CircularTimer from "../components/organisms/CircularTimer";
+import NudgeChip from "../components/molecules/NudgeChip";
+import MilestoneToast from "../components/molecules/MilestoneToast";
+import DoneSummary from "../components/organisms/DoneSummary";
 import { ActionType } from "../models/types";
 
 type BrainDumpScreenNavigationProp = NativeStackNavigationProp<
@@ -32,12 +33,7 @@ interface BrainDumpScreenProps {
 }
 
 const DURATION = 120;
-const SIZE = 130;
-const STROKE = 8;
-const R = (SIZE - STROKE) / 2;
-const CIRCUMFERENCE = 2 * Math.PI * R;
 
-// Prompts that appear if user seems stuck
 const NUDGE_PROMPTS = [
   "What's really on your mind?",
   "What do you wish you could say out loud?",
@@ -46,247 +42,6 @@ const NUDGE_PROMPTS = [
   "What would make today easier?",
   "What keeps replaying in your head?",
 ];
-
-// ─── Circular Timer ───────────────────────────────────────────────────────────
-
-const CircularTimer: React.FC<{
-  timeLeft: number;
-  total: number;
-  phase: "active" | "urgent" | "done";
-}> = ({ timeLeft, total, phase }) => {
-  const progress = timeLeft / total;
-  const strokeDashoffset = CIRCUMFERENCE * (1 - progress);
-
-  const pulseAnim = useRef(new Animated.Value(1)).current;
-
-  useEffect(() => {
-    if (phase === "urgent") {
-      Animated.loop(
-        Animated.sequence([
-          Animated.timing(pulseAnim, {
-            toValue: 1.06,
-            duration: 600,
-            useNativeDriver: true,
-          }),
-          Animated.timing(pulseAnim, {
-            toValue: 1,
-            duration: 600,
-            useNativeDriver: true,
-          }),
-        ]),
-      ).start();
-    } else {
-      pulseAnim.setValue(1);
-    }
-  }, [phase]);
-
-  const color =
-    phase === "done" ? "#10B981" : phase === "urgent" ? "#EF4444" : "#6366F1";
-
-  const mins = Math.floor(timeLeft / 60);
-  const secs = timeLeft % 60;
-
-  return (
-    <Animated.View
-      style={[styles.orbContainer, { transform: [{ scale: pulseAnim }] }]}
-    >
-      {/* SVG-style ring using border trick */}
-      <View style={[styles.ringOuter, { borderColor: "#1F2937" }]}>
-        <View style={[styles.ringInner, { borderColor: color + "30" }]} />
-      </View>
-
-      {/* Segmented arc approximation via rotation views */}
-      <View style={[StyleSheet.absoluteFillObject, styles.ringCenter]}>
-        {/* Foreground stroke approximated with a rotated border */}
-        <View
-          style={[
-            styles.progressArc,
-            {
-              borderColor: color,
-              borderTopColor: progress > 0.75 ? color : "transparent",
-              borderRightColor: progress > 0.5 ? color : "transparent",
-              borderBottomColor: progress > 0.25 ? color : "transparent",
-              borderLeftColor: progress > 0 ? color : "transparent",
-            },
-          ]}
-        />
-      </View>
-
-      {/* Center content */}
-      <View style={styles.timerCenter}>
-        {phase === "done" ? (
-          <AppText style={[styles.doneEmoji]}>✓</AppText>
-        ) : (
-          <>
-            <AppText style={[styles.timerDigits, { color }]}>
-              {mins}:{secs.toString().padStart(2, "0")}
-            </AppText>
-            <AppText style={styles.timerCaption}>
-              {phase === "urgent" ? "almost done" : "remaining"}
-            </AppText>
-          </>
-        )}
-      </View>
-
-      {/* Glow */}
-      <View
-        style={[
-          styles.timerGlow,
-          { backgroundColor: color + "15", shadowColor: color },
-        ]}
-      />
-    </Animated.View>
-  );
-};
-
-// ─── Nudge Prompt Chip ────────────────────────────────────────────────────────
-
-const NudgeChip: React.FC<{ prompt: string; onPress: () => void }> = ({
-  prompt,
-  onPress,
-}) => {
-  const fadeAnim = useRef(new Animated.Value(0)).current;
-  const slideAnim = useRef(new Animated.Value(8)).current;
-
-  useEffect(() => {
-    Animated.parallel([
-      Animated.timing(fadeAnim, {
-        toValue: 1,
-        duration: 400,
-        useNativeDriver: true,
-      }),
-      Animated.spring(slideAnim, {
-        toValue: 0,
-        useNativeDriver: true,
-        speed: 14,
-        bounciness: 4,
-      }),
-    ]).start();
-  }, [prompt]);
-
-  return (
-    <Animated.View
-      style={{ opacity: fadeAnim, transform: [{ translateY: slideAnim }] }}
-    >
-      <Pressable style={styles.nudgeChip} onPress={onPress}>
-        <AppText style={styles.nudgeIcon}>💭</AppText>
-        <AppText style={styles.nudgeText}>{prompt}</AppText>
-      </Pressable>
-    </Animated.View>
-  );
-};
-
-// ─── Word Milestone Toast ─────────────────────────────────────────────────────
-
-const MilestoneToast: React.FC<{ visible: boolean; words: number }> = ({
-  visible,
-  words,
-}) => {
-  const anim = useRef(new Animated.Value(0)).current;
-
-  useEffect(() => {
-    if (visible) {
-      Animated.sequence([
-        Animated.spring(anim, {
-          toValue: 1,
-          useNativeDriver: true,
-          speed: 20,
-          bounciness: 10,
-        }),
-        Animated.delay(1400),
-        Animated.timing(anim, {
-          toValue: 0,
-          duration: 300,
-          useNativeDriver: true,
-        }),
-      ]).start();
-    }
-  }, [visible, words]);
-
-  return (
-    <Animated.View
-      style={[
-        styles.toast,
-        {
-          opacity: anim,
-          transform: [
-            {
-              scale: anim.interpolate({
-                inputRange: [0, 1],
-                outputRange: [0.8, 1],
-              }),
-            },
-          ],
-        },
-      ]}
-      pointerEvents="none"
-    >
-      <AppText style={styles.toastText}>🎉 {words} words!</AppText>
-    </Animated.View>
-  );
-};
-
-// ─── Done Summary Card ────────────────────────────────────────────────────────
-
-const DoneSummary: React.FC<{
-  wordCount: number;
-  charCount: number;
-  onDone: () => void;
-}> = ({ wordCount, charCount, onDone }) => {
-  const fadeAnim = useRef(new Animated.Value(0)).current;
-  const slideAnim = useRef(new Animated.Value(30)).current;
-
-  useEffect(() => {
-    Animated.parallel([
-      Animated.timing(fadeAnim, {
-        toValue: 1,
-        duration: 500,
-        useNativeDriver: true,
-      }),
-      Animated.spring(slideAnim, {
-        toValue: 0,
-        useNativeDriver: true,
-        speed: 12,
-        bounciness: 6,
-      }),
-    ]).start();
-  }, []);
-
-  return (
-    <Animated.View
-      style={[
-        styles.summaryCard,
-        { opacity: fadeAnim, transform: [{ translateY: slideAnim }] },
-      ]}
-    >
-      <AppText style={styles.summaryEmoji}>🧠</AppText>
-      <AppText style={styles.summaryTitle}>That's it. You let it out.</AppText>
-      <AppText style={styles.summaryBody}>
-        You wrote {wordCount} words in 2 minutes. That's mental clutter cleared
-        from your head and onto the page.
-      </AppText>
-      <View style={styles.statRow}>
-        <View style={styles.statBox}>
-          <AppText style={styles.statValue}>{wordCount}</AppText>
-          <AppText style={styles.statLabel}>words</AppText>
-        </View>
-        <View style={styles.statDivider} />
-        <View style={styles.statBox}>
-          <AppText style={styles.statValue}>{charCount}</AppText>
-          <AppText style={styles.statLabel}>characters</AppText>
-        </View>
-      </View>
-      <Button
-        title="Continue →"
-        onPress={onDone}
-        variant="primary"
-        style={styles.continueBtn}
-      />
-    </Animated.View>
-  );
-};
-
-// ─── Main Screen ──────────────────────────────────────────────────────────────
 
 const WORD_MILESTONES = [10, 25, 50, 100];
 
@@ -497,58 +252,6 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     gap: 20,
   },
-  orbContainer: {
-    width: SIZE,
-    height: SIZE,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  ringOuter: {
-    position: "absolute",
-    width: SIZE,
-    height: SIZE,
-    borderRadius: SIZE / 2,
-    borderWidth: STROKE,
-  },
-  ringInner: {
-    position: "absolute",
-    width: SIZE - STROKE * 3,
-    height: SIZE - STROKE * 3,
-    borderRadius: (SIZE - STROKE * 3) / 2,
-    borderWidth: 1,
-    top: STROKE,
-    left: STROKE,
-  },
-  ringCenter: { alignItems: "center", justifyContent: "center" },
-  progressArc: {
-    width: SIZE - STROKE,
-    height: SIZE - STROKE,
-    borderRadius: (SIZE - STROKE) / 2,
-    borderWidth: STROKE,
-  },
-  timerCenter: { position: "absolute", alignItems: "center" },
-  timerDigits: { fontSize: 25, fontWeight: "800", letterSpacing: -1 },
-  timerCaption: {
-    fontSize: 10,
-    color: "#6B7280",
-    fontWeight: "600",
-    letterSpacing: 0.5,
-  },
-  doneEmoji: { fontSize: 36 },
-  timerGlow: {
-    position: "absolute",
-    width: SIZE + 20,
-    height: SIZE + 20,
-    borderRadius: (SIZE + 20) / 2,
-    top: -10,
-    left: -10,
-    shadowOffset: { width: 0, height: 0 },
-    shadowOpacity: 0.6,
-    shadowRadius: 20,
-    elevation: 0,
-  },
-
-  // Stats mini
   statsColumn: { gap: 12 },
   statMini: {
     backgroundColor: "#161B22",
@@ -566,28 +269,6 @@ const styles = StyleSheet.create({
     color: "#6B7280",
     fontWeight: "600",
     letterSpacing: 0.5,
-  },
-
-  // Nudge
-  nudgeChip: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 8,
-    backgroundColor: "#161B22",
-    borderRadius: 12,
-    paddingHorizontal: 14,
-    paddingVertical: 10,
-    borderWidth: 1,
-    borderColor: "#6366F1" + "60",
-    marginBottom: 12,
-  },
-  nudgeIcon: { fontSize: 16 },
-  nudgeText: {
-    fontSize: 13,
-    color: "#A5B4FC",
-    fontWeight: "500",
-    flex: 1,
-    lineHeight: 18,
   },
 
   // Urgent
@@ -625,18 +306,6 @@ const styles = StyleSheet.create({
   skipBtn: { alignItems: "center", paddingVertical: 8 },
   skipText: { fontSize: 13, color: "#4B5563", fontWeight: "600" },
 
-  // Toast
-  toast: {
-    position: "absolute",
-    bottom: 80,
-    alignSelf: "center",
-    backgroundColor: "#10B981",
-    borderRadius: 20,
-    paddingHorizontal: 16,
-    paddingVertical: 8,
-  },
-  toastText: { fontSize: 14, color: "#fff", fontWeight: "700" },
-
   // Done screen
   doneScreen: {
     flex: 1,
@@ -645,42 +314,6 @@ const styles = StyleSheet.create({
     padding: 24,
     paddingTop: 80,
   },
-  summaryCard: {
-    backgroundColor: "#161B22",
-    borderRadius: 20,
-    padding: 24,
-    marginTop: 28,
-    width: "100%",
-    borderWidth: 1,
-    borderColor: "#21262D",
-    alignItems: "center",
-  },
-  summaryEmoji: { fontSize: 40, marginBottom: 12 },
-  summaryTitle: {
-    fontSize: 20,
-    fontWeight: "700",
-    color: "#F9FAFB",
-    marginBottom: 10,
-    textAlign: "center",
-  },
-  summaryBody: {
-    fontSize: 14,
-    color: "#9CA3AF",
-    lineHeight: 22,
-    textAlign: "center",
-    marginBottom: 20,
-  },
-  statRow: {
-    flexDirection: "row",
-    alignItems: "center",
-    marginBottom: 24,
-    gap: 20,
-  },
-  statBox: { alignItems: "center" },
-  statValue: { fontSize: 32, fontWeight: "800", color: "#6366F1" },
-  statLabel: { fontSize: 12, color: "#6B7280", fontWeight: "600" },
-  statDivider: { width: 1, height: 40, backgroundColor: "#21262D" },
-  continueBtn: { width: "100%", borderRadius: 14 },
 });
 
 export default BrainDumpScreen;

@@ -8,6 +8,7 @@ import AppText from '../components/atoms/AppText';
 import Card from '../components/atoms/Card';
 import useSessionViewModel from '../viewmodels/sessionViewModel';
 import { formatActionName } from '../utils/insights';
+import { formatTrigger, getEffectivenessEmoji, getEffectivenessLabel, getEffectivenessColor } from '../utils/formatters';
 
 type SessionSummaryScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'SessionSummary'>;
 
@@ -17,45 +18,6 @@ interface SessionSummaryScreenProps {
 
 const SessionSummaryScreen: React.FC<SessionSummaryScreenProps> = ({ navigation }) => {
   const { session, getMostEffectiveExercise } = useSessionViewModel();
-
-  const getEffectivenessEmoji = (effectiveness: string) => {
-    switch (effectiveness) {
-      case 'yes':
-        return '✅';
-      case 'neutral':
-        return '😐';
-      case 'no':
-        return '❌';
-      default:
-        return '';
-    }
-  };
-
-  const getEffectivenessLabel = (effectiveness: string) => {
-    switch (effectiveness) {
-      case 'yes':
-        return 'Helped';
-      case 'neutral':
-        return 'Somewhat';
-      case 'no':
-        return "Didn't help";
-      default:
-        return '';
-    }
-  };
-
-  const getEffectivenessColor = (effectiveness: string) => {
-    switch (effectiveness) {
-      case 'yes':
-        return '#10B981';
-      case 'neutral':
-        return '#F59E0B';
-      case 'no':
-        return '#EF4444';
-      default:
-        return '#9CA3AF';
-    }
-  };
 
   const mostEffective = getMostEffectiveExercise();
 
@@ -123,7 +85,7 @@ const SessionSummaryScreen: React.FC<SessionSummaryScreenProps> = ({ navigation 
         <View style={styles.statRow}>
           <AppText variant="body" color="#9CA3AF">Trigger</AppText>
           <AppText variant="body" style={styles.statValue}>
-            {session.trigger.charAt(0).toUpperCase() + session.trigger.slice(1)}
+            {formatTrigger(session.trigger)}
           </AppText>
         </View>
         <View style={styles.statRow}>

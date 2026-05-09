@@ -58,3 +58,6 @@ ios/fastlane/test_output
 # Environment
 .env
 .env.local
+
+# API keys / secrets
+src/config/api.ts

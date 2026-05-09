@@ -7,6 +7,7 @@ import AppText from '../components/atoms/AppText';
 import Card from '../components/atoms/Card';
 import InsightCard from '../components/organisms/InsightCard';
 import useInsightsViewModel from '../viewmodels/insightsViewModel';
+import { formatTrigger } from '../utils/formatters';
 
 type InsightsScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'Insights'>;
 
@@ -15,23 +16,11 @@ interface InsightsScreenProps {
 }
 
 const InsightsScreen: React.FC<InsightsScreenProps> = ({ navigation }) => {
-  const { insights, events, loading, loadInsights } = useInsightsViewModel();
+  const { insights, events, triggerDistribution, loading, loadInsights } = useInsightsViewModel();
 
   useEffect(() => {
     loadInsights();
   }, [loadInsights]);
-
-  const formatTrigger = (trigger: string) => {
-    return trigger.charAt(0).toUpperCase() + trigger.slice(1);
-  };
-
-  const getTriggerDistribution = () => {
-    const distribution: Record<string, number> = {};
-    events.forEach((event) => {
-      distribution[event.trigger] = (distribution[event.trigger] || 0) + 1;
-    });
-    return distribution;
-  };
 
   if (loading) {
     return (
@@ -42,8 +31,6 @@ const InsightsScreen: React.FC<InsightsScreenProps> = ({ navigation }) => {
       </View>
     );
   }
-
-  const triggerDistribution = getTriggerDistribution();
 
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.content}>
@@ -68,11 +55,11 @@ const InsightsScreen: React.FC<InsightsScreenProps> = ({ navigation }) => {
             <AppText variant="h3" style={styles.cardTitle}>
               Trigger Distribution
             </AppText>
-            {Object.entries(triggerDistribution).map(([trigger, count]) => (
+            {triggerDistribution.map(({ trigger, count, percentage }) => (
               <View key={trigger} style={styles.statRow}>
                 <AppText variant="body">{formatTrigger(trigger)}</AppText>
                 <AppText variant="body" style={styles.statCount}>
-                  {count} ({Math.round((count / events.length) * 100)}%)
+                  {count} ({percentage}%)
                 </AppText>
               </View>
             ))}

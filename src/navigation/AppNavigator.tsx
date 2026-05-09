@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { View, StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { StatusBar } from 'react-native';
@@ -17,8 +18,11 @@ import HistoryScreen from '../screens/HistoryScreen';
 import InsightsScreen from '../screens/InsightsScreen';
 import AchievementsScreen from '../screens/AchievementsScreen';
 import SessionSummaryScreen from '../screens/SessionSummaryScreen';
+import NotificationSettingsScreen from '../screens/NotificationSettingsScreen';
 import { ActionType } from '../models/types';
 import { Achievement, UserStats } from '../models/types';
+import useHomeViewModel from '../viewmodels/homeViewModel';
+import AppText from '../components/atoms/AppText';
 
 export type RootStackParamList = {
   Onboarding: undefined;
@@ -41,14 +45,30 @@ export type RootStackParamList = {
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 const AppNavigator: React.FC = () => {
+  const { hasCompletedOnboarding, loadEvents } = useHomeViewModel();
+  const [isReady, setIsReady] = useState(false);
+
+  useEffect(() => {
+    loadEvents();
+    setIsReady(true);
+  }, [loadEvents]);
+
+  if (!isReady) {
+    return (
+      <View style={styles.loadingContainer}>
+        <AppText variant="h2">Stress Guide</AppText>
+      </View>
+    );
+  }
+
   return (
     <NavigationContainer>
       <StatusBar barStyle="light-content" backgroundColor="#111827" />
       <Stack.Navigator
-        initialRouteName="Onboarding"
+        initialRouteName={hasCompletedOnboarding ? 'Home' : 'Onboarding'}
         screenOptions={{
           headerStyle: {
-            backgroundColor: '#111827',
+            backgroundColor: '#40287b',
           },
           headerTintColor: '#F9FAFB',
           headerTitleStyle: {
@@ -67,7 +87,7 @@ const AppNavigator: React.FC = () => {
         <Stack.Screen
           name="Home"
           component={HomeScreen}
-          options={{ title: 'Stress Guide' }}
+          options={{ title: 'MindEase' }}
         />
         <Stack.Screen
           name="StressFlow"
@@ -102,7 +122,7 @@ const AppNavigator: React.FC = () => {
         <Stack.Screen
           name="PMRScreen"
           component={PMRScreen}
-          options={{ title: 'Progressive Muscle Relaxation' }}
+          options={{ title: 'PMR' }}
         />
         <Stack.Screen
           name="Feedback"
@@ -129,9 +149,23 @@ const AppNavigator: React.FC = () => {
           component={SessionSummaryScreen}
           options={{ title: 'Session Summary' }}
         />
+        <Stack.Screen
+          name="NotificationSettings"
+          component={NotificationSettingsScreen}
+          options={{ title: 'Notifications' }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
 };
+
+const styles = StyleSheet.create({
+  loadingContainer: {
+    flex: 1,
+    backgroundColor: '#111827',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+});
 
 export default AppNavigator;

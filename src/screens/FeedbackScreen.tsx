@@ -10,7 +10,7 @@ import Card from '../components/atoms/Card';
 import useStressFlowViewModel from '../viewmodels/stressFlowViewModel';
 import useHomeViewModel from '../viewmodels/homeViewModel';
 import useSessionViewModel from '../viewmodels/sessionViewModel';
-import { StressEvent } from '../models/types';
+import { StressEvent, EffectivenessType } from '../models/types';
 
 type FeedbackScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'Feedback'>;
 type FeedbackScreenRouteProp = RouteProp<RootStackParamList, 'Feedback'>;
@@ -26,12 +26,12 @@ const FeedbackScreen: React.FC<FeedbackScreenProps> = ({ navigation, route }) =>
   const { addEvent } = useHomeViewModel();
   const { addCompletedExercise, isSessionComplete, clearSession } = useSessionViewModel();
 
-  const handleFeedback = (effectiveness: 'yes' | 'neutral' | 'no') => {
+  const handleFeedback = (effectiveness: EffectivenessType) => {
     setEffectiveness(effectiveness);
 
     const newEvent: StressEvent = {
       id: Date.now().toString(),
-      trigger,
+      trigger: trigger as any,
       intensity,
       action,
       effectiveness,

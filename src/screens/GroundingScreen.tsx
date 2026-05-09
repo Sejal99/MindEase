@@ -3,17 +3,18 @@ import {
   View,
   StyleSheet,
   ScrollView,
-  TextInput,
   Animated,
   KeyboardAvoidingView,
   Platform,
-  Pressable,
 } from 'react-native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RouteProp } from '@react-navigation/native';
 import { RootStackParamList } from '../navigation/AppNavigator';
 import AppText from '../components/atoms/AppText';
 import Button from '../components/atoms/Button';
+import BreathingOrb from '../components/atoms/BreathingOrb';
+import EntryItem from '../components/molecules/EntryItem';
+import ProgressDots, { Step } from '../components/molecules/ProgressDots';
 import { ActionType } from '../models/types';
 
 type GroundingScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'GroundingScreen'>;
@@ -22,18 +23,6 @@ type GroundingScreenRouteProp = RouteProp<RootStackParamList, 'GroundingScreen'>
 interface GroundingScreenProps {
   navigation: GroundingScreenNavigationProp;
   route: GroundingScreenRouteProp;
-}
-
-interface Step {
-  id: number;
-  count: number;
-  label: string;
-  verb: string;
-  instruction: string;
-  emoji: string;
-  color: string;
-  dimColor: string;
-  placeholder: (n: number) => string;
 }
 
 const STEPS: Step[] = [
@@ -78,104 +67,6 @@ const STEPS: Step[] = [
     placeholder: () => 'Something subtle...',
   },
 ];
-
-// ─── Breathing Orb ───────────────────────────────────────────────────────────
-
-const BreathingOrb: React.FC<{ color: string }> = ({ color }) => {
-  const pulse1 = useRef(new Animated.Value(1)).current;
-  const pulse2 = useRef(new Animated.Value(1)).current;
-  const colorAnim = useRef(new Animated.Value(0)).current;
-
-  useEffect(() => {
-    const loop1 = Animated.loop(
-      Animated.sequence([
-        Animated.timing(pulse1, { toValue: 1.18, duration: 2400, useNativeDriver: true }),
-        Animated.timing(pulse1, { toValue: 1, duration: 2400, useNativeDriver: true }),
-      ])
-    );
-    const loop2 = Animated.loop(
-      Animated.sequence([
-        Animated.delay(600),
-        Animated.timing(pulse2, { toValue: 1.32, duration: 2400, useNativeDriver: true }),
-        Animated.timing(pulse2, { toValue: 1, duration: 2400, useNativeDriver: true }),
-      ])
-    );
-    loop1.start();
-    loop2.start();
-    return () => { loop1.stop(); loop2.stop(); };
-  }, []);
-
-  return (
-    <View style={styles.orbWrapper}>
-      <Animated.View style={[styles.orbRing2, { backgroundColor: color + '18', transform: [{ scale: pulse2 }] }]} />
-      <Animated.View style={[styles.orbRing1, { backgroundColor: color + '28', transform: [{ scale: pulse1 }] }]} />
-      <View style={[styles.orbCore, { backgroundColor: color + '40', borderColor: color + '80' }]} />
-    </View>
-  );
-};
-
-// ─── Entry Item ───────────────────────────────────────────────────────────────
-
-const EntryItem: React.FC<{
-  index: number;
-  color: string;
-  dimColor: string;
-  placeholder: string;
-  value: string;
-  onChange: (text: string) => void;
-}> = ({ index, color, dimColor, placeholder, value, onChange }) => {
-  const fadeAnim = useRef(new Animated.Value(0)).current;
-  const slideAnim = useRef(new Animated.Value(20)).current;
-  const isDone = value.trim().length > 0;
-
-  useEffect(() => {
-    Animated.parallel([
-      Animated.timing(fadeAnim, { toValue: 1, duration: 350, delay: index * 80, useNativeDriver: true }),
-      Animated.spring(slideAnim, { toValue: 0, delay: index * 80, useNativeDriver: true, speed: 14, bounciness: 6 }),
-    ]).start();
-  }, []);
-
-  return (
-    <Animated.View style={[styles.entryRow, { opacity: fadeAnim, transform: [{ translateY: slideAnim }] }]}>
-      <View style={[styles.indexBadge, { backgroundColor: isDone ? color : dimColor, borderColor: isDone ? color : '#374151' }]}>
-        <AppText variant="caption" style={[styles.indexText, { color: isDone ? '#fff' : '#6B7280' }]}>
-          {isDone ? '✓' : String(index + 1)}
-        </AppText>
-      </View>
-      <TextInput
-        style={[styles.entryInput, { borderBottomColor: isDone ? color : '#374151' }]}
-        placeholder={placeholder}
-        placeholderTextColor="#4B5563"
-        value={value}
-        onChangeText={onChange}
-        multiline={false}
-        returnKeyType="done"
-        selectionColor={color}
-      />
-    </Animated.View>
-  );
-};
-
-// ─── Progress Dots ────────────────────────────────────────────────────────────
-
-const ProgressDots: React.FC<{ current: number; steps: Step[] }> = ({ current, steps }) => (
-  <View style={styles.dotsRow}>
-    {steps.map((s, i) => {
-      const isActive = i === current;
-      const isDone = i < current;
-      return (
-        <View key={s.id} style={styles.dotWrapper}>
-          <View style={[
-            styles.dot,
-            isActive && { backgroundColor: s.color, width: 24, borderRadius: 6 },
-            isDone && { backgroundColor: s.color + '60' },
-            !isActive && !isDone && { backgroundColor: '#374151' },
-          ]} />
-        </View>
-      );
-    })}
-  </View>
-);
 
 // ─── Main Screen ──────────────────────────────────────────────────────────────
 
@@ -313,7 +204,7 @@ const GroundingScreen: React.FC<GroundingScreenProps> = ({ navigation, route }) 
           onPress={handleNext}
           variant="primary"
           disabled={!canAdvance}
-          style={[styles.cta, canAdvance && { backgroundColor: step.color }]}
+          style={StyleSheet.flatten([styles.cta, canAdvance && { backgroundColor: step.color }])}
         />
 
         <AppText variant="caption" color="#4B5563" style={styles.tip}>
@@ -335,8 +226,6 @@ const styles = StyleSheet.create({
 
   // Progress dots
   dotsRow: { flexDirection: 'row', alignItems: 'center', gap: 6, marginBottom: 28 },
-  dotWrapper: {},
-  dot: { width: 8, height: 8, borderRadius: 4, backgroundColor: '#374151' },
 
   // Step card
   stepCard: {
@@ -347,19 +236,6 @@ const styles = StyleSheet.create({
     borderColor: '#21262D',
     marginBottom: 24,
   },
-
-  // Orb
-  orbWrapper: {
-    width: 56,
-    height: 56,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginRight: 16,
-    flexShrink: 0,
-  },
-  orbRing2: { position: 'absolute', width: 56, height: 56, borderRadius: 28 },
-  orbRing1: { position: 'absolute', width: 40, height: 40, borderRadius: 20 },
-  orbCore: { width: 26, height: 26, borderRadius: 13, borderWidth: 1.5 },
 
   // Sense header
   senseHeader: { flexDirection: 'row', alignItems: 'flex-start', marginBottom: 20 },
@@ -381,25 +257,6 @@ const styles = StyleSheet.create({
 
   // Entries
   entriesBlock: { gap: 4, marginBottom: 20 },
-  entryRow: { flexDirection: 'row', alignItems: 'center', gap: 12, marginBottom: 10 },
-  indexBadge: {
-    width: 28,
-    height: 28,
-    borderRadius: 8,
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderWidth: 1,
-    flexShrink: 0,
-  },
-  indexText: { fontSize: 12, fontWeight: '700' },
-  entryInput: {
-    flex: 1,
-    color: '#F9FAFB',
-    fontSize: 15,
-    fontWeight: '500',
-    paddingBottom: 6,
-    borderBottomWidth: 1.5,
-  },
 
   // In-card progress
   inCardProgress: { flexDirection: 'row', alignItems: 'center', gap: 10 },

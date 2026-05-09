@@ -3,15 +3,13 @@ import { View, StyleSheet } from 'react-native';
 import Card from '../atoms/Card';
 import AppText from '../atoms/AppText';
 import { InsightData } from '../../models/types';
+import { formatTrigger } from '../../utils/formatters';
 
 interface InsightCardProps {
   insights: InsightData;
 }
 
 const InsightCard: React.FC<InsightCardProps> = ({ insights }) => {
-  const formatTrigger = (trigger: string) => {
-    return trigger.charAt(0).toUpperCase() + trigger.slice(1);
-  };
 
   return (
     <Card style={styles.card}>

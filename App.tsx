@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import RootScreen from './src/screens/RootScreen';
+import AppNavigator from './src/navigation/AppNavigator';
 import { NotificationService } from './src/services/NotificationService';
 
 const App: React.FC = () => {
@@ -16,7 +16,7 @@ const App: React.FC = () => {
 
   return (
     <SafeAreaProvider>
-      <RootScreen />
+      <AppNavigator />
     </SafeAreaProvider>
   );
 };

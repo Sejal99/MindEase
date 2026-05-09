@@ -7,6 +7,7 @@ import AppText from '../components/atoms/AppText';
 import Card from '../components/atoms/Card';
 import useHistoryViewModel from '../viewmodels/historyViewModel';
 import { formatActionName } from '../utils/insights';
+import { formatTrigger, formatTime, getEffectivenessColor } from '../utils/formatters';
 
 type HistoryScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'History'>;
 
@@ -20,31 +21,6 @@ const HistoryScreen: React.FC<HistoryScreenProps> = ({ navigation }) => {
   useEffect(() => {
     loadEvents();
   }, [loadEvents]);
-
-  const formatTrigger = (trigger: string) => {
-    return trigger.charAt(0).toUpperCase() + trigger.slice(1);
-  };
-
-  const formatTime = (dateString: string) => {
-    const date = new Date(dateString);
-    return date.toLocaleTimeString('en-US', {
-      hour: '2-digit',
-      minute: '2-digit',
-    });
-  };
-
-  const getEffectivenessColor = (effectiveness: string) => {
-    switch (effectiveness) {
-      case 'yes':
-        return '#10B981';
-      case 'neutral':
-        return '#F59E0B';
-      case 'no':
-        return '#EF4444';
-      default:
-        return '#9CA3AF';
-    }
-  };
 
   if (loading) {
     return (

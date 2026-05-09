@@ -3,14 +3,15 @@ import {
   View,
   StyleSheet,
   ScrollView,
-  Pressable,
   Animated,
+  Pressable,
 } from "react-native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RouteProp } from "@react-navigation/native";
 import { RootStackParamList } from "../navigation/AppNavigator";
 import AppText from "../components/atoms/AppText";
-import Button from "../components/atoms/Button";
+import ExerciseCard from "../components/molecules/ExerciseCard";
+import RingTimer from "../components/organisms/RingTimer";
 import { ActionType } from "../models/types";
 
 type MovementScreenNavigationProp = NativeStackNavigationProp<
@@ -135,158 +136,12 @@ const EXERCISES: Exercise[] = [
 
 const DURATION = 120;
 
-// ─── Exercise Card ────────────────────────────────────────────────────────────
-
-const ExerciseCard: React.FC<{ exercise: Exercise; onPress: () => void }> = ({
-  exercise,
-  onPress,
-}) => {
-  const scaleAnim = useRef(new Animated.Value(1)).current;
-
-  return (
-    <Animated.View style={{ transform: [{ scale: scaleAnim }] }}>
-      <Pressable
-        style={[styles.exerciseCard, { borderColor: exercise.color + "35" }]}
-        onPressIn={() =>
-          Animated.spring(scaleAnim, {
-            toValue: 0.97,
-            useNativeDriver: true,
-            speed: 40,
-            bounciness: 0,
-          }).start()
-        }
-        onPressOut={() =>
-          Animated.spring(scaleAnim, {
-            toValue: 1,
-            useNativeDriver: true,
-            speed: 20,
-            bounciness: 6,
-          }).start()
-        }
-        onPress={onPress}
-      >
-        <View
-          style={[styles.cardAccent, { backgroundColor: exercise.color }]}
-        />
-        <View style={styles.cardInner}>
-          <View
-            style={[styles.cardIconBox, { backgroundColor: exercise.dimColor }]}
-          >
-            <AppText style={styles.cardEmoji}>{exercise.emoji}</AppText>
-          </View>
-          <View style={styles.cardText}>
-            <AppText style={styles.cardTitle}>{exercise.title}</AppText>
-            <AppText style={styles.cardDesc}>{exercise.description}</AppText>
-          </View>
-          <View
-            style={[
-              styles.cardTag,
-              {
-                backgroundColor: exercise.dimColor,
-                borderColor: exercise.color + "50",
-              },
-            ]}
-          >
-            <AppText style={[styles.cardTagText, { color: exercise.color }]}>
-              {exercise.tag}
-            </AppText>
-          </View>
-        </View>
-      </Pressable>
-    </Animated.View>
-  );
-};
-
-// ─── Ring Timer ───────────────────────────────────────────────────────────────
-
-const RingTimer: React.FC<{
-  timeLeft: number;
-  total: number;
-  color: string;
-  isDone: boolean;
-}> = ({ timeLeft, total, color, isDone }) => {
-  const pulseAnim = useRef(new Animated.Value(1)).current;
-  const progress = timeLeft / total;
-  const isUrgent = timeLeft <= 10 && !isDone;
-  const ringColor = isDone ? "#10B981" : isUrgent ? "#EF4444" : color;
-
-  useEffect(() => {
-    if (isUrgent) {
-      Animated.loop(
-        Animated.sequence([
-          Animated.timing(pulseAnim, {
-            toValue: 1.06,
-            duration: 500,
-            useNativeDriver: true,
-          }),
-          Animated.timing(pulseAnim, {
-            toValue: 1,
-            duration: 500,
-            useNativeDriver: true,
-          }),
-        ]),
-      ).start();
-    } else {
-      pulseAnim.setValue(1);
-    }
-  }, [isUrgent]);
-
-  const mins = Math.floor(timeLeft / 60);
-  const secs = timeLeft % 60;
-
-  return (
-    <Animated.View
-      style={[styles.ringWrapper, { transform: [{ scale: pulseAnim }] }]}
-    >
-      <View style={[styles.ringOuter, { borderColor: ringColor + "25" }]}>
-        <View
-          style={[
-            styles.ringArc,
-            {
-              borderColor: ringColor,
-              borderTopColor: progress > 0.75 ? ringColor : "transparent",
-              borderRightColor: progress > 0.5 ? ringColor : "transparent",
-              borderBottomColor: progress > 0.25 ? ringColor : "transparent",
-              borderLeftColor: progress > 0 ? ringColor : "transparent",
-            },
-          ]}
-        />
-      </View>
-      <View style={styles.ringCenter}>
-        {isDone ? (
-          <AppText style={styles.ringDoneText}>✓</AppText>
-        ) : (
-          <>
-            <AppText style={[styles.ringTime, { color: ringColor }]}>
-              {mins}:{secs.toString().padStart(2, "0")}
-            </AppText>
-            <AppText style={styles.ringCaption}>
-              {isUrgent ? "almost done" : "remaining"}
-            </AppText>
-          </>
-        )}
-      </View>
-      <View
-        style={[
-          styles.ringGlow,
-          { backgroundColor: ringColor + "12", shadowColor: ringColor },
-        ]}
-      />
-    </Animated.View>
-  );
-};
-
 // ─── Main Screen ──────────────────────────────────────────────────────────────
 
-const MovementScreen: React.FC<MovementScreenProps> = ({
-  navigation,
-  route,
-}) => {
+const MovementScreen: React.FC<MovementScreenProps> = ({ navigation, route }) => {
   const { trigger, intensity } = route.params;
 
-  const [selectedExercise, setSelectedExercise] = useState<Exercise | null>(
-    null,
-  );
+  const [selectedExercise, setSelectedExercise] = useState<Exercise | null>(null);
   const [timeLeft, setTimeLeft] = useState(DURATION);
   const [isActive, setIsActive] = useState(false);
   const [currentStep, setCurrentStep] = useState(0);
@@ -294,7 +149,6 @@ const MovementScreen: React.FC<MovementScreenProps> = ({
 
   const slideAnim = useRef(new Animated.Value(0)).current;
   const fadeAnim = useRef(new Animated.Value(1)).current;
-  const screenFade = useRef(new Animated.Value(1)).current;
 
   // Timer countdown
   useEffect(() => {
@@ -315,87 +169,71 @@ const MovementScreen: React.FC<MovementScreenProps> = ({
   const animateStepTransition = useCallback(
     (direction: "next" | "prev", cb: () => void) => {
       const outX = direction === "next" ? -30 : 30;
-      Animated.parallel([
+      const inX = direction === "next" ? 30 : -30;
+      Animated.sequence([
         Animated.timing(fadeAnim, {
           toValue: 0,
-          duration: 140,
+          duration: 200,
           useNativeDriver: true,
         }),
         Animated.timing(slideAnim, {
           toValue: outX,
-          duration: 140,
+          duration: 300,
           useNativeDriver: true,
         }),
-      ]).start(() => {
-        cb();
-        slideAnim.setValue(direction === "next" ? 30 : -30);
         Animated.parallel([
+          Animated.timing(slideAnim, {
+            toValue: inX,
+            duration: 0,
+            useNativeDriver: true,
+          }),
           Animated.timing(fadeAnim, {
             toValue: 1,
             duration: 200,
             useNativeDriver: true,
           }),
-          Animated.spring(slideAnim, {
-            toValue: 0,
-            useNativeDriver: true,
-            speed: 16,
-            bounciness: 4,
-          }),
-        ]).start();
-      });
+        ]),
+      ]).start(cb);
     },
-    [fadeAnim, slideAnim],
+    [fadeAnim, slideAnim]
   );
 
-  const handleExerciseSelect = useCallback((exercise: Exercise) => {
-    Animated.timing(screenFade, {
-      toValue: 0,
-      duration: 200,
-      useNativeDriver: true,
-    }).start(() => {
+  const handleExerciseSelect = useCallback(
+    (exercise: Exercise) => {
       setSelectedExercise(exercise);
       setTimeLeft(exercise.durationSecs);
-      setIsActive(true);
       setCurrentStep(0);
+      setIsActive(false);
       setExerciseDone(false);
-      Animated.timing(screenFade, {
-        toValue: 1,
-        duration: 300,
-        useNativeDriver: true,
-      }).start();
-    });
+      animateStepTransition("next", () => {});
+    },
+    [animateStepTransition]
+  );
+
+  const handleStart = useCallback(() => {
+    setIsActive(true);
   }, []);
+
+  const handlePause = useCallback(() => {
+    setIsActive(false);
+  }, []);
+
+  const handleNext = useCallback(() => {
+    if (currentStep < selectedExercise!.steps.length - 1) {
+      setCurrentStep(currentStep + 1);
+    } else {
+      setExerciseDone(true);
+      setIsActive(false);
+    }
+  }, [currentStep, selectedExercise]);
 
   const handleBack = useCallback(() => {
-    Animated.timing(screenFade, {
-      toValue: 0,
-      duration: 200,
-      useNativeDriver: true,
-    }).start(() => {
-      setSelectedExercise(null);
-      setIsActive(false);
-      setTimeLeft(DURATION);
-      setExerciseDone(false);
-      Animated.timing(screenFade, {
-        toValue: 1,
-        duration: 300,
-        useNativeDriver: true,
-      }).start();
-    });
-  }, []);
-
-  const handleStepNext = useCallback(() => {
-    if (!selectedExercise) return;
-    if (currentStep >= selectedExercise.steps.length - 1) {
-      setExerciseDone(true);
+    if (currentStep > 0) {
+      setCurrentStep(currentStep - 1);
     } else {
-      animateStepTransition("next", () => setCurrentStep((p) => p + 1));
+      setSelectedExercise(null);
+      animateStepTransition("prev", () => {});
     }
-  }, [selectedExercise, currentStep, animateStepTransition]);
-
-  const handleStepPrev = useCallback(() => {
-    if (currentStep === 0) return;
-    animateStepTransition("prev", () => setCurrentStep((p) => p - 1));
   }, [currentStep, animateStepTransition]);
 
   const handleDone = useCallback(() => {
@@ -406,441 +244,256 @@ const MovementScreen: React.FC<MovementScreenProps> = ({
     });
   }, [navigation, trigger, intensity]);
 
-  // ── Active Exercise View ──────────────────────────────────────────────────
-  if (selectedExercise) {
-    const isLastStep = currentStep === selectedExercise.steps.length - 1;
-    const isDone = timeLeft === 0;
-
+  if (!selectedExercise) {
     return (
-      <Animated.ScrollView
-        style={[styles.container, { opacity: screenFade }]}
-        contentContainerStyle={styles.content}
-        showsVerticalScrollIndicator={false}
-      >
-        {/* Top bar */}
-        <View style={styles.activeHeader}>
-          <Pressable onPress={handleBack} style={styles.backBtn}>
-            <AppText style={styles.backText}>← Change</AppText>
-          </Pressable>
-          <View
-            style={[
-              styles.activePill,
-              {
-                backgroundColor: selectedExercise.dimColor,
-                borderColor: selectedExercise.color + "50",
-              },
-            ]}
-          >
-            <AppText style={styles.activePillEmoji}>
-              {selectedExercise.emoji}
+      <View style={styles.container}>
+        <ScrollView contentContainerStyle={styles.content}>
+          <View style={styles.header}>
+            <AppText variant="h2" style={styles.title}>
+              Choose Your Movement
             </AppText>
-            <AppText
-              style={[
-                styles.activePillTitle,
-                { color: selectedExercise.color },
-              ]}
-            >
-              {selectedExercise.title}
+            <AppText variant="body" color="#9CA3AF" style={styles.subtitle}>
+              Select an exercise to release physical tension and reset your mind.
             </AppText>
           </View>
+
+          {EXERCISES.map((exercise) => (
+            <ExerciseCard
+              key={exercise.id}
+              exercise={exercise}
+              onPress={() => handleExerciseSelect(exercise)}
+            />
+          ))}
+        </ScrollView>
+      </View>
+    );
+  }
+
+  return (
+    <View style={styles.container}>
+      <ScrollView contentContainerStyle={styles.content}>
+        <View style={styles.exerciseHeader}>
+          <AppText variant="h3" style={styles.exerciseTitle}>
+            {selectedExercise.title}
+          </AppText>
+          <AppText variant="body" color="#9CA3AF" style={styles.exerciseSubtitle}>
+            {selectedExercise.description}
+          </AppText>
         </View>
 
-        {/* Timer + meta row */}
-        <View style={styles.activeTopRow}>
+        <View style={styles.timerSection}>
           <RingTimer
             timeLeft={timeLeft}
             total={selectedExercise.durationSecs}
             color={selectedExercise.color}
-            isDone={isDone}
           />
-          <View style={styles.activeTopMeta}>
-            <AppText style={styles.metaLabel}>EXERCISE</AppText>
-            <AppText style={styles.metaTitle}>{selectedExercise.title}</AppText>
-            <AppText style={styles.metaDesc}>
-              {selectedExercise.description}
-            </AppText>
-          </View>
         </View>
 
-        {/* Step card or completion */}
-        {exerciseDone ? (
-          <View
-            style={[
-              styles.completeCard,
-              { borderColor: selectedExercise.color + "40" },
-            ]}
-          >
-            <AppText style={styles.completeEmoji}>🎉</AppText>
-            <AppText style={styles.completeTitle}>Great work!</AppText>
-            <AppText style={styles.completeBody}>
-              You moved your body. That takes more courage than it sounds.
+        <Animated.View
+          style={[styles.stepContainer, { opacity: fadeAnim, transform: [{ translateX: slideAnim }] }]}
+        >
+          <View style={styles.stepHeader}>
+            <AppText variant="caption" color="#6B7280">
+              Step {currentStep + 1} of {selectedExercise.steps.length}
             </AppText>
-            <Button
-              title="Continue →"
-              onPress={handleDone}
-              variant="primary"
-              style={[
-                styles.completeBtn,
-                { backgroundColor: selectedExercise.color },
-              ]}
-            />
+            <Pressable style={styles.stepDot} />
           </View>
-        ) : (
-          <View
-            style={[
-              styles.stepCard,
-              { borderColor: selectedExercise.color + "25" },
-            ]}
-          >
-            {/* Dot progress */}
-            <View style={styles.stepDots}>
-              {selectedExercise.steps.map((_, i) => (
-                <View
-                  key={i}
-                  style={[
-                    styles.stepDot,
-                    i === currentStep && [
-                      styles.stepDotActive,
-                      { backgroundColor: selectedExercise.color },
-                    ],
-                    i < currentStep && {
-                      backgroundColor: selectedExercise.color + "50",
-                    },
-                    i > currentStep && { backgroundColor: "#21262D" },
-                  ]}
-                />
-              ))}
-            </View>
 
-            {/* Step text with animation */}
-            <Animated.View
-              style={[
-                styles.stepTextBox,
-                { opacity: fadeAnim, transform: [{ translateX: slideAnim }] },
-              ]}
+          <AppText variant="body" style={styles.stepText}>
+            {selectedExercise.steps[currentStep]}
+          </AppText>
+
+          <View style={styles.stepActions}>
+            <Pressable
+              style={[styles.actionButton, styles.backButton]}
+              onPress={handleBack}
             >
-              <AppText
-                style={[styles.stepCounter, { color: selectedExercise.color }]}
-              >
-                Step {currentStep + 1} of {selectedExercise.steps.length}
-              </AppText>
-              <AppText style={styles.stepText}>
-                {selectedExercise.steps[currentStep]}
-              </AppText>
-            </Animated.View>
+              <AppText style={styles.actionText}>← Back</AppText>
+            </Pressable>
 
-            {/* Nav buttons */}
-            <View style={styles.stepNavRow}>
+            {!isActive && !exerciseDone && (
               <Pressable
-                onPress={handleStepPrev}
-                disabled={currentStep === 0}
-                style={[
-                  styles.navSecondary,
-                  currentStep === 0 && { opacity: 0.3 },
-                ]}
+                style={[styles.actionButton, styles.startButton, { backgroundColor: selectedExercise.color }]}
+                onPress={handleStart}
               >
-                <AppText style={styles.navSecondaryText}>← Prev</AppText>
+                <AppText style={styles.actionText}>Start</AppText>
               </Pressable>
+            )}
 
+            {isActive && (
               <Pressable
-                style={[
-                  styles.navPrimary,
-                  { backgroundColor: selectedExercise.color },
-                ]}
-                onPress={handleStepNext}
+                style={[styles.actionButton, styles.pauseButton]}
+                onPress={handlePause}
               >
-                <AppText style={styles.navPrimaryText}>
-                  {isLastStep ? "I'm Done ✓" : "Next →"}
-                </AppText>
+                <AppText style={styles.actionText}>Pause</AppText>
               </Pressable>
-            </View>
+            )}
+
+            {currentStep === selectedExercise.steps.length - 1 && !isActive && !exerciseDone && (
+              <Pressable
+                style={[styles.actionButton, styles.nextButton, { backgroundColor: selectedExercise.color }]}
+                onPress={handleNext}
+              >
+                <AppText style={styles.actionText}>Complete</AppText>
+              </Pressable>
+            )}
+
+            {currentStep < selectedExercise.steps.length - 1 && !isActive && (
+              <Pressable
+                style={[styles.actionButton, styles.nextButton, { backgroundColor: selectedExercise.color }]}
+                onPress={handleNext}
+              >
+                <AppText style={styles.actionText}>Next Step</AppText>
+              </Pressable>
+            )}
           </View>
-        )}
+        </Animated.View>
 
-        {/* Tip */}
-        {!exerciseDone && (
-          <View style={styles.tipRow}>
-            <AppText style={styles.tipText}>
-              💡 Focus on your breathing between steps
+        {exerciseDone && (
+          <View style={styles.doneSection}>
+            <AppText variant="h3" style={styles.doneTitle}>
+              Great job!
             </AppText>
+            <AppText variant="body" color="#9CA3AF" style={styles.doneText}>
+              You've completed the exercise. Take a moment to notice how you feel.
+            </AppText>
+            <Pressable
+              style={[styles.continueButton, { backgroundColor: selectedExercise.color }]}
+              onPress={handleDone}
+            >
+              <AppText style={styles.continueButtonText}>Continue</AppText>
+            </Pressable>
           </View>
         )}
-
-        {/* Skip */}
-        {!exerciseDone && (
-          <Pressable onPress={handleDone} style={styles.skipBtn}>
-            <AppText style={styles.skipText}>Skip & finish early</AppText>
-          </Pressable>
-        )}
-      </Animated.ScrollView>
-    );
-  }
-
-  // ── Exercise Selection View ───────────────────────────────────────────────
-  return (
-    <Animated.ScrollView
-      style={[styles.container, { opacity: screenFade }]}
-      contentContainerStyle={styles.content}
-      showsVerticalScrollIndicator={false}
-    >
-      <View style={styles.header}>
-        <AppText style={styles.screenLabel}>MOVEMENT RESET</AppText>
-        <AppText style={styles.screenTitle}>
-          Move your body,{"\n"}shift your state.
-        </AppText>
-        <AppText style={styles.screenSub}>
-          Physical movement metabolizes stress hormones. Even 60 seconds helps.
-        </AppText>
-      </View>
-
-      <AppText style={styles.chooseLabel}>PICK AN EXERCISE</AppText>
-
-      {EXERCISES.map((exercise) => (
-        <ExerciseCard
-          key={exercise.id}
-          exercise={exercise}
-          onPress={() => handleExerciseSelect(exercise)}
-        />
-      ))}
-    </Animated.ScrollView>
+      </ScrollView>
+    </View>
   );
 };
 
-const RING_SIZE = 110;
-const RING_STROKE = 6;
-
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: "#0D1117" },
-  content: { padding: 24, paddingBottom: 60 },
-
-  // ── Selection ──
-  header: { marginBottom: 28 },
-  screenLabel: {
-    fontSize: 11,
-    fontWeight: "700",
-    letterSpacing: 2.5,
-    color: "#6366F1",
-    marginBottom: 10,
+  container: {
+    flex: 1,
+    backgroundColor: "#0D1117",
   },
-  screenTitle: {
-    fontSize: 26,
-    fontWeight: "700",
+  content: {
+    padding: 24,
+    paddingBottom: 48,
+  },
+  header: {
+    marginBottom: 32,
+  },
+  title: {
+    fontSize: 28,
+    fontWeight: "800",
     color: "#F9FAFB",
-    lineHeight: 34,
     marginBottom: 8,
   },
-  screenSub: { fontSize: 14, color: "#6B7280", lineHeight: 20 },
-  chooseLabel: {
-    fontSize: 11,
-    fontWeight: "700",
-    letterSpacing: 2,
-    color: "#4B5563",
-    marginBottom: 14,
+  subtitle: {
+    fontSize: 16,
+    lineHeight: 24,
   },
-
-  // Exercise card
-  exerciseCard: {
-    backgroundColor: "#161B22",
-    borderRadius: 16,
-    borderWidth: 1,
-    marginBottom: 12,
-    overflow: "hidden",
-  },
-  cardAccent: { height: 3 },
-  cardInner: {
-    flexDirection: "row",
+  exerciseHeader: {
+    marginBottom: 32,
     alignItems: "center",
-    padding: 16,
-    gap: 14,
   },
-  cardIconBox: {
-    width: 48,
-    height: 48,
-    borderRadius: 14,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  cardEmoji: { fontSize: 22 },
-  cardText: { flex: 1 },
-  cardTitle: {
-    fontSize: 15,
+  exerciseTitle: {
+    fontSize: 24,
     fontWeight: "700",
     color: "#F9FAFB",
-    marginBottom: 2,
+    marginBottom: 8,
   },
-  cardDesc: { fontSize: 13, color: "#6B7280", lineHeight: 18 },
-  cardTag: {
-    paddingHorizontal: 9,
-    paddingVertical: 4,
-    borderRadius: 10,
+  exerciseSubtitle: {
+    fontSize: 16,
+    lineHeight: 24,
+    textAlign: "center",
+  },
+  timerSection: {
+    marginBottom: 32,
+  },
+  stepContainer: {
+    backgroundColor: "#161B22",
+    borderRadius: 20,
+    padding: 24,
     borderWidth: 1,
+    borderColor: "#21262D",
+    marginBottom: 24,
   },
-  cardTagText: { fontSize: 11, fontWeight: "700" },
-
-  // ── Active view ──
-  activeHeader: {
+  stepHeader: {
     flexDirection: "row",
-    alignItems: "center",
     justifyContent: "space-between",
-    marginBottom: 24,
-  },
-  backBtn: { paddingVertical: 4 },
-  backText: { fontSize: 14, color: "#6B7280", fontWeight: "600" },
-  activePill: {
-    flexDirection: "row",
     alignItems: "center",
-    gap: 6,
-    paddingHorizontal: 12,
-    paddingVertical: 6,
-    borderRadius: 20,
-    borderWidth: 1,
-  },
-  activePillEmoji: { fontSize: 14 },
-  activePillTitle: { fontSize: 12, fontWeight: "700" },
-
-  // Timer + meta row
-  activeTopRow: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 20,
-    marginBottom: 24,
-  },
-  activeTopMeta: { flex: 1 },
-  metaLabel: {
-    fontSize: 10,
-    fontWeight: "700",
-    letterSpacing: 2,
-    color: "#4B5563",
-    marginBottom: 4,
-  },
-  metaTitle: {
-    fontSize: 20,
-    fontWeight: "700",
-    color: "#F9FAFB",
-    marginBottom: 4,
-  },
-  metaDesc: { fontSize: 13, color: "#6B7280", lineHeight: 18 },
-
-  // Ring
-  ringWrapper: {
-    width: RING_SIZE,
-    height: RING_SIZE,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  ringOuter: {
-    position: "absolute",
-    width: RING_SIZE,
-    height: RING_SIZE,
-    borderRadius: RING_SIZE / 2,
-    borderWidth: RING_STROKE,
-  },
-  ringArc: {
-    position: "absolute",
-    width: RING_SIZE,
-    height: RING_SIZE,
-    borderRadius: RING_SIZE / 2,
-    borderWidth: RING_STROKE,
-  },
-  ringCenter: { alignItems: "center" },
-  ringTime: { fontSize: 24, fontWeight: "800", letterSpacing: -1 },
-  ringCaption: {
-    fontSize: 9,
-    color: "#6B7280",
-    fontWeight: "600",
-    letterSpacing: 0.5,
-  },
-  ringDoneText: { fontSize: 32, color: "#10B981" },
-  ringGlow: {
-    position: "absolute",
-    width: RING_SIZE + 16,
-    height: RING_SIZE + 16,
-    borderRadius: (RING_SIZE + 16) / 2,
-    top: -8,
-    left: -8,
-    shadowOffset: { width: 0, height: 0 },
-    shadowOpacity: 0.5,
-    shadowRadius: 14,
-  },
-
-  // Step card
-  stepCard: {
-    backgroundColor: "#161B22",
-    borderRadius: 20,
-    borderWidth: 1,
-    padding: 20,
     marginBottom: 16,
   },
-  stepDots: { flexDirection: "row", gap: 5, marginBottom: 20 },
-  stepDot: { width: 7, height: 7, borderRadius: 3.5 },
-  stepDotActive: { width: 20, borderRadius: 4 },
-  stepTextBox: { marginBottom: 28, minHeight: 80 },
-  stepCounter: {
-    fontSize: 11,
-    fontWeight: "700",
-    letterSpacing: 1.5,
-    marginBottom: 10,
+  stepDot: {
+    width: 8,
+    height: 8,
+    borderRadius: 4,
+    backgroundColor: "#6366F1",
   },
   stepText: {
     fontSize: 18,
-    fontWeight: "600",
+    lineHeight: 26,
     color: "#F9FAFB",
-    lineHeight: 28,
+    marginBottom: 24,
   },
-  stepNavRow: {
+  stepActions: {
     flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
     gap: 12,
   },
-  navSecondary: { paddingVertical: 12, paddingHorizontal: 16 },
-  navSecondaryText: { fontSize: 14, color: "#9CA3AF", fontWeight: "600" },
-  navPrimary: {
-    flex: 1,
+  actionButton: {
+    paddingHorizontal: 20,
+    paddingVertical: 12,
     borderRadius: 12,
-    paddingVertical: 13,
+    minWidth: 100,
     alignItems: "center",
   },
-  navPrimaryText: { fontSize: 15, fontWeight: "700", color: "#fff" },
-
-  // Completion card
-  completeCard: {
+  backButton: {
+    backgroundColor: "#374151",
+  },
+  startButton: {
+    backgroundColor: "#6366F1",
+  },
+  pauseButton: {
+    backgroundColor: "#F59E0B",
+  },
+  nextButton: {
+    backgroundColor: "#6366F1",
+  },
+  actionText: {
+    color: "#FFFFFF",
+    fontSize: 16,
+    fontWeight: "600",
+  },
+  doneSection: {
+    alignItems: "center",
+    padding: 32,
     backgroundColor: "#161B22",
     borderRadius: 20,
     borderWidth: 1,
-    padding: 28,
-    marginBottom: 16,
-    alignItems: "center",
+    borderColor: "#21262D",
   },
-  completeEmoji: { fontSize: 25, marginBottom: 12 },
-  completeTitle: {
-    fontSize: 22,
+  doneTitle: {
+    fontSize: 24,
     fontWeight: "700",
     color: "#F9FAFB",
-    marginBottom: 8,
+    marginBottom: 16,
   },
-  completeBody: {
-    fontSize: 14,
-    color: "#9CA3AF",
-    lineHeight: 22,
+  doneText: {
+    fontSize: 16,
+    lineHeight: 24,
     textAlign: "center",
     marginBottom: 24,
   },
-  completeBtn: { width: "100%", borderRadius: 14 },
-
-  // Tip & skip
-  tipRow: {
-    backgroundColor: "#161B22",
-    borderRadius: 12,
-    borderWidth: 1,
-    borderColor: "#21262D",
-    padding: 12,
-    marginBottom: 12,
-    alignItems: "center",
+  continueButton: {
+    paddingHorizontal: 32,
+    paddingVertical: 16,
+    borderRadius: 16,
   },
-  tipText: { fontSize: 13, color: "#6B7280" },
-  skipBtn: { alignItems: "center", paddingVertical: 8 },
-  skipText: { fontSize: 13, color: "#4B5563", fontWeight: "600" },
+  continueButtonText: {
+    color: "#FFFFFF",
+    fontSize: 18,
+    fontWeight: "700",
+  },
 });
 
 export default MovementScreen;
