@@ -1,0 +1,221 @@
+{
+  "app": {
+    "name": "MindEase"
+  },
+  "home": {
+    "greeting": {
+      "morning": "Good morning",
+      "afternoon": "Good afternoon",
+      "evening": "Good evening"
+    },
+    "streak": "{count} day streak — keep going",
+    "sections": {
+      "progress": "YOUR PROGRESS",
+      "quickAccess": "QUICK ACCESS",
+      "lastSession": "LAST SESSION",
+      "insights": "INSIGHTS"
+    },
+    "actions": {
+      "achievements": "Achievements",
+      "seeAll": "See All",
+      "allHistory": "All History"
+    },
+    "stats": {
+      "dayStreak": "Day Streak",
+      "level": "Level",
+      "xpEarned": "XP Earned"
+    },
+    "quickActions": {
+      "breathe": "Breathe",
+      "ground": "Ground",
+      "move": "Move",
+      "release": "Release",
+      "dump": "Dump"
+    },
+    "bottomNav": {
+      "history": "History",
+      "insights": "Insights",
+      "awards": "Awards",
+      "alerts": "Alerts"
+    }
+  },
+  "feedback": {
+    "title": "Did this help?",
+    "subtitle": "Your feedback helps us understand what works best for you",
+    "options": {
+      "yes": "Yes, it helped",
+      "neutral": "Somewhat",
+      "no": "No, it didn't help"
+    }
+  },
+  "onboarding": {
+    "slides": [
+      {
+        "title": "Welcome to Stress Guide",
+        "description": "Your personal mental wellness companion. Track your stress, practice relief techniques, and build healthy habits.",
+        "emoji": "🧘",
+        "color": "#6366F1"
+      },
+      {
+        "title": "Log Your Stress",
+        "description": "When you feel stressed, tap \"I'm Stressed\" to log your trigger and intensity level.",
+        "emoji": "📝",
+        "color": "#10B981"
+      },
+      {
+        "title": "Choose Your Relief",
+        "description": "Select from 5 evidence-based techniques: Breathing, Grounding, Brain Dump, Movement, or Thought Reframing.",
+        "emoji": "🎯",
+        "color": "#F59E0B"
+      },
+      {
+        "title": "Track Your Progress",
+        "description": "View your history, gain insights from your patterns, and unlock achievements as you build your streak.",
+        "emoji": "📊",
+        "color": "#EC4899"
+      },
+      {
+        "title": "Build Healthy Habits",
+        "description": "Consistent practice leads to better stress management. Start your journey today!",
+        "emoji": "🌟",
+        "color": "#8B5CF6"
+      }
+    ],
+    "skip": "Skip",
+    "next": "Next",
+    "getStarted": "Get Started"
+  },
+  "insights": {
+    "title": "Your Insights",
+    "subtitle": "Learn from your stress patterns",
+    "notEnoughData": "Not enough data yet. Log more stress events to see insights!",
+    "triggerDistribution": "Trigger Distribution",
+    "totalEvents": "Total Events"
+  },
+  "achievements": {
+    "title": "Achievements",
+    "subtitle": "Track your progress and unlock badges",
+    "stats": {
+      "level": "Level",
+      "dayStreak": "Day Streak",
+      "exercises": "Exercises"
+    },
+    "xp": {
+      "title": "Experience Points"
+    },
+    "progress": {
+      "title": "Progress",
+      "unlocked": "Unlocked"
+    },
+    "categories": {
+      "streak": {
+        "title": "Streak Achievements"
+      },
+      "milestone": {
+        "title": "Milestones"
+      },
+      "explorer": {
+        "title": "Explorer"
+      },
+      "master": {
+        "title": "Master"
+      }
+    },
+    "unlocked": "Unlocked"
+  },
+  "notifications": {
+    "title": "Notifications",
+    "description": "Choose when and how MindEase reaches out to you.",
+    "allNotifications": "All Notifications",
+    "scheduledReminders": {
+      "title": "Scheduled Reminders",
+      "dailyCheckIn": {
+        "label": "Daily Check-in",
+        "description": "A gentle nudge to log how you are feeling"
+      },
+      "streakReminder": {
+        "label": "Streak Reminder",
+        "description": "Encouragement to keep your daily streak going"
+      },
+      "mindfulBreak": {
+        "label": "Mindful Break",
+        "description": "A midday prompt to pause and breathe"
+      },
+      "weeklyInsights": {
+        "label": "Weekly Insights",
+        "description": "Your stress patterns and progress summary"
+      }
+    },
+    "smartNotifications": {
+      "title": "Smart Notifications",
+      "postSessionCheckIn": {
+        "label": "Post-session Check-in",
+        "description": "Ask how you feel 30 minutes after a stress session"
+      },
+      "achievementCelebrations": {
+        "label": "Achievement Celebrations",
+        "description": "Instant cheers when you unlock something new"
+      },
+      "reEngagement": {
+        "label": "Re-engagement",
+        "description": "A soft check-in after 3 days of inactivity"
+      }
+    }
+  },
+  "actions": {
+    "breathing": "Breathing",
+    "grounding": "Grounding",
+    "brainDump": "Brain Dump",
+    "movement": "Movement",
+    "pmr": "PMR"
+  },
+  "triggers": {
+    "work": "Work",
+    "overthinking": "Overthinking",
+    "social": "Social",
+    "health": "Health",
+    "other": "Other"
+  },
+  "stressFlow": {
+    "title": "Log Your Stress",
+    "subtitle": "Take a moment to understand what you're feeling",
+    "continue": "Continue"
+  },
+  "actionSelection": {
+    "title": "Choose Your Action",
+    "subtitle": "Select a technique to help you right now",
+    "completed": "Completed",
+    "actions": [
+      {
+        "title": "Breathing Exercise",
+        "description": "Calm your mind with guided breathing",
+        "emoji": "🌬️",
+        "duration": "2 min"
+      },
+      {
+        "title": "5-4-3-2-1 Grounding",
+        "description": "Instant anxiety control using your senses",
+        "emoji": "🧘",
+        "duration": "3 min"
+      },
+      {
+        "title": "Brain Dump",
+        "description": "Mental unload - write everything down",
+        "emoji": "📝",
+        "duration": "2 min"
+      },
+      {
+        "title": "Movement Reset",
+        "description": "Release stress through body movement",
+        "emoji": "🏃",
+        "duration": "2 min"
+      },
+      {
+        "title": "Progressive Muscle Relaxation",
+        "description": "Release tension by tensing and relaxing muscle groups",
+        "emoji": "💪",
+        "duration": "5 min"
+      }
+    ]
+  }
+}

@@ -8,6 +8,7 @@ import Card from '../components/atoms/Card';
 import InsightCard from '../components/organisms/InsightCard';
 import useInsightsViewModel from '../viewmodels/insightsViewModel';
 import { formatTrigger } from '../utils/formatters';
+import { useTranslation } from 'react-i18next';
 
 type InsightsScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'Insights'>;
 
@@ -17,6 +18,7 @@ interface InsightsScreenProps {
 
 const InsightsScreen: React.FC<InsightsScreenProps> = ({ navigation }) => {
   const { insights, events, triggerDistribution, loading, loadInsights } = useInsightsViewModel();
+  const { t } = useTranslation();
 
   useEffect(() => {
     loadInsights();
@@ -35,16 +37,16 @@ const InsightsScreen: React.FC<InsightsScreenProps> = ({ navigation }) => {
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.content}>
       <AppText variant="h2" style={styles.title}>
-        Your Insights
+        {t('insights.title')}
       </AppText>
       <AppText variant="body" color="#9CA3AF" style={styles.subtitle}>
-        Learn from your stress patterns
+        {t('insights.subtitle')}
       </AppText>
 
       {events.length === 0 ? (
         <Card style={styles.emptyCard}>
           <AppText variant="body" style={styles.emptyText}>
-            Not enough data yet. Log more stress events to see insights!
+            {t('insights.notEnoughData')}
           </AppText>
         </Card>
       ) : (
@@ -53,7 +55,7 @@ const InsightsScreen: React.FC<InsightsScreenProps> = ({ navigation }) => {
 
           <Card style={styles.statsCard}>
             <AppText variant="h3" style={styles.cardTitle}>
-              Trigger Distribution
+              {t('insights.triggerDistribution')}
             </AppText>
             {triggerDistribution.map(({ trigger, count, percentage }) => (
               <View key={trigger} style={styles.statRow}>
@@ -67,7 +69,7 @@ const InsightsScreen: React.FC<InsightsScreenProps> = ({ navigation }) => {
 
           <Card style={styles.statsCard}>
             <AppText variant="h3" style={styles.cardTitle}>
-              Total Events
+              {t('insights.totalEvents')}
             </AppText>
             <AppText variant="h1" style={styles.totalCount}>
               {events.length}

@@ -8,6 +8,7 @@ import AppText from '../components/atoms/AppText';
 import Card from '../components/atoms/Card';
 import { Achievement, UserStats } from '../models/types';
 import { getXPProgress, getXPForNextLevel } from '../utils/achievements';
+import { useTranslation } from 'react-i18next';
 
 type AchievementsScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'Achievements'>;
 type AchievementsScreenRouteProp = RouteProp<RootStackParamList, 'Achievements'>;
@@ -19,12 +20,21 @@ interface AchievementsScreenProps {
 
 const AchievementsScreen: React.FC<AchievementsScreenProps> = ({ navigation, route }) => {
   const { achievements, userStats } = route.params;
+  const { t } = useTranslation();
+
+  // Map category IDs to translation keys
+  const categoryTitleMap: Record<string, string> = {
+    streak: 'achievements.categories.streak.title',
+    milestone: 'achievements.categories.milestone.title',
+    explorer: 'achievements.categories.explorer.title',
+    master: 'achievements.categories.master.title',
+  };
 
   const categories = [
-    { id: 'streak', title: 'Streak Achievements', color: '#F59E0B' },
-    { id: 'milestone', title: 'Milestones', color: '#10B981' },
-    { id: 'explorer', title: 'Explorer', color: '#6366F1' },
-    { id: 'master', title: 'Master', color: '#EC4899' },
+    { id: 'streak', title: t(categoryTitleMap.streak) || 'Streak Achievements', color: '#F59E0B' },
+    { id: 'milestone', title: t(categoryTitleMap.milestone) || 'Milestones', color: '#10B981' },
+    { id: 'explorer', title: t(categoryTitleMap.explorer) || 'Explorer', color: '#6366F1' },
+    { id: 'master', title: t(categoryTitleMap.master) || 'Master', color: '#EC4899' },
   ];
 
   const unlockedCount = achievements.filter((a: Achievement) => a.unlockedAt).length;
@@ -35,9 +45,9 @@ const AchievementsScreen: React.FC<AchievementsScreenProps> = ({ navigation, rou
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.content}>
       <View style={styles.header}>
-        <AppText variant="h2">Achievements</AppText>
+        <AppText variant="h2">{t('achievements.title')}</AppText>
         <AppText variant="body" color="#9CA3AF" style={styles.subtitle}>
-          Track your progress and unlock badges
+          {t('achievements.subtitle')}
         </AppText>
       </View>
 
@@ -48,7 +58,7 @@ const AchievementsScreen: React.FC<AchievementsScreenProps> = ({ navigation, rou
               {userStats.level}
             </AppText>
             <AppText variant="caption" color="#9CA3AF">
-              Level
+              {t('achievements.stats.level')}
             </AppText>
           </View>
           <View style={styles.statDivider} />
@@ -57,7 +67,7 @@ const AchievementsScreen: React.FC<AchievementsScreenProps> = ({ navigation, rou
               {userStats.currentStreak}
             </AppText>
             <AppText variant="caption" color="#9CA3AF">
-              Day Streak
+              {t('achievements.stats.dayStreak')}
             </AppText>
           </View>
           <View style={styles.statDivider} />
@@ -66,7 +76,7 @@ const AchievementsScreen: React.FC<AchievementsScreenProps> = ({ navigation, rou
               {userStats.totalExercises}
             </AppText>
             <AppText variant="caption" color="#9CA3AF">
-              Exercises
+              {t('achievements.stats.exercises')}
             </AppText>
           </View>
         </View>
@@ -74,7 +84,7 @@ const AchievementsScreen: React.FC<AchievementsScreenProps> = ({ navigation, rou
 
       <Card style={styles.xpCard}>
         <View style={styles.xpHeader}>
-          <AppText variant="h3">Experience Points</AppText>
+          <AppText variant="h3">{t('achievements.xp.title')}</AppText>
           <AppText variant="body" color="#6366F1">
             {userStats.xp} XP
           </AppText>
@@ -89,9 +99,9 @@ const AchievementsScreen: React.FC<AchievementsScreenProps> = ({ navigation, rou
 
       <Card style={styles.progressCard}>
         <View style={styles.progressRow}>
-          <AppText variant="h3">Progress</AppText>
+          <AppText variant="h3">{t('achievements.progress.title')}</AppText>
           <AppText variant="body" color="#10B981">
-            {unlockedCount}/{totalCount} Unlocked
+            {unlockedCount}/{totalCount} {t('achievements.progress.unlocked')}
           </AppText>
         </View>
         <View style={styles.progressBar}>
@@ -114,7 +124,7 @@ const AchievementsScreen: React.FC<AchievementsScreenProps> = ({ navigation, rou
         return (
           <View key={category.id} style={styles.categorySection}>
             <AppText variant="h3" style={styles.categoryTitle}>
-              {category.title}
+              {t(categoryTitleMap[category.id])}
             </AppText>
             {categoryAchievements.map((achievement: Achievement) => (
               <Card
@@ -132,17 +142,17 @@ const AchievementsScreen: React.FC<AchievementsScreenProps> = ({ navigation, rou
                       variant="h3"
                       color={achievement.unlockedAt ? '#F9FAFB' : '#6B7280'}
                     >
-                      {achievement.title}
+                      {t(`achievements.list.${achievement.id}.title`) || achievement.title}
                     </AppText>
                     <AppText
                       variant="body"
                       color={achievement.unlockedAt ? '#9CA3AF' : '#4B5563'}
                     >
-                      {achievement.description}
+                      {t(`achievements.list.${achievement.id}.description`) || achievement.description}
                     </AppText>
                     {achievement.unlockedAt && (
                       <AppText variant="caption" color="#10B981" style={styles.unlockedText}>
-                        ✓ Unlocked
+                        ✓ {t('achievements.unlocked')}
                       </AppText>
                     )}
                   </View>

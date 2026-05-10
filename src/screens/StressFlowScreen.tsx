@@ -9,6 +9,7 @@ import StressForm from '../components/organisms/StressForm';
 import useStressFlowViewModel from '../viewmodels/stressFlowViewModel';
 import useHomeViewModel from '../viewmodels/homeViewModel';
 import useSessionViewModel from '../viewmodels/sessionViewModel';
+import { useTranslation } from 'react-i18next';
 
 type StressFlowScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'StressFlow'>;
 
@@ -20,6 +21,7 @@ const StressFlowScreen: React.FC<StressFlowScreenProps> = ({ navigation }) => {
   const { trigger, intensity, setTrigger, setIntensity, canProceed, reset } = useStressFlowViewModel();
   const { addEvent } = useHomeViewModel();
   const { startSession } = useSessionViewModel();
+  const { t } = useTranslation();
 
   const handleContinue = () => {
     if (canProceed() && trigger && intensity) {
@@ -31,9 +33,9 @@ const StressFlowScreen: React.FC<StressFlowScreenProps> = ({ navigation }) => {
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.content}>
       <View style={styles.header}>
-        <AppText variant="h2">Log Your Stress</AppText>
+        <AppText variant="h2">{t('stressFlow.title')}</AppText>
         <AppText variant="body" color="#9CA3AF" style={styles.subtitle}>
-          Take a moment to understand what you're feeling
+          {t('stressFlow.subtitle')}
         </AppText>
       </View>
 
@@ -46,7 +48,7 @@ const StressFlowScreen: React.FC<StressFlowScreenProps> = ({ navigation }) => {
 
       <View style={styles.buttonContainer}>
         <Button
-          title="Continue"
+          title={t('stressFlow.continue')}
           onPress={handleContinue}
           variant="primary"
           disabled={!canProceed()}

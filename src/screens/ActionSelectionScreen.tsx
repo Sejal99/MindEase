@@ -9,6 +9,7 @@ import AppText from '../components/atoms/AppText';
 import Card from '../components/atoms/Card';
 import { ActionType } from '../models/types';
 import useSessionViewModel from '../viewmodels/sessionViewModel';
+import { useTranslation } from 'react-i18next';
 
 type ActionSelectionScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'ActionSelection'>;
 type ActionSelectionScreenRouteProp = RouteProp<RootStackParamList, 'ActionSelection'>;
@@ -65,6 +66,7 @@ const ACTIONS: {
 const ActionSelectionScreen: React.FC<ActionSelectionScreenProps> = ({ navigation, route }) => {
   const { trigger, intensity } = route.params;
   const { isExerciseCompleted, getCompletedCount } = useSessionViewModel();
+  const { t } = useTranslation();
 
   const handleActionSelect = (action: ActionType) => {
     switch (action) {
@@ -86,15 +88,40 @@ const ActionSelectionScreen: React.FC<ActionSelectionScreenProps> = ({ navigatio
     }
   };
 
+  // Create maps for action translations
+  const actionTitleMap: Record<string, string> = {
+    'Breathing Exercise': 'actionSelection.actions.0.title',
+    '5-4-3-2-1 Grounding': 'actionSelection.actions.1.title',
+    'Brain Dump': 'actionSelection.actions.2.title',
+    'Movement Reset': 'actionSelection.actions.3.title',
+    'Progressive Muscle Relaxation': 'actionSelection.actions.4.title',
+  };
+
+  const actionDescriptionMap: Record<string, string> = {
+    'Calm your mind with guided breathing': 'actionSelection.actions.0.description',
+    'Instant anxiety control using your senses': 'actionSelection.actions.1.description',
+    'Mental unload - write everything down': 'actionSelection.actions.2.description',
+    'Release stress through body movement': 'actionSelection.actions.3.description',
+    'Release tension by tensing and relaxing muscle groups': 'actionSelection.actions.4.description',
+  };
+
+  const actionDurationMap: Record<string, string> = {
+    'Breathing Exercise': 'actionSelection.actions.0.duration',
+    '5-4-3-2-1 Grounding': 'actionSelection.actions.1.duration',
+    'Brain Dump': 'actionSelection.actions.2.duration',
+    'Movement Reset': 'actionSelection.actions.3.duration',
+    'Progressive Muscle Relaxation': 'actionSelection.actions.4.duration',
+  };
+
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.content}>
       <View style={styles.header}>
-        <AppText variant="h2">Choose Your Action</AppText>
+        <AppText variant="h2">{t('actionSelection.title')}</AppText>
         <AppText variant="body" color="#9CA3AF" style={styles.subtitle}>
-          Select a technique to help you right now
+          {t('actionSelection.subtitle')}
         </AppText>
         <AppText variant="caption" style={styles.progress}>
-          Completed: {getCompletedCount()}/5
+          {getCompletedCount()}/5 {t('actionSelection.completed')}
         </AppText>
       </View>
 
@@ -112,13 +139,13 @@ const ActionSelectionScreen: React.FC<ActionSelectionScreenProps> = ({ navigatio
               </AppText>
               <View style={styles.actionDetails}>
                 <AppText variant="h3" style={isCompleted ? styles.textCompleted : styles.actionTitle}>
-                  {action.title}
+                  {t(actionTitleMap[action.title] || action.title)}
                 </AppText>
                 <AppText variant="body" color="#9CA3AF" style={styles.actionDescription}>
-                  {action.description}
+                  {t(actionDescriptionMap[action.description] || action.description)}
                 </AppText>
                 <AppText variant="caption" style={styles.duration}>
-                  ⏱️ {action.duration}
+                  ⏱️ {t(actionDurationMap[action.title] || action.duration)}
                 </AppText>
               </View>
             </View>

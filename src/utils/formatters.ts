@@ -1,4 +1,5 @@
 import { EffectivenessType } from '../models/types';
+import i18n from '../locales/i18n';
 
 export const getEffectivenessEmoji = (effectiveness: EffectivenessType | string) => {
   switch (effectiveness) {
@@ -16,11 +17,11 @@ export const getEffectivenessEmoji = (effectiveness: EffectivenessType | string)
 export const getEffectivenessLabel = (effectiveness: EffectivenessType | string) => {
   switch (effectiveness) {
     case 'yes':
-      return 'Helped';
+      return i18n.t('feedback.options.yes');
     case 'neutral':
-      return 'Somewhat';
+      return i18n.t('feedback.options.neutral');
     case 'no':
-      return "Didn't help";
+      return i18n.t('feedback.options.no');
     default:
       return '';
   }
@@ -28,16 +29,19 @@ export const getEffectivenessLabel = (effectiveness: EffectivenessType | string)
 
 export const getGreeting = () => {
   const h = new Date().getHours();
-  if (h < 12) return { text: 'Good morning', emoji: '🌤' };
-  if (h < 17) return { text: 'Good afternoon', emoji: '☀️' };
-  return { text: 'Good evening', emoji: '🌙' };
+  if (h < 12) return { text: i18n.t('home.greeting.morning'), emoji: '🌤' };
+  if (h < 17) return { text: i18n.t('home.greeting.afternoon'), emoji: '☀️' };
+  return { text: i18n.t('home.greeting.evening'), emoji: '🌙' };
 };
 
-export const formatTrigger = (trigger: string) =>
-  trigger.charAt(0).toUpperCase() + trigger.slice(1);
+export const formatTrigger = (trigger: string) => {
+  // Translate the trigger key if it exists, then capitalize first letter
+  const translatedTrigger = i18n.t(`triggers.${trigger}`) || trigger;
+  return translatedTrigger.charAt(0).toUpperCase() + translatedTrigger.slice(1);
+};
 
 export const formatDate = (dateString: string) =>
-  new Date(dateString).toLocaleDateString('en-US', {
+  new Date(dateString).toLocaleDateString(i18n.language, {
     month: 'short',
     day: 'numeric',
     hour: '2-digit',
@@ -46,7 +50,7 @@ export const formatDate = (dateString: string) =>
 
 export const formatTime = (dateString: string) => {
   const date = new Date(dateString);
-  return date.toLocaleTimeString('en-US', {
+  return date.toLocaleTimeString(i18n.language, {
     hour: '2-digit',
     minute: '2-digit',
   });

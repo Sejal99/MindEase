@@ -1,12 +1,13 @@
 import { StressEvent, InsightData, TriggerType, ActionType } from '../models/types';
+import i18n from '../locales/i18n';
 
 export const formatActionName = (action: ActionType): string => {
   const actionNames: Record<ActionType, string> = {
-    breathing: 'Breathing',
-    grounding: 'Grounding',
-    brainDump: 'Brain Dump',
-    movement: 'Movement',
-    pmr: 'PMR',
+    breathing: i18n.t('actions.breathing'),
+    grounding: i18n.t('actions.grounding'),
+    brainDump: i18n.t('actions.brainDump'),
+    movement: i18n.t('actions.movement'),
+    pmr: i18n.t('actions.pmr'),
   };
   return actionNames[action] || action;
 };

@@ -13,6 +13,7 @@ import TimePickerModal from '../components/organisms/TimePickerModal';
 import DayPickerModal from '../components/organisms/DayPickerModal';
 import { useNotificationStore } from '../store/notificationStore';
 import { NotificationService } from '../services/NotificationService';
+import { useTranslation } from 'react-i18next';
 
 type NotificationSettingsScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'NotificationSettings'>;
 
@@ -44,6 +45,7 @@ const NotificationSettingsScreen: React.FC<NotificationSettingsScreenProps> = ()
     setAchievementEnabled,
     setInactivityReminder,
   } = useNotificationStore();
+  const { t } = useTranslation();
 
   const [timePickerVisible, setTimePickerVisible] = useState(false);
   const [dayPickerVisible, setDayPickerVisible] = useState(false);
@@ -81,13 +83,13 @@ const NotificationSettingsScreen: React.FC<NotificationSettingsScreenProps> = ()
   return (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
       <View style={styles.header}>
-        <AppText variant="h1" style={styles.headerTitle}>Notifications</AppText>
-        <AppText style={styles.headerDesc}>Choose when and how MindEase reaches out to you.</AppText>
+        <AppText variant="h1" style={styles.headerTitle}>{t('notifications.title')}</AppText>
+        <AppText style={styles.headerDesc}>{t('notifications.description')}</AppText>
       </View>
 
       <View style={styles.section}>
         <View style={styles.masterRow}>
-          <AppText style={styles.masterLabel}>All Notifications</AppText>
+          <AppText style={styles.masterLabel}>{t('notifications.allNotifications')}</AppText>
           <Pressable
             style={[styles.toggle, allEnabled && styles.toggleActive]}
             onPress={() => handleToggle(setAllEnabled, allEnabled)}
@@ -97,11 +99,11 @@ const NotificationSettingsScreen: React.FC<NotificationSettingsScreenProps> = ()
         </View>
       </View>
 
-      <AppText style={styles.sectionTitle}>Scheduled Reminders</AppText>
+      <AppText style={styles.sectionTitle}>{t('notifications.scheduledReminders.title')}</AppText>
       <View style={styles.section}>
         <ToggleRow
-          label="Daily Check-in"
-          description="A gentle nudge to log how you are feeling"
+          label={t('notifications.scheduledReminders.dailyCheckIn.label')}
+          description={t('notifications.scheduledReminders.dailyCheckIn.description')}
           enabled={allEnabled && dailyCheckInEnabled}
           onToggle={() => handleToggle((e) => setDailyCheckIn(e), dailyCheckInEnabled)}
           time={dailyCheckInTime}
@@ -109,8 +111,8 @@ const NotificationSettingsScreen: React.FC<NotificationSettingsScreenProps> = ()
         />
         <View style={styles.divider} />
         <ToggleRow
-          label="Streak Reminder"
-          description="Encouragement to keep your daily streak going"
+          label={t('notifications.scheduledReminders.streakReminder.label')}
+          description={t('notifications.scheduledReminders.streakReminder.description')}
           enabled={allEnabled && streakReminderEnabled}
           onToggle={() => handleToggle((e) => setStreakReminder(e), streakReminderEnabled)}
           time={streakReminderTime}
@@ -118,8 +120,8 @@ const NotificationSettingsScreen: React.FC<NotificationSettingsScreenProps> = ()
         />
         <View style={styles.divider} />
         <ToggleRow
-          label="Mindful Break"
-          description="A midday prompt to pause and breathe"
+          label={t('notifications.scheduledReminders.mindfulBreak.label')}
+          description={t('notifications.scheduledReminders.mindfulBreak.description')}
           enabled={allEnabled && mindfulBreakEnabled}
           onToggle={() => handleToggle((e) => setMindfulBreak(e), mindfulBreakEnabled)}
           time={mindfulBreakTime}
@@ -127,8 +129,8 @@ const NotificationSettingsScreen: React.FC<NotificationSettingsScreenProps> = ()
         />
         <View style={styles.divider} />
         <ToggleRow
-          label="Weekly Insights"
-          description="Your stress patterns and progress summary"
+          label={t('notifications.scheduledReminders.weeklyInsights.label')}
+          description={t('notifications.scheduledReminders.weeklyInsights.description')}
           enabled={allEnabled && weeklyInsightsEnabled}
           onToggle={() => handleToggle((e) => setWeeklyInsights(e), weeklyInsightsEnabled)}
           day={weeklyInsightsDay}
@@ -138,25 +140,25 @@ const NotificationSettingsScreen: React.FC<NotificationSettingsScreenProps> = ()
         />
       </View>
 
-      <AppText style={styles.sectionTitle}>Smart Notifications</AppText>
+      <AppText style={styles.sectionTitle}>{t('notifications.smartNotifications.title')}</AppText>
       <View style={styles.section}>
         <ToggleRow
-          label="Post-session Check-in"
-          description="Ask how you feel 30 minutes after a stress session"
+          label={t('notifications.smartNotifications.postSessionCheckIn.label')}
+          description={t('notifications.smartNotifications.postSessionCheckIn.description')}
           enabled={allEnabled && postSessionFollowUpEnabled}
           onToggle={() => handleToggle(setPostSessionFollowUp, postSessionFollowUpEnabled)}
         />
         <View style={styles.divider} />
         <ToggleRow
-          label="Achievement Celebrations"
-          description="Instant cheers when you unlock something new"
+          label={t('notifications.smartNotifications.achievementCelebrations.label')}
+          description={t('notifications.smartNotifications.achievementCelebrations.description')}
           enabled={allEnabled && achievementEnabled}
           onToggle={() => handleToggle(setAchievementEnabled, achievementEnabled)}
         />
         <View style={styles.divider} />
         <ToggleRow
-          label="Re-engagement"
-          description="A soft check-in after 3 days of inactivity"
+          label={t('notifications.smartNotifications.reEngagement.label')}
+          description={t('notifications.smartNotifications.reEngagement.description')}
           enabled={allEnabled && inactivityReminderEnabled}
           onToggle={() => handleToggle(setInactivityReminder, inactivityReminderEnabled)}
         />

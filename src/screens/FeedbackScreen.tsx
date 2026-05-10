@@ -11,6 +11,7 @@ import useStressFlowViewModel from '../viewmodels/stressFlowViewModel';
 import useHomeViewModel from '../viewmodels/homeViewModel';
 import useSessionViewModel from '../viewmodels/sessionViewModel';
 import { StressEvent, EffectivenessType } from '../models/types';
+import { useTranslation } from 'react-i18next';
 
 type FeedbackScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'Feedback'>;
 type FeedbackScreenRouteProp = RouteProp<RootStackParamList, 'Feedback'>;
@@ -25,6 +26,7 @@ const FeedbackScreen: React.FC<FeedbackScreenProps> = ({ navigation, route }) =>
   const { setEffectiveness, reset } = useStressFlowViewModel();
   const { addEvent } = useHomeViewModel();
   const { addCompletedExercise, isSessionComplete, clearSession } = useSessionViewModel();
+  const { t } = useTranslation();
 
   const handleFeedback = (effectiveness: EffectivenessType) => {
     setEffectiveness(effectiveness);
@@ -55,27 +57,27 @@ const FeedbackScreen: React.FC<FeedbackScreenProps> = ({ navigation, route }) =>
     <View style={styles.container}>
       <View style={styles.content}>
         <AppText variant="h2" style={styles.title}>
-          Did this help?
+          {t('feedback.title')}
         </AppText>
         <AppText variant="body" color="#9CA3AF" style={styles.subtitle}>
-          Your feedback helps us understand what works best for you
+          {t('feedback.subtitle')}
         </AppText>
 
         <Card style={styles.feedbackCard}>
           <Button
-            title="Yes, it helped"
+            title={t('feedback.options.yes')}
             onPress={() => handleFeedback('yes')}
             variant="primary"
             style={styles.feedbackButton}
           />
           <Button
-            title="Somewhat"
+            title={t('feedback.options.neutral')}
             onPress={() => handleFeedback('neutral')}
             variant="secondary"
             style={styles.feedbackButton}
           />
           <Button
-            title="No, it didn't help"
+            title={t('feedback.options.no')}
             onPress={() => handleFeedback('no')}
             variant="secondary"
             style={styles.feedbackButton}

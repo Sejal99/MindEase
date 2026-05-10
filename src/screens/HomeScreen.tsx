@@ -18,6 +18,7 @@ import QuickAction from "../components/molecules/QuickAction";
 import useHomeViewModel from "../viewmodels/homeViewModel";
 import { formatActionName } from "../utils/insights";
 import { getGreeting } from "../utils/formatters";
+import { useTranslation } from 'react-i18next';
 
 type HomeScreenNavigationProp = NativeStackNavigationProp<
   RootStackParamList,
@@ -70,6 +71,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
   const { recentEvent, insights, achievements, userStats, loadEvents } =
     useHomeViewModel();
   const greeting = getGreeting();
+  const { t } = useTranslation();
 
   const headerFade = useRef(new Animated.Value(0)).current;
 
@@ -94,7 +96,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
             <AppText style={styles.greetingText}>
               {greeting.emoji} {greeting.text}
             </AppText>
-            <AppText style={styles.appName}>MindEase</AppText>
+            <AppText style={styles.appName}>{t('app.name')}</AppText>
           </View>
           <Pressable
             style={styles.historyBtn}
@@ -107,7 +109,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
         {userStats.currentStreak > 0 && (
           <View style={styles.streakBanner}>
             <AppText style={styles.streakText}>
-              🔥 {userStats.currentStreak} day streak — keep going
+              🔥 {t('home.streak', { count: userStats.currentStreak })}
             </AppText>
           </View>
         )}
@@ -116,8 +118,8 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
       <HeroButton onPress={() => navigation.navigate("StressFlow")} />
 
       <SectionHeader
-        label="YOUR PROGRESS"
-        action="Achievements"
+        label={t('home.sections.progress')}
+        action={t('home.actions.achievements')}
         onAction={() =>
           navigation.navigate("Achievements", { achievements, userStats })
         }
@@ -125,7 +127,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
       <View style={styles.statsRow}>
         <StatBox
           value={userStats.currentStreak}
-          label="Day Streak"
+          label={t('home.stats.dayStreak')}
           emoji="🔥"
           color="#F59E0B"
           dimColor="#451A03"
@@ -133,7 +135,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
         />
         <StatBox
           value={userStats.level}
-          label="Level"
+          label={t('home.stats.level')}
           emoji="⭐"
           color="#818CF8"
           dimColor="#1E1B4B"
@@ -141,7 +143,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
         />
         <StatBox
           value={userStats.xp}
-          label="XP Earned"
+          label={t('home.stats.xpEarned')}
           emoji="✨"
           color="#34D399"
           dimColor="#022C22"
@@ -149,30 +151,41 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
         />
       </View>
 
-      <SectionHeader label="QUICK ACCESS" />
+      <SectionHeader label={t('home.sections.quickAccess')} />
       <View style={styles.quickGrid}>
-        {QUICK_ACTIONS.map((a) => (
-          <QuickAction
-            key={a.screen}
-            emoji={a.emoji}
-            label={a.label}
-            color={a.color}
-            dimColor={a.dimColor}
-            onPress={() => {
-              navigation.navigate(a.screen as any, {
-                trigger: "quick",
-                intensity: 3,
-              });
-            }}
-          />
-        ))}
+        {QUICK_ACTIONS.map((a) => {
+          // Map action labels to translation keys
+          const labelKeyMap: Record<string, string> = {
+            Breathe: 'home.quickActions.breathe',
+            Ground: 'home.quickActions.ground',
+            Move: 'home.quickActions.move',
+            Release: 'home.quickActions.release',
+            Dump: 'home.quickActions.dump',
+          };
+
+          return (
+            <QuickAction
+              key={a.screen}
+              emoji={a.emoji}
+              label={t(labelKeyMap[a.label] || a.label)}
+              color={a.color}
+              dimColor={a.dimColor}
+              onPress={() => {
+                navigation.navigate(a.screen as any, {
+                  trigger: "quick",
+                  intensity: 3,
+                });
+              }}
+            />
+          );
+        })}
       </View>
 
       {recentEvent && (
         <>
           <SectionHeader
-            label="LAST SESSION"
-            action="All History"
+            label={t('home.sections.lastSession')}
+            action={t('home.actions.allHistory')}
             onAction={() => navigation.navigate("History")}
           />
           <RecentSessionCard
@@ -186,8 +199,8 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
       )}
 
       <SectionHeader
-        label="INSIGHTS"
-        action="See All"
+        label={t('home.sections.insights')}
+        action={t('home.actions.seeAll')}
         onAction={() => navigation.navigate("Insights")}
       />
       <InsightCard insights={insights} />
@@ -198,14 +211,14 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
           onPress={() => navigation.navigate("History")}
         >
           <AppText style={styles.bottomNavEmoji}>📋</AppText>
-          <AppText style={styles.bottomNavLabel}>History</AppText>
+          <AppText style={styles.bottomNavLabel}>{t('home.bottomNav.history')}</AppText>
         </Pressable>
         <Pressable
           style={styles.bottomNavBtn}
           onPress={() => navigation.navigate("Insights")}
         >
           <AppText style={styles.bottomNavEmoji}>💡</AppText>
-          <AppText style={styles.bottomNavLabel}>Insights</AppText>
+          <AppText style={styles.bottomNavLabel}>{t('home.bottomNav.insights')}</AppText>
         </Pressable>
         <Pressable
           style={styles.bottomNavBtn}
@@ -214,14 +227,14 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
           }
         >
           <AppText style={styles.bottomNavEmoji}>🏆</AppText>
-          <AppText style={styles.bottomNavLabel}>Awards</AppText>
+          <AppText style={styles.bottomNavLabel}>{t('home.bottomNav.awards')}</AppText>
         </Pressable>
         <Pressable
           style={styles.bottomNavBtn}
           onPress={() => navigation.navigate("NotificationSettings")}
         >
           <AppText style={styles.bottomNavEmoji}>🔔</AppText>
-          <AppText style={styles.bottomNavLabel}>Alerts</AppText>
+          <AppText style={styles.bottomNavLabel}>{t('home.bottomNav.alerts')}</AppText>
         </Pressable>
       </View>
     </ScrollView>
