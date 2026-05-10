@@ -1,17 +1,18 @@
 import React, { useEffect } from 'react';
 import { View, StyleSheet, ScrollView } from 'react-native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { NavigationProp } from '@react-navigation/native';
 import { RouteProp } from '@react-navigation/native';
-import { RootStackParamList } from '../navigation/AppNavigator';
+import { TabParamList } from '../navigation/AppNavigator';
 
 import AppText from '../components/atoms/AppText';
 import Card from '../components/atoms/Card';
 import { Achievement, UserStats } from '../models/types';
 import { getXPProgress, getXPForNextLevel } from '../utils/achievements';
 import { useTranslation } from 'react-i18next';
+import useHomeViewModel from '../viewmodels/homeViewModel';
 
-type AchievementsScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'Achievements'>;
-type AchievementsScreenRouteProp = RouteProp<RootStackParamList, 'Achievements'>;
+type AchievementsScreenNavigationProp = NavigationProp<TabParamList>;
+type AchievementsScreenRouteProp = RouteProp<TabParamList, 'AchievementsTab'>;
 
 interface AchievementsScreenProps {
   navigation: AchievementsScreenNavigationProp;
@@ -19,7 +20,7 @@ interface AchievementsScreenProps {
 }
 
 const AchievementsScreen: React.FC<AchievementsScreenProps> = ({ navigation, route }) => {
-  const { achievements, userStats } = route.params;
+  const { achievements, userStats } = useHomeViewModel();
   const { t } = useTranslation();
 
   // Map category IDs to translation keys

@@ -16,6 +16,7 @@ import BreathingOrb from '../components/atoms/BreathingOrb';
 import EntryItem from '../components/molecules/EntryItem';
 import ProgressDots, { Step } from '../components/molecules/ProgressDots';
 import { ActionType } from '../models/types';
+import { Eye, Hand, Volume2, Wind, Droplets } from 'lucide-react-native';
 
 type GroundingScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'GroundingScreen'>;
 type GroundingScreenRouteProp = RouteProp<RootStackParamList, 'GroundingScreen'>;
@@ -30,7 +31,7 @@ const STEPS: Step[] = [
     id: 1, count: 5,
     label: 'SEE', verb: 'see',
     instruction: 'Look around slowly. Name each thing you notice.',
-    emoji: '👀',
+    icon: <Eye color="#6366F1" size={14} />,
     color: '#6366F1', dimColor: '#312E81',
     placeholder: (n) => ['A light on the ceiling...', 'Your hands...', 'Something blue...', 'A shadow...', 'Text on a screen...'][n - 1],
   },
@@ -38,7 +39,7 @@ const STEPS: Step[] = [
     id: 2, count: 4,
     label: 'TOUCH', verb: 'feel',
     instruction: 'What textures, temperatures, or surfaces can you feel?',
-    emoji: '✋',
+    icon: <Hand color="#10B981" size={14} />,
     color: '#10B981', dimColor: '#064E3B',
     placeholder: (n) => ['The fabric on your seat...', 'Air on your skin...', 'Your feet on the floor...', 'Your phone in your hands...'][n - 1],
   },
@@ -46,7 +47,7 @@ const STEPS: Step[] = [
     id: 3, count: 3,
     label: 'HEAR', verb: 'hear',
     instruction: 'Close your eyes. What sounds reach you?',
-    emoji: '👂',
+    icon: <Volume2 color="#F59E0B" size={14} />,
     color: '#F59E0B', dimColor: '#78350F',
     placeholder: (n) => ['A distant hum...', 'Your own breathing...', 'Something outside...'][n - 1],
   },
@@ -54,7 +55,7 @@ const STEPS: Step[] = [
     id: 4, count: 2,
     label: 'SMELL', verb: 'smell',
     instruction: 'Take a slow breath. What do you notice?',
-    emoji: '👃',
+    icon: <Wind color="#EC4899" size={14} />,
     color: '#EC4899', dimColor: '#831843',
     placeholder: (n) => ['Fresh air...', 'Something nearby...'][n - 1],
   },
@@ -62,7 +63,7 @@ const STEPS: Step[] = [
     id: 5, count: 1,
     label: 'TASTE', verb: 'taste',
     instruction: "What's the faintest taste in your mouth right now?",
-    emoji: '👅',
+    icon: <Droplets color="#14B8A6" size={14} />,
     color: '#14B8A6', dimColor: '#134E4A',
     placeholder: () => 'Something subtle...',
   },
@@ -147,7 +148,7 @@ const GroundingScreen: React.FC<GroundingScreenProps> = ({ navigation, route }) 
             <BreathingOrb color={step.color} />
             <View style={styles.senseTextBlock}>
               <View style={[styles.sensePill, { backgroundColor: step.dimColor, borderColor: step.color + '50' }]}>
-                <AppText style={[styles.senseEmoji]}>{step.emoji}</AppText>
+                {step.icon}
                 <AppText variant="caption" style={[styles.sensePillText, { color: step.color }]}>
                   {step.count} things you can {step.verb}
                 </AppText>
@@ -251,7 +252,6 @@ const styles = StyleSheet.create({
     marginBottom: 8,
     gap: 5,
   },
-  senseEmoji: { fontSize: 14 },
   sensePillText: { fontSize: 12, fontWeight: '700', letterSpacing: 0.5 },
   instruction: { fontSize: 14, lineHeight: 20 },
 

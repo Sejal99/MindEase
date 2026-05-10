@@ -9,7 +9,7 @@ import AppText from './AppText';
 
 export interface IntensityLevel {
   value: number;
-  emoji: string;
+  icon: React.ReactNode;
   label: string;
   activeColor: string;
   activeBorder: string;
@@ -97,9 +97,9 @@ const IntensityButton: React.FC<IntensityButtonProps> = ({ level, isSelected, on
           pointerEvents="none"
         />
 
-        <AppText variant="h3" style={styles.emoji}>
-          {level.emoji}
-        </AppText>
+        <View style={styles.icon}>
+          {level.icon}
+        </View>
 
         <AppText
           variant="caption"
@@ -136,9 +136,12 @@ const styles = StyleSheet.create({
     borderRadius: 14,
     borderWidth: 1.5,
   },
-  emoji: {
+  icon: {
     marginBottom: 6,
-    fontSize: 22,
+    width: 22,
+    height: 22,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   label: {
     fontSize: 10,

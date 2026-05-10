@@ -7,7 +7,7 @@ interface Exercise {
   title: string;
   description: string;
   durationSecs: number;
-  emoji: string;
+  icon: React.ReactNode;
   color: string;
   dimColor: string;
   tag: string;
@@ -46,7 +46,7 @@ const ExerciseCard: React.FC<ExerciseCardProps> = ({ exercise, onPress }) => {
       >
         <View style={styles.cardLeft}>
           <View style={[styles.emojiCircle, { backgroundColor: exercise.dimColor }]}>
-            <AppText style={styles.emoji}>{exercise.emoji}</AppText>
+            {exercise.icon}
           </View>
           <View style={styles.textBlock}>
             <AppText style={styles.title}>{exercise.title}</AppText>
@@ -84,7 +84,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     marginRight: 12,
   },
-  emoji: { fontSize: 20 },
   textBlock: { flex: 1 },
   title: {
     fontSize: 16,

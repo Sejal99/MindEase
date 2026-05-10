@@ -8,13 +8,23 @@ import AppText from '../components/atoms/AppText';
 import Card from '../components/atoms/Card';
 import useSessionViewModel from '../viewmodels/sessionViewModel';
 import { formatActionName } from '../utils/insights';
-import { formatTrigger, getEffectivenessEmoji, getEffectivenessLabel, getEffectivenessColor } from '../utils/formatters';
+import { formatTrigger, getEffectivenessLabel, getEffectivenessColor } from '../utils/formatters';
+import { Trophy, CheckCircle, XCircle, MinusCircle } from 'lucide-react-native';
 
 type SessionSummaryScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'SessionSummary'>;
 
 interface SessionSummaryScreenProps {
   navigation: SessionSummaryScreenNavigationProp;
 }
+
+const EffectivenessIcon = ({ effectiveness, color, size }: { effectiveness: string; color: string; size: number }) => {
+  switch (effectiveness) {
+    case 'yes': return <CheckCircle color={color} size={size} />;
+    case 'no': return <XCircle color={color} size={size} />;
+    case 'neutral': return <MinusCircle color={color} size={size} />;
+    default: return null;
+  }
+};
 
 const SessionSummaryScreen: React.FC<SessionSummaryScreenProps> = ({ navigation }) => {
   const { session, getMostEffectiveExercise } = useSessionViewModel();
@@ -42,9 +52,12 @@ const SessionSummaryScreen: React.FC<SessionSummaryScreenProps> = ({ navigation 
 
       {mostEffective && (
         <Card style={styles.highlightCard}>
-          <AppText variant="h3" style={styles.highlightTitle}>
-            🏆 Most Effective Exercise
-          </AppText>
+          <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6, marginBottom: 8 }}>
+            <Trophy color="#6366F1" size={20} />
+            <AppText variant="h3" style={[styles.highlightTitle, { marginBottom: 0 }]}>
+              Most Effective Exercise
+            </AppText>
+          </View>
           <AppText variant="h1" style={styles.highlightAction}>
             {formatActionName(mostEffective)}
           </AppText>
@@ -67,12 +80,19 @@ const SessionSummaryScreen: React.FC<SessionSummaryScreenProps> = ({ navigation 
               </AppText>
             </View>
             <View style={styles.effectivenessBadge}>
-              <AppText
-                variant="body"
-                style={{ color: getEffectivenessColor(exercise.effectiveness) }}
-              >
-                {getEffectivenessEmoji(exercise.effectiveness)} {getEffectivenessLabel(exercise.effectiveness)}
-              </AppText>
+              <View style={{ flexDirection: 'row', alignItems: 'center', gap: 4 }}>
+                <EffectivenessIcon
+                  effectiveness={exercise.effectiveness}
+                  color={getEffectivenessColor(exercise.effectiveness)}
+                  size={16}
+                />
+                <AppText
+                  variant="body"
+                  style={{ color: getEffectivenessColor(exercise.effectiveness) }}
+                >
+                  {getEffectivenessLabel(exercise.effectiveness)}
+                </AppText>
+              </View>
             </View>
           </View>
         ))}
@@ -104,7 +124,7 @@ const SessionSummaryScreen: React.FC<SessionSummaryScreenProps> = ({ navigation 
 
       <Button
         title="Back to Home"
-        onPress={() => navigation.navigate('Home')}
+        onPress={() => navigation.navigate('MainTabs')}
         variant="primary"
         style={styles.homeButton}
       />

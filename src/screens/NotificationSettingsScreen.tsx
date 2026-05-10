@@ -1,24 +1,25 @@
 import React, { useState } from 'react';
-import {
-  View,
-  StyleSheet,
-  ScrollView,
-  Pressable,
-} from 'react-native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { RootStackParamList } from '../navigation/AppNavigator';
+import { View, StyleSheet, ScrollView, Switch, Pressable } from 'react-native';
+import { NavigationProp } from '@react-navigation/native';
+import { RouteProp } from '@react-navigation/native';
+import { TabParamList } from '../navigation/AppNavigator';
+
 import AppText from '../components/atoms/AppText';
+import Card from '../components/atoms/Card';
+import Button from '../components/atoms/Button';
 import ToggleRow from '../components/molecules/ToggleRow';
 import TimePickerModal from '../components/organisms/TimePickerModal';
 import DayPickerModal from '../components/organisms/DayPickerModal';
-import { useNotificationStore } from '../store/notificationStore';
 import { NotificationService } from '../services/NotificationService';
+import { useNotificationStore } from '../store/notificationStore';
 import { useTranslation } from 'react-i18next';
 
-type NotificationSettingsScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'NotificationSettings'>;
+type NotificationSettingsScreenNavigationProp = NavigationProp<TabParamList>;
+type NotificationSettingsScreenRouteProp = RouteProp<TabParamList, 'NotificationSettingsTab'>;
 
 interface NotificationSettingsScreenProps {
   navigation: NotificationSettingsScreenNavigationProp;
+  route: NotificationSettingsScreenRouteProp;
 }
 
 const NotificationSettingsScreen: React.FC<NotificationSettingsScreenProps> = () => {

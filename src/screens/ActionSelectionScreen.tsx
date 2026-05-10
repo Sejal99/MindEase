@@ -10,6 +10,7 @@ import Card from '../components/atoms/Card';
 import { ActionType } from '../models/types';
 import useSessionViewModel from '../viewmodels/sessionViewModel';
 import { useTranslation } from 'react-i18next';
+import { Wind, Activity, PenLine, Dumbbell, CheckCircle2, Clock } from 'lucide-react-native';
 
 type ActionSelectionScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'ActionSelection'>;
 type ActionSelectionScreenRouteProp = RouteProp<RootStackParamList, 'ActionSelection'>;
@@ -23,42 +24,48 @@ const ACTIONS: {
   id: ActionType;
   title: string;
   description: string;
-  emoji: string;
+  icon: React.ReactNode;
+  completedIcon: React.ReactNode;
   duration: string;
 }[] = [
   {
     id: 'breathing',
     title: 'Breathing Exercise',
     description: 'Calm your mind with guided breathing',
-    emoji: '🌬️',
+    icon: <Wind color="#F9FAFB" size={24} />,
+    completedIcon: <CheckCircle2 color="#10B981" size={24} />,
     duration: '2 min',
   },
   {
     id: 'grounding',
     title: '5-4-3-2-1 Grounding',
     description: 'Instant anxiety control using your senses',
-    emoji: '🧘',
+    icon: <Activity color="#F9FAFB" size={24} />,
+    completedIcon: <CheckCircle2 color="#10B981" size={24} />,
     duration: '3 min',
   },
   {
     id: 'brainDump',
     title: 'Brain Dump',
     description: 'Mental unload - write everything down',
-    emoji: '📝',
+    icon: <PenLine color="#F9FAFB" size={24} />,
+    completedIcon: <CheckCircle2 color="#10B981" size={24} />,
     duration: '2 min',
   },
   {
     id: 'movement',
     title: 'Movement Reset',
     description: 'Release stress through body movement',
-    emoji: '🏃',
+    icon: <Activity color="#F9FAFB" size={24} />,
+    completedIcon: <CheckCircle2 color="#10B981" size={24} />,
     duration: '2 min',
   },
   {
     id: 'pmr',
     title: 'Progressive Muscle Relaxation',
     description: 'Release tension by tensing and relaxing muscle groups',
-    emoji: '💪',
+    icon: <Dumbbell color="#F9FAFB" size={24} />,
+    completedIcon: <CheckCircle2 color="#10B981" size={24} />,
     duration: '5 min',
   },
 ];
@@ -134,9 +141,9 @@ const ActionSelectionScreen: React.FC<ActionSelectionScreenProps> = ({ navigatio
             onPress={() => !isCompleted && handleActionSelect(action.id)}
           >
             <View style={styles.actionContent}>
-              <AppText variant="h2" style={isCompleted ? styles.emojiCompleted : styles.emoji}>
-                {isCompleted ? '✅' : action.emoji}
-              </AppText>
+              <View style={isCompleted ? styles.iconCompleted : styles.icon}>
+                {isCompleted ? action.completedIcon : action.icon}
+              </View>
               <View style={styles.actionDetails}>
                 <AppText variant="h3" style={isCompleted ? styles.textCompleted : styles.actionTitle}>
                   {t(actionTitleMap[action.title] || action.title)}
@@ -144,9 +151,12 @@ const ActionSelectionScreen: React.FC<ActionSelectionScreenProps> = ({ navigatio
                 <AppText variant="body" color="#9CA3AF" style={styles.actionDescription}>
                   {t(actionDescriptionMap[action.description] || action.description)}
                 </AppText>
-                <AppText variant="caption" style={styles.duration}>
-                  ⏱️ {t(actionDurationMap[action.title] || action.duration)}
-                </AppText>
+                <View style={{ flexDirection: 'row', alignItems: 'center', gap: 4, marginTop: 4 }}>
+                  <Clock color="#9CA3AF" size={12} />
+                  <AppText variant="caption" style={styles.duration}>
+                    {t(actionDurationMap[action.title] || action.duration)}
+                  </AppText>
+                </View>
               </View>
             </View>
           </Card>
@@ -182,10 +192,19 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
   },
-  emoji: {
+  icon: {
     marginRight: 16,
+    width: 24,
+    height: 24,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
-  emojiCompleted: {
+  iconCompleted: {
+    marginRight: 16,
+    width: 24,
+    height: 24,
+    justifyContent: 'center',
+    alignItems: 'center',
     opacity: 0.7,
   },
   textCompleted: {

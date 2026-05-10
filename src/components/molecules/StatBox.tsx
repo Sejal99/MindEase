@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
   statValue: { fontSize: 24, fontWeight: '800' },
   statLabel: {
     fontSize: 10,
-    color: '#3D4F6E',
+    color: '#6B7280',
     fontWeight: '600',
     textAlign: 'center',
   },

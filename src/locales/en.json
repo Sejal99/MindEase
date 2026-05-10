@@ -8,7 +8,7 @@
       "afternoon": "Good afternoon",
       "evening": "Good evening"
     },
-    "streak": "{count} day streak — keep going",
+    "streak": "{{count}} day streak — keep going",
     "sections": {
       "progress": "YOUR PROGRESS",
       "quickAccess": "QUICK ACCESS",
@@ -87,10 +87,27 @@
   },
   "insights": {
     "title": "Your Insights",
-    "subtitle": "Learn from your stress patterns",
+    "subtitle": "Understand your emotional patterns and progress",
+    "loading": "Loading your insights...",
     "notEnoughData": "Not enough data yet. Log more stress events to see insights!",
     "triggerDistribution": "Trigger Distribution",
-    "totalEvents": "Total Events"
+    "totalEvents": "Total Events",
+    "overview": {
+      "totalLogs": "Total Logs",
+      "triggers": "Triggers"
+    },
+    "triggers": {
+      "title": "Emotional Triggers",
+      "events": "{{count}} events"
+    },
+    "motivation": {
+      "title": "You're doing great",
+      "text": "Every emotion you track helps you understand yourself better."
+    },
+    "empty": {
+      "title": "No Insights Yet",
+      "description": "Start tracking your emotions to discover helpful patterns and insights."
+    }
   },
   "achievements": {
     "title": "Achievements",
@@ -175,6 +192,18 @@
     "social": "Social",
     "health": "Health",
     "other": "Other"
+  },
+  "history": {
+    "greeting": "Your journey",
+    "title": "Mindful Log",
+    "sessions": "sessions",
+    "days": "days",
+    "intensity": "Intensity",
+    "empty": {
+      "title": "Begin your journey",
+      "subtitle": "Each session you log becomes a step toward understanding yourself better.",
+      "cta": "Log your first session"
+    }
   },
   "stressFlow": {
     "title": "Log Your Stress",

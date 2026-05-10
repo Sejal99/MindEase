@@ -29,9 +29,9 @@ export const getEffectivenessLabel = (effectiveness: EffectivenessType | string)
 
 export const getGreeting = () => {
   const h = new Date().getHours();
-  if (h < 12) return { text: i18n.t('home.greeting.morning'), emoji: '🌤' };
-  if (h < 17) return { text: i18n.t('home.greeting.afternoon'), emoji: '☀️' };
-  return { text: i18n.t('home.greeting.evening'), emoji: '🌙' };
+  if (h < 12) return { text: i18n.t('home.greeting.morning'), period: 'morning' as const };
+  if (h < 17) return { text: i18n.t('home.greeting.afternoon'), period: 'afternoon' as const };
+  return { text: i18n.t('home.greeting.evening'), period: 'evening' as const };
 };
 
 export const formatTrigger = (trigger: string) => {

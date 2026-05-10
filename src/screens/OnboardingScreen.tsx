@@ -2,12 +2,13 @@ import React, { useState, useRef } from 'react';
 import { View, StyleSheet, ScrollView, Dimensions } from 'react-native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../navigation/AppNavigator';
+import { Activity, PenLine, Target, BarChart3, Sparkles } from 'lucide-react-native';
+import { useTranslation } from 'react-i18next';
 
 import Button from '../components/atoms/Button';
 import AppText from '../components/atoms/AppText';
 import Card from '../components/atoms/Card';
 import useHomeViewModel from '../viewmodels/homeViewModel';
-import { useTranslation } from 'react-i18next';
 
 type OnboardingScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'Onboarding'>;
 
@@ -21,7 +22,7 @@ interface OnboardingSlide {
   id: number;
   title: string;
   description: string;
-  emoji: string;
+  icon: React.ReactNode;
   color: string;
 }
 
@@ -30,35 +31,35 @@ const SLIDES: OnboardingSlide[] = [
     id: 1,
     title: 'Welcome to Stress Guide',
     description: 'Your personal mental wellness companion. Track your stress, practice relief techniques, and build healthy habits.',
-    emoji: '🧘',
+    icon: <Activity color="#6366F1" size={48} />,
     color: '#6366F1',
   },
   {
     id: 2,
     title: 'Log Your Stress',
     description: 'When you feel stressed, tap "I\'m Stressed" to log your trigger and intensity level.',
-    emoji: '📝',
+    icon: <PenLine color="#10B981" size={48} />,
     color: '#10B981',
   },
   {
     id: 3,
     title: 'Choose Your Relief',
     description: 'Select from 5 evidence-based techniques: Breathing, Grounding, Brain Dump, Movement, or Thought Reframing.',
-    emoji: '🎯',
+    icon: <Target color="#F59E0B" size={48} />,
     color: '#F59E0B',
   },
   {
     id: 4,
     title: 'Track Your Progress',
     description: 'View your history, gain insights from your patterns, and unlock achievements as you build your streak.',
-    emoji: '📊',
+    icon: <BarChart3 color="#EC4899" size={48} />,
     color: '#EC4899',
   },
   {
     id: 5,
     title: 'Build Healthy Habits',
     description: 'Consistent practice leads to better stress management. Start your journey today!',
-    emoji: '🌟',
+    icon: <Sparkles color="#8B5CF6" size={48} />,
     color: '#8B5CF6',
   },
 ];
@@ -85,7 +86,7 @@ const OnboardingScreen: React.FC<OnboardingScreenProps> = ({ navigation }) => {
 
   const handleComplete = () => {
     completeOnboarding();
-    navigation.replace('Home');
+    navigation.replace('MainTabs');
   };
 
   const handleScroll = (event: any) => {
@@ -124,10 +125,8 @@ const OnboardingScreen: React.FC<OnboardingScreenProps> = ({ navigation }) => {
         {SLIDES.map((slide) => (
           <View key={slide.id} style={[styles.slide, { width }]}>
             <View style={styles.content}>
-              <View style={[styles.emojiContainer, { backgroundColor: slide.color + '20' }]}>
-                <AppText variant="h1" style={styles.emoji}>
-                  {slide.emoji}
-                </AppText>
+              <View style={[styles.iconContainer, { backgroundColor: slide.color + '20' }]}>
+                {slide.icon}
               </View>
 
               <AppText variant="h2" style={styles.title}>
@@ -194,16 +193,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     maxWidth: 400,
   },
-  emojiContainer: {
+  iconContainer: {
     width: 120,
     height: 120,
     borderRadius: 60,
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 32,
-  },
-  emoji: {
-    fontSize: 64,
   },
   title: {
     textAlign: 'center',

@@ -12,7 +12,8 @@ import { RootStackParamList } from "../navigation/AppNavigator";
 import AppText from "../components/atoms/AppText";
 import ExerciseCard from "../components/molecules/ExerciseCard";
 import RingTimer from "../components/organisms/RingTimer";
-import { ActionType } from "../models/types";
+import { ActionType } from '../models/types';
+import { PersonStanding, Sun, RotateCcw, User, Dumbbell } from 'lucide-react-native';
 
 type MovementScreenNavigationProp = NativeStackNavigationProp<
   RootStackParamList,
@@ -30,7 +31,7 @@ interface Exercise {
   title: string;
   description: string;
   durationSecs: number;
-  emoji: string;
+  icon: React.ReactNode;
   color: string;
   dimColor: string;
   tag: string;
@@ -43,7 +44,7 @@ const EXERCISES: Exercise[] = [
     title: "Quick Walk",
     description: "Reset your nervous system with movement",
     durationSecs: 120,
-    emoji: "🚶",
+    icon: <PersonStanding color="#6366F1" size={20} />,
     color: "#6366F1",
     dimColor: "#1E1B4B",
     tag: "2 min",
@@ -62,7 +63,7 @@ const EXERCISES: Exercise[] = [
     title: "Full Stretch",
     description: "Open your chest, spine, and sides",
     durationSecs: 120,
-    emoji: "🤸",
+    icon: <Sun color="#10B981" size={20} />,
     color: "#10B981",
     dimColor: "#064E3B",
     tag: "2 min",
@@ -81,7 +82,7 @@ const EXERCISES: Exercise[] = [
     title: "Neck Release",
     description: "Melt the tension in your neck & jaw",
     durationSecs: 60,
-    emoji: "🔄",
+    icon: <RotateCcw color="#F59E0B" size={20} />,
     color: "#F59E0B",
     dimColor: "#78350F",
     tag: "1 min",
@@ -100,7 +101,7 @@ const EXERCISES: Exercise[] = [
     title: "Shoulder Shrugs",
     description: "Release trapped stress from your shoulders",
     durationSecs: 60,
-    emoji: "🤷",
+    icon: <User color="#EC4899" size={20} />,
     color: "#EC4899",
     dimColor: "#831843",
     tag: "1 min",
@@ -118,7 +119,7 @@ const EXERCISES: Exercise[] = [
     title: "Power Squats",
     description: "Ground yourself with a full-body reset",
     durationSecs: 60,
-    emoji: "🏋️",
+    icon: <Dumbbell color="#14B8A6" size={20} />,
     color: "#14B8A6",
     dimColor: "#134E4A",
     tag: "1 min",

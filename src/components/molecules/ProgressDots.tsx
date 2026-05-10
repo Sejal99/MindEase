@@ -7,7 +7,7 @@ export interface Step {
   label: string;
   verb: string;
   instruction: string;
-  emoji: string;
+  icon: React.ReactNode;
   color: string;
   dimColor: string;
   placeholder: (n: number) => string;
