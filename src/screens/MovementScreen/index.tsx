@@ -1,19 +1,22 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import {
   View,
-  StyleSheet,
   ScrollView,
   Animated,
   Pressable,
 } from "react-native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RouteProp } from "@react-navigation/native";
-import { RootStackParamList } from "../navigation/AppNavigator";
-import AppText from "../components/atoms/AppText";
-import ExerciseCard from "../components/molecules/ExerciseCard";
-import RingTimer from "../components/organisms/RingTimer";
-import { ActionType } from '../models/types';
+import { RootStackParamList } from "../../navigation/AppNavigator";
+import AppText from "../../components/atoms/AppText";
+import ExerciseCard from "../../components/molecules/ExerciseCard";
+import RingTimer from "../../components/organisms/RingTimer";
+import { ActionType } from '../../models';
+import { styles } from './styles';
 import { PersonStanding, Sun, RotateCcw, User, Dumbbell } from 'lucide-react-native';
+import { COLORS } from '../../constants/colors';
+import { EXERCISE_CONFIG } from '../../constants';
+import { darkTheme } from '../../theme/colors';
 
 type MovementScreenNavigationProp = NativeStackNavigationProp<
   RootStackParamList,
@@ -44,9 +47,9 @@ const EXERCISES: Exercise[] = [
     title: "Quick Walk",
     description: "Reset your nervous system with movement",
     durationSecs: 120,
-    icon: <PersonStanding color="#6366F1" size={20} />,
-    color: "#6366F1",
-    dimColor: "#1E1B4B",
+    icon: <PersonStanding color={darkTheme.primary} size={20} />,
+    color: darkTheme.primary,
+    dimColor: darkTheme.primaryDark,
     tag: "2 min",
     steps: [
       "Stand up and find a clear space.",
@@ -63,9 +66,9 @@ const EXERCISES: Exercise[] = [
     title: "Full Stretch",
     description: "Open your chest, spine, and sides",
     durationSecs: 120,
-    icon: <Sun color="#10B981" size={20} />,
-    color: "#10B981",
-    dimColor: "#064E3B",
+    icon: <Sun color={darkTheme.success} size={20} />,
+    color: darkTheme.success,
+    dimColor: darkTheme.success + '80',
     tag: "2 min",
     steps: [
       "Reach both arms high above your head.",
@@ -82,9 +85,9 @@ const EXERCISES: Exercise[] = [
     title: "Neck Release",
     description: "Melt the tension in your neck & jaw",
     durationSecs: 60,
-    icon: <RotateCcw color="#F59E0B" size={20} />,
-    color: "#F59E0B",
-    dimColor: "#78350F",
+    icon: <RotateCcw color={darkTheme.warning} size={20} />,
+    color: darkTheme.warning,
+    dimColor: darkTheme.warning + '80',
     tag: "1 min",
     steps: [
       "Sit upright. Drop your shoulders away from your ears.",
@@ -101,9 +104,9 @@ const EXERCISES: Exercise[] = [
     title: "Shoulder Shrugs",
     description: "Release trapped stress from your shoulders",
     durationSecs: 60,
-    icon: <User color="#EC4899" size={20} />,
-    color: "#EC4899",
-    dimColor: "#831843",
+    icon: <User color={darkTheme.accent} size={20} />,
+    color: darkTheme.accent,
+    dimColor: darkTheme.accent + '80',
     tag: "1 min",
     steps: [
       "Stand or sit with arms relaxed at your sides.",
@@ -119,9 +122,9 @@ const EXERCISES: Exercise[] = [
     title: "Power Squats",
     description: "Ground yourself with a full-body reset",
     durationSecs: 60,
-    icon: <Dumbbell color="#14B8A6" size={20} />,
-    color: "#14B8A6",
-    dimColor: "#134E4A",
+    icon: <Dumbbell color={darkTheme.primary} size={20} />,
+    color: darkTheme.primary,
+    dimColor: darkTheme.primaryDark,
     tag: "1 min",
     steps: [
       "Stand with feet shoulder-width apart.",
@@ -253,7 +256,7 @@ const MovementScreen: React.FC<MovementScreenProps> = ({ navigation, route }) =>
             <AppText variant="h2" style={styles.title}>
               Choose Your Movement
             </AppText>
-            <AppText variant="body" color="#9CA3AF" style={styles.subtitle}>
+            <AppText variant="body" color={darkTheme.textSecondary} style={styles.subtitle}>
               Select an exercise to release physical tension and reset your mind.
             </AppText>
           </View>
@@ -277,7 +280,7 @@ const MovementScreen: React.FC<MovementScreenProps> = ({ navigation, route }) =>
           <AppText variant="h3" style={styles.exerciseTitle}>
             {selectedExercise.title}
           </AppText>
-          <AppText variant="body" color="#9CA3AF" style={styles.exerciseSubtitle}>
+          <AppText variant="body" color={darkTheme.textSecondary} style={styles.exerciseSubtitle}>
             {selectedExercise.description}
           </AppText>
         </View>
@@ -294,7 +297,7 @@ const MovementScreen: React.FC<MovementScreenProps> = ({ navigation, route }) =>
           style={[styles.stepContainer, { opacity: fadeAnim, transform: [{ translateX: slideAnim }] }]}
         >
           <View style={styles.stepHeader}>
-            <AppText variant="caption" color="#6B7280">
+            <AppText variant="caption" color={darkTheme.textSecondary}>
               Step {currentStep + 1} of {selectedExercise.steps.length}
             </AppText>
             <Pressable style={styles.stepDot} />
@@ -355,7 +358,7 @@ const MovementScreen: React.FC<MovementScreenProps> = ({ navigation, route }) =>
             <AppText variant="h3" style={styles.doneTitle}>
               Great job!
             </AppText>
-            <AppText variant="body" color="#9CA3AF" style={styles.doneText}>
+            <AppText variant="body" color={darkTheme.textSecondary} style={styles.doneText}>
               You've completed the exercise. Take a moment to notice how you feel.
             </AppText>
             <Pressable
@@ -371,130 +374,5 @@ const MovementScreen: React.FC<MovementScreenProps> = ({ navigation, route }) =>
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#0D1117",
-  },
-  content: {
-    padding: 24,
-    paddingBottom: 48,
-  },
-  header: {
-    marginBottom: 32,
-  },
-  title: {
-    fontSize: 28,
-    fontWeight: "800",
-    color: "#F9FAFB",
-    marginBottom: 8,
-  },
-  subtitle: {
-    fontSize: 16,
-    lineHeight: 24,
-  },
-  exerciseHeader: {
-    marginBottom: 32,
-    alignItems: "center",
-  },
-  exerciseTitle: {
-    fontSize: 24,
-    fontWeight: "700",
-    color: "#F9FAFB",
-    marginBottom: 8,
-  },
-  exerciseSubtitle: {
-    fontSize: 16,
-    lineHeight: 24,
-    textAlign: "center",
-  },
-  timerSection: {
-    marginBottom: 32,
-  },
-  stepContainer: {
-    backgroundColor: "#161B22",
-    borderRadius: 20,
-    padding: 24,
-    borderWidth: 1,
-    borderColor: "#21262D",
-    marginBottom: 24,
-  },
-  stepHeader: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    marginBottom: 16,
-  },
-  stepDot: {
-    width: 8,
-    height: 8,
-    borderRadius: 4,
-    backgroundColor: "#6366F1",
-  },
-  stepText: {
-    fontSize: 18,
-    lineHeight: 26,
-    color: "#F9FAFB",
-    marginBottom: 24,
-  },
-  stepActions: {
-    flexDirection: "row",
-    gap: 12,
-  },
-  actionButton: {
-    paddingHorizontal: 20,
-    paddingVertical: 12,
-    borderRadius: 12,
-    minWidth: 100,
-    alignItems: "center",
-  },
-  backButton: {
-    backgroundColor: "#374151",
-  },
-  startButton: {
-    backgroundColor: "#6366F1",
-  },
-  pauseButton: {
-    backgroundColor: "#F59E0B",
-  },
-  nextButton: {
-    backgroundColor: "#6366F1",
-  },
-  actionText: {
-    color: "#FFFFFF",
-    fontSize: 16,
-    fontWeight: "600",
-  },
-  doneSection: {
-    alignItems: "center",
-    padding: 32,
-    backgroundColor: "#161B22",
-    borderRadius: 20,
-    borderWidth: 1,
-    borderColor: "#21262D",
-  },
-  doneTitle: {
-    fontSize: 24,
-    fontWeight: "700",
-    color: "#F9FAFB",
-    marginBottom: 16,
-  },
-  doneText: {
-    fontSize: 16,
-    lineHeight: 24,
-    textAlign: "center",
-    marginBottom: 24,
-  },
-  continueButton: {
-    paddingHorizontal: 32,
-    paddingVertical: 16,
-    borderRadius: 16,
-  },
-  continueButtonText: {
-    color: "#FFFFFF",
-    fontSize: 18,
-    fontWeight: "700",
-  },
-});
 
 export default MovementScreen;

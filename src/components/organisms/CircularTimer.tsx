@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { View, Animated, StyleSheet } from 'react-native';
 import AppText from '../atoms/AppText';
+import { darkTheme } from '../../theme/colors';
 
 const SIZE = 130;
 const STROKE = 8;
@@ -39,7 +40,7 @@ const CircularTimer: React.FC<CircularTimerProps> = ({ timeLeft, total, phase })
   }, [phase]);
 
   const color =
-    phase === 'done' ? '#10B981' : phase === 'urgent' ? '#EF4444' : '#6366F1';
+    phase === 'done' ? darkTheme.success : phase === 'urgent' ? darkTheme.error : darkTheme.primary;
 
   const mins = Math.floor(timeLeft / 60);
   const secs = timeLeft % 60;
@@ -48,7 +49,7 @@ const CircularTimer: React.FC<CircularTimerProps> = ({ timeLeft, total, phase })
     <Animated.View
       style={[styles.orbContainer, { transform: [{ scale: pulseAnim }] }]}
     >
-      <View style={[styles.ringOuter, { borderColor: '#1F2937' }]}>
+      <View style={[styles.ringOuter, { borderColor: darkTheme.border }]}>
         <View style={[styles.ringInner, { borderColor: color + '30' }]} />
       </View>
 
@@ -126,7 +127,7 @@ const styles = StyleSheet.create({
   timerDigits: { fontSize: 25, fontWeight: '800', letterSpacing: -1 },
   timerCaption: {
     fontSize: 10,
-    color: '#6B7280',
+    color: darkTheme.textSecondary,
     fontWeight: '600',
     letterSpacing: 0.5,
   },

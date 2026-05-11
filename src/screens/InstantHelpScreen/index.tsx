@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, Animated } from 'react-native';
+import { View, Animated } from 'react-native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RouteProp } from '@react-navigation/native';
-import { RootStackParamList } from '../navigation/AppNavigator';
+import { RootStackParamList } from '../../navigation/AppNavigator';
 
-import Button from '../components/atoms/Button';
-import AppText from '../components/atoms/AppText';
-import Card from '../components/atoms/Card';
+import Button from '../../components/atoms/Button';
+import AppText from '../../components/atoms/AppText';
+import Card from '../../components/atoms/Card';
+import { styles } from './styles';
+import { darkTheme } from '../../theme/colors';
 
 type InstantHelpScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'InstantHelp'>;
 type InstantHelpScreenRouteProp = RouteProp<RootStackParamList, 'InstantHelp'>;
@@ -16,7 +18,8 @@ interface InstantHelpScreenProps {
   route: InstantHelpScreenRouteProp;
 }
 
-const BREATHING_CYCLE = 8000; // 8 seconds per cycle
+// Breathing exercise timing constants (in milliseconds)
+const BREATHING_CYCLE = 8000;
 const INHALE_DURATION = 4000;
 const HOLD_DURATION = 1000;
 const EXHALE_DURATION = 3000;
@@ -103,7 +106,7 @@ const InstantHelpScreen: React.FC<InstantHelpScreenProps> = ({ navigation, route
         <AppText variant="h2" style={styles.title}>
           Breathing Exercise
         </AppText>
-        <AppText variant="body" color="#9CA3AF" style={styles.subtitle}>
+        <AppText variant="body" color={darkTheme.textSecondary} style={styles.subtitle}>
           Follow the circle to calm your mind
         </AppText>
 
@@ -140,57 +143,5 @@ const InstantHelpScreen: React.FC<InstantHelpScreenProps> = ({ navigation, route
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#111827',
-  },
-  content: {
-    flex: 1,
-    padding: 20,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  title: {
-    textAlign: 'center',
-    marginBottom: 8,
-  },
-  subtitle: {
-    textAlign: 'center',
-    marginBottom: 40,
-  },
-  circleContainer: {
-    width: 200,
-    height: 200,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginBottom: 40,
-  },
-  circle: {
-    position: 'absolute',
-    width: 150,
-    height: 150,
-    borderRadius: 75,
-    backgroundColor: '#6366F1',
-    opacity: 0.3,
-  },
-  phaseTextContainer: {
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  phaseText: {
-    color: '#6366F1',
-  },
-  instructionCard: {
-    marginBottom: 32,
-    width: '100%',
-  },
-  instruction: {
-    textAlign: 'center',
-  },
-  doneButton: {
-    width: '100%',
-  },
-});
 
 export default InstantHelpScreen;

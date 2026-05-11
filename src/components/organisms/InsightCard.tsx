@@ -4,6 +4,7 @@ import Card from '../atoms/Card';
 import AppText from '../atoms/AppText';
 import { InsightData } from '../../models/types';
 import { formatTrigger } from '../../utils/formatters';
+import { darkTheme } from '../../theme/colors';
 
 interface InsightCardProps {
   insights: InsightData;
@@ -60,7 +61,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingVertical: 8,
     borderBottomWidth: 1,
-    borderBottomColor: '#374151',
+    borderBottomColor: darkTheme.border,
   },
   label: {
     flex: 1,

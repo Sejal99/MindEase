@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import {
   View,
-  StyleSheet,
   TextInput,
   Pressable,
   KeyboardAvoidingView,
@@ -10,13 +9,15 @@ import {
 } from "react-native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RouteProp } from "@react-navigation/native";
-import { RootStackParamList } from "../navigation/AppNavigator";
-import AppText from "../components/atoms/AppText";
-import CircularTimer from "../components/organisms/CircularTimer";
-import NudgeChip from "../components/molecules/NudgeChip";
-import MilestoneToast from "../components/molecules/MilestoneToast";
-import DoneSummary from "../components/organisms/DoneSummary";
-import { ActionType } from "../models/types";
+import { RootStackParamList } from "../../navigation/AppNavigator";
+import AppText from "../../components/atoms/AppText";
+import CircularTimer from "../../components/organisms/CircularTimer";
+import { styles } from "./styles";
+import NudgeChip from "../../components/molecules/NudgeChip";
+import MilestoneToast from "../../components/molecules/MilestoneToast";
+import DoneSummary from "../../components/organisms/DoneSummary";
+import { ActionType } from "../../models/types";
+import { darkTheme } from "../../theme/colors";
 
 type BrainDumpScreenNavigationProp = NativeStackNavigationProp<
   RootStackParamList,
@@ -201,13 +202,13 @@ const BrainDumpScreen: React.FC<BrainDumpScreenProps> = ({
             placeholder={
               "Just start typing...\n\nIt doesn't need to make sense."
             }
-            placeholderTextColor="#374151"
+            placeholderTextColor={darkTheme.border}
             multiline
             autoFocus
             value={text}
             onChangeText={handleTextChange}
             textAlignVertical="top"
-            selectionColor="#6366F1"
+            selectionColor={darkTheme.primary}
           />
         </View>
 
@@ -222,98 +223,5 @@ const BrainDumpScreen: React.FC<BrainDumpScreenProps> = ({
   );
 };
 
-const styles = StyleSheet.create({
-  root: { flex: 1, backgroundColor: "#0D1117" },
-  container: { flex: 1 },
-  content: { padding: 24, paddingBottom: 60 },
-
-  // Header
-  label: {
-    fontSize: 11,
-    fontWeight: "700",
-    letterSpacing: 2.5,
-    color: "#6366F1",
-    marginBottom: 10,
-  },
-  title: {
-    fontSize: 26,
-    fontWeight: "700",
-    color: "#F9FAFB",
-    lineHeight: 34,
-    marginBottom: 8,
-  },
-  subtitle: { fontSize: 14, color: "#6B7280", lineHeight: 20 },
-  header: { marginBottom: 28 },
-
-  // Timer row
-  timerRow: {
-    flexDirection: "row",
-    alignItems: "center",
-    marginBottom: 20,
-    gap: 20,
-  },
-  statsColumn: { gap: 12 },
-  statMini: {
-    backgroundColor: "#161B22",
-    borderRadius: 12,
-    paddingVertical: 10,
-    paddingHorizontal: 16,
-    borderWidth: 1,
-    borderColor: "#21262D",
-    alignItems: "center",
-  },
-  statMiniBottom: {},
-  statMiniValue: { fontSize: 22, fontWeight: "800", color: "#F9FAFB" },
-  statMiniLabel: {
-    fontSize: 10,
-    color: "#6B7280",
-    fontWeight: "600",
-    letterSpacing: 0.5,
-  },
-
-  // Urgent
-  urgentBanner: {
-    backgroundColor: "#EF444420",
-    borderRadius: 10,
-    paddingHorizontal: 14,
-    paddingVertical: 8,
-    borderWidth: 1,
-    borderColor: "#EF444440",
-    marginBottom: 12,
-    alignItems: "center",
-  },
-  urgentText: { fontSize: 13, color: "#F87171", fontWeight: "600" },
-
-  // Editor
-  editorCard: {
-    backgroundColor: "#161B22",
-    borderRadius: 16,
-    borderWidth: 1,
-    borderColor: "#21262D",
-    padding: 16,
-    minHeight: 220,
-    marginBottom: 16,
-  },
-  editor: {
-    flex: 1,
-    minHeight: 200,
-    color: "#E5E7EB",
-    fontSize: 16,
-    lineHeight: 26,
-  },
-
-  // Skip
-  skipBtn: { alignItems: "center", paddingVertical: 8 },
-  skipText: { fontSize: 13, color: "#4B5563", fontWeight: "600" },
-
-  // Done screen
-  doneScreen: {
-    flex: 1,
-    backgroundColor: "#0D1117",
-    alignItems: "center",
-    padding: 24,
-    paddingTop: 80,
-  },
-});
 
 export default BrainDumpScreen;

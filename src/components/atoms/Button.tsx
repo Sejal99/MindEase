@@ -7,6 +7,7 @@ import {
   TextStyle,
   ActivityIndicator,
 } from 'react-native';
+import { darkTheme } from '../../theme/colors';
 
 interface ButtonProps {
   title: string;
@@ -40,7 +41,7 @@ const Button: React.FC<ButtonProps> = ({
       activeOpacity={0.7}
     >
       {loading ? (
-        <ActivityIndicator color="#FFFFFF" />
+        <ActivityIndicator color={darkTheme.text} />
       ) : (
         <Text style={[styles.text, textStyle]}>{title}</Text>
       )}
@@ -58,21 +59,21 @@ const styles = StyleSheet.create({
     minHeight: 56,
   },
   primary: {
-    backgroundColor: '#6366F1',
+    backgroundColor: darkTheme.primary,
   },
   secondary: {
-    backgroundColor: '#374151',
+    backgroundColor: darkTheme.card,
     borderWidth: 1,
-    borderColor: '#4B5563',
+    borderColor: darkTheme.border,
   },
   danger: {
-    backgroundColor: '#EF4444',
+    backgroundColor: darkTheme.error,
   },
   disabled: {
     opacity: 0.5,
   },
   text: {
-    color: '#FFFFFF',
+    color: darkTheme.text,
     fontSize: 16,
     fontWeight: '600',
     letterSpacing: 0.5,

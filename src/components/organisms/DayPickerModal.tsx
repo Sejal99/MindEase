@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Pressable, Modal, StyleSheet } from 'react-native';
 import AppText from '../atoms/AppText';
+import { darkTheme } from '../../theme/colors';
 
 const DAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
@@ -43,7 +44,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   modalContent: {
-    backgroundColor: '#1F2937',
+    backgroundColor: darkTheme.card,
     borderRadius: 16,
     padding: 20,
   },
@@ -53,16 +54,17 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     alignItems: 'center',
     marginVertical: 2,
+    backgroundColor: darkTheme.primary,
   },
   dayItemActive: {
     paddingVertical: 12,
     borderRadius: 8,
     alignItems: 'center',
     marginVertical: 2,
-    backgroundColor: '#6366F1',
+    backgroundColor: darkTheme.primary,
   },
-  dayItemText: { fontSize: 16, color: '#F9FAFB' },
-  dayItemTextActive: { fontSize: 16, color: '#FFFFFF', fontWeight: '700' },
+  dayItemText: { fontSize: 16, color: darkTheme.text },
+  dayItemTextActive: { fontSize: 16, color: darkTheme.text, fontWeight: '700' },
 });
 
 export default DayPickerModal;

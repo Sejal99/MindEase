@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { View, Pressable, Animated, StyleSheet } from 'react-native';
 import AppText from '../atoms/AppText';
+import { darkTheme } from '../../theme/colors';
 
 interface HeroButtonProps {
   onPress: () => void;
@@ -111,9 +112,9 @@ const styles = StyleSheet.create({
   hero: {
     borderRadius: 22,
     overflow: 'hidden',
-    backgroundColor: '#0F1828',
+    backgroundColor: darkTheme.background,
     borderWidth: 1,
-    borderColor: '#1E3A5F',
+    borderColor: darkTheme.border,
   },
   heroGlow: {
     position: 'absolute',
@@ -122,8 +123,8 @@ const styles = StyleSheet.create({
     width: 160,
     height: 160,
     borderRadius: 80,
-    backgroundColor: '#3B82F6',
-    shadowColor: '#3B82F6',
+    backgroundColor: darkTheme.primary,
+    shadowColor: darkTheme.primary,
     shadowOpacity: 0.6,
     shadowRadius: 40,
     shadowOffset: { width: 0, height: 0 },
@@ -137,39 +138,39 @@ const styles = StyleSheet.create({
   heroLeft: { flex: 1 },
   heroBadge: {
     alignSelf: 'flex-start',
-    backgroundColor: '#1E3A5F',
+    backgroundColor: darkTheme.card,
     borderRadius: 20,
     paddingHorizontal: 10,
     paddingVertical: 4,
     marginBottom: 12,
     borderWidth: 1,
-    borderColor: '#2563EB40',
+    borderColor: darkTheme.primary + '40',
   },
   heroBadgeText: {
     fontSize: 10,
     fontWeight: '800',
-    color: '#60A5FA',
+    color: darkTheme.primary,
     letterSpacing: 1.5,
   },
   heroTitle: {
     fontSize: 24,
     fontWeight: '800',
-    color: '#E8EDF5',
+    color: darkTheme.text,
     lineHeight: 32,
     marginBottom: 8,
   },
-  heroSub: { fontSize: 13, color: '#3D4F6E', lineHeight: 19 },
+  heroSub: { fontSize: 13, color: darkTheme.textSecondary, lineHeight: 19 },
   heroRight: { alignItems: 'center', gap: 12 },
   heroEmoji: { fontSize: 20 },
   heroArrowBox: {
-    backgroundColor: '#2563EB',
+    backgroundColor: darkTheme.primary,
     borderRadius: 12,
     width: 36,
     height: 36,
     alignItems: 'center',
     justifyContent: 'center',
   },
-  heroArrow: { fontSize: 16, color: '#fff', fontWeight: '700' },
+  heroArrow: { fontSize: 16, color: darkTheme.text, fontWeight: '700' },
 });
 
 export default HeroButton;

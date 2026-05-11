@@ -1,5 +1,6 @@
 import React from 'react';
 import { Text, StyleSheet, TextStyle } from 'react-native';
+import { darkTheme } from '../../theme/colors';
 
 interface AppTextProps {
   children: React.ReactNode;
@@ -23,7 +24,7 @@ const AppText: React.FC<AppTextProps> = ({
 
 const styles = StyleSheet.create({
   text: {
-    color: '#F9FAFB',
+    color: darkTheme.text,
   },
   h1: {
     fontSize: 32,
@@ -49,7 +50,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: '400',
     lineHeight: 20,
-    color: '#9CA3AF',
+    color: darkTheme.textSecondary,
   },
 });
 

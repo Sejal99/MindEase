@@ -7,6 +7,7 @@ import {
   StyleSheet,
 } from 'react-native';
 import AppText from '../atoms/AppText';
+import { darkTheme } from '../../theme/colors';
 
 interface TimePickerModalProps {
   visible: boolean;
@@ -101,7 +102,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   modalContent: {
-    backgroundColor: '#1F2937',
+    backgroundColor: darkTheme.card,
     borderRadius: 16,
     padding: 20,
     width: 300,
@@ -110,7 +111,7 @@ const styles = StyleSheet.create({
   modalTitle: { marginBottom: 16, textAlign: 'center' },
   pickerRow: { flexDirection: 'row', justifyContent: 'center', marginBottom: 16 },
   pickerColumn: { flex: 1, alignItems: 'center' },
-  pickerLabel: { fontSize: 12, color: '#9CA3AF', marginBottom: 8, fontWeight: '600' },
+  pickerLabel: { fontSize: 12, color: darkTheme.textSecondary, marginBottom: 8, fontWeight: '600' },
   pickerList: { maxHeight: 200 },
   pickerItem: {
     paddingVertical: 10,
@@ -118,18 +119,18 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     marginVertical: 2,
   },
-  pickerItemActive: { backgroundColor: '#6366F1' },
-  pickerItemText: { fontSize: 16, color: '#F9FAFB' },
+  pickerItemActive: { backgroundColor: darkTheme.primary },
+  pickerItemText: { fontSize: 16, color: darkTheme.text },
   pickerItemTextActive: { fontWeight: '700' },
   pickerSeparator: { justifyContent: 'center', paddingHorizontal: 8 },
-  pickerColon: { fontSize: 20, color: '#F9FAFB', fontWeight: '700' },
+  pickerColon: { fontSize: 20, color: darkTheme.text, fontWeight: '700' },
   confirmBtn: {
-    backgroundColor: '#6366F1',
+    backgroundColor: darkTheme.primary,
     borderRadius: 12,
     paddingVertical: 12,
     alignItems: 'center',
   },
-  confirmBtnText: { color: '#FFFFFF', fontSize: 16, fontWeight: '600' },
+  confirmBtnText: { color: darkTheme.text, fontSize: 16, fontWeight: '600' },
 });
 
 export default TimePickerModal;

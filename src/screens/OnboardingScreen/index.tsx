@@ -1,14 +1,16 @@
 import React, { useState, useRef } from 'react';
-import { View, StyleSheet, ScrollView, Dimensions } from 'react-native';
+import { View, ScrollView, Dimensions } from 'react-native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { RootStackParamList } from '../navigation/AppNavigator';
+import { RootStackParamList } from '../../navigation/AppNavigator';
 import { Activity, PenLine, Target, BarChart3, Sparkles } from 'lucide-react-native';
 import { useTranslation } from 'react-i18next';
 
-import Button from '../components/atoms/Button';
-import AppText from '../components/atoms/AppText';
-import Card from '../components/atoms/Card';
-import useHomeViewModel from '../viewmodels/homeViewModel';
+import Button from '../../components/atoms/Button';
+import AppText from '../../components/atoms/AppText';
+import Card from '../../components/atoms/Card';
+import useHomeViewModel from '../../viewmodels/homeViewModel';
+import { styles } from './styles';
+import { darkTheme } from '../../theme/colors';
 
 type OnboardingScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'Onboarding'>;
 
@@ -31,36 +33,36 @@ const SLIDES: OnboardingSlide[] = [
     id: 1,
     title: 'Welcome to Stress Guide',
     description: 'Your personal mental wellness companion. Track your stress, practice relief techniques, and build healthy habits.',
-    icon: <Activity color="#6366F1" size={48} />,
-    color: '#6366F1',
+    icon: <Activity color={darkTheme.primary} size={48} />,
+    color: darkTheme.primary,
   },
   {
     id: 2,
     title: 'Log Your Stress',
     description: 'When you feel stressed, tap "I\'m Stressed" to log your trigger and intensity level.',
-    icon: <PenLine color="#10B981" size={48} />,
-    color: '#10B981',
+    icon: <PenLine color={darkTheme.success} size={48} />,
+    color: darkTheme.success,
   },
   {
     id: 3,
     title: 'Choose Your Relief',
     description: 'Select from 5 evidence-based techniques: Breathing, Grounding, Brain Dump, Movement, or Thought Reframing.',
-    icon: <Target color="#F59E0B" size={48} />,
-    color: '#F59E0B',
+    icon: <Target color={darkTheme.warning} size={48} />,
+    color: darkTheme.warning,
   },
   {
     id: 4,
     title: 'Track Your Progress',
     description: 'View your history, gain insights from your patterns, and unlock achievements as you build your streak.',
-    icon: <BarChart3 color="#EC4899" size={48} />,
-    color: '#EC4899',
+    icon: <BarChart3 color={darkTheme.accent} size={48} />,
+    color: darkTheme.accent,
   },
   {
     id: 5,
     title: 'Build Healthy Habits',
     description: 'Consistent practice leads to better stress management. Start your journey today!',
-    icon: <Sparkles color="#8B5CF6" size={48} />,
-    color: '#8B5CF6',
+    icon: <Sparkles color={darkTheme.primary} size={48} />,
+    color: darkTheme.primary,
   },
 ];
 
@@ -133,7 +135,7 @@ const OnboardingScreen: React.FC<OnboardingScreenProps> = ({ navigation }) => {
                 {t(slideTitleMap[slide.title] || slide.title)}
               </AppText>
 
-              <AppText variant="body" color="#9CA3AF" style={styles.description}>
+              <AppText variant="body" color={darkTheme.textSecondary} style={styles.description}>
                 {t(slideDescriptionMap[slide.description] || slide.description)}
               </AppText>
             </View>
@@ -175,76 +177,5 @@ const OnboardingScreen: React.FC<OnboardingScreenProps> = ({ navigation }) => {
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#111827',
-  },
-  scrollView: {
-    flex: 1,
-  },
-  slide: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 20,
-  },
-  content: {
-    alignItems: 'center',
-    maxWidth: 400,
-  },
-  iconContainer: {
-    width: 120,
-    height: 120,
-    borderRadius: 60,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginBottom: 32,
-  },
-  title: {
-    textAlign: 'center',
-    marginBottom: 16,
-  },
-  description: {
-    textAlign: 'center',
-    lineHeight: 24,
-  },
-  footer: {
-    padding: 20,
-    paddingBottom: 40,
-    backgroundColor: '#111827',
-  },
-  pagination: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    marginBottom: 24,
-  },
-  dot: {
-    width: 8,
-    height: 8,
-    borderRadius: 4,
-    marginHorizontal: 4,
-  },
-  activeDot: {
-    backgroundColor: '#6366F1',
-    width: 24,
-  },
-  inactiveDot: {
-    backgroundColor: '#374151',
-  },
-  buttonContainer: {
-    flexDirection: 'row',
-    gap: 12,
-  },
-  skipButton: {
-    flex: 1,
-  },
-  nextButton: {
-    flex: 2,
-  },
-  fullButton: {
-    flex: 1,
-  },
-});
 
 export default OnboardingScreen;

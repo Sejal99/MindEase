@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import {
   View,
-  StyleSheet,
   ScrollView,
   TouchableOpacity,
   ActivityIndicator,
@@ -9,7 +8,7 @@ import {
 import { NavigationProp } from '@react-navigation/native';
 import { RouteProp } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
-import { insightsPalette as C } from '../theme/colors';
+import { insightsPalette as C } from '../../theme/colors';
 import {
   Sparkles,
   Sprout,
@@ -26,13 +25,14 @@ import {
   Heart,
 } from 'lucide-react-native';
 
-import { TabParamList } from '../navigation/AppNavigator';
+import { TabParamList } from '../../navigation/AppNavigator';
 
-import AppText from '../components/atoms/AppText';
-import Card from '../components/atoms/Card';
-import InsightCard from '../components/organisms/InsightCard';
-import useInsightsViewModel from '../viewmodels/insightsViewModel';
-import { formatTrigger } from '../utils/formatters';
+import AppText from '../../components/atoms/AppText';
+import Card from '../../components/atoms/Card';
+import InsightCard from '../../components/organisms/InsightCard';
+import useInsightsViewModel from '../../viewmodels/insightsViewModel';
+import { formatTrigger } from '../../utils/formatters';
+import { styles } from './styles';
 
 type InsightsScreenNavigationProp = NavigationProp<TabParamList>;
 type InsightsScreenRouteProp = RouteProp<TabParamList, 'InsightsTab'>;
@@ -255,210 +255,5 @@ const InsightsScreen: React.FC<InsightsScreenProps> = () => {
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: C.background,
-  },
-
-  content: {
-    padding: 20,
-    paddingBottom: 120,
-  },
-
-  loaderContainer: {
-    flex: 1,
-    backgroundColor: C.background,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-
-  loadingText: {
-    marginTop: 16,
-    color: C.textLight,
-  },
-
-  header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 28,
-    marginTop: 10,
-  },
-
-  title: {
-    color: C.white,
-    marginBottom: 6,
-  },
-
-  subtitle: {
-    lineHeight: 22,
-  },
-
-  headerBadge: {
-    width: 52,
-    height: 52,
-    borderRadius: 16,
-    backgroundColor: C.headerBadge,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginLeft: 16,
-  },
-
-
-  statsRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginBottom: 18,
-  },
-
-  overviewCard: {
-    width: '48%',
-    borderRadius: 24,
-    paddingVertical: 24,
-    alignItems: 'center',
-  },
-
-  purpleCard: {
-    backgroundColor: C.purple,
-  },
-
-  blueCard: {
-    backgroundColor: C.blue,
-  },
-
-
-  overviewNumber: {
-    color: C.white,
-    fontSize: 34,
-    fontWeight: '800',
-  },
-
-  overviewLabel: {
-    color: C.label,
-    marginTop: 6,
-  },
-
-  sectionSpacing: {
-    marginBottom: 18,
-  },
-
-  card: {
-    backgroundColor: C.card,
-    borderRadius: 24,
-    padding: 20,
-    marginBottom: 18,
-  },
-
-  cardHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 20,
-  },
-
-  cardTitle: {
-    color: C.white,
-  },
-
-
-  triggerItem: {
-    borderBottomWidth: 1,
-    borderBottomColor: C.border,
-    paddingBottom: 18,
-    marginBottom: 18,
-  },
-
-  triggerTop: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginBottom: 12,
-  },
-
-  triggerLeft: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    flex: 1,
-  },
-
-
-  triggerTitle: {
-    color: C.white,
-    fontWeight: '600',
-  },
-
-  triggerSubtitle: {
-    marginTop: 2,
-  },
-
-  triggerPercentage: {
-    color: C.accent,
-    fontWeight: '700',
-    fontSize: 16,
-  },
-
-  progressTrack: {
-    width: '100%',
-    height: 10,
-    backgroundColor: C.progressTrack,
-    borderRadius: 20,
-    overflow: 'hidden',
-  },
-
-  progressFill: {
-    height: '100%',
-    backgroundColor: C.progressFill,
-    borderRadius: 20,
-  },
-
-  motivationCard: {
-    backgroundColor: C.card,
-    borderRadius: 24,
-    padding: 20,
-  },
-
-  motivationRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-
-  motivationEmojiContainer: {
-    width: 56,
-    height: 56,
-    borderRadius: 18,
-    backgroundColor: C.motivationEmoji,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginRight: 16,
-  },
-
-
-  motivationTitle: {
-    color: C.white,
-    marginBottom: 6,
-  },
-
-  motivationText: {
-    lineHeight: 22,
-  },
-
-  emptyCard: {
-    backgroundColor: C.card,
-    borderRadius: 28,
-    padding: 32,
-    alignItems: 'center',
-    marginTop: 40,
-  },
-
-
-  emptyTitle: {
-    color: C.white,
-    marginBottom: 12,
-  },
-
-  emptyDescription: {
-    textAlign: 'center',
-    lineHeight: 24,
-  },
-});
 
 export default InsightsScreen;

@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Pressable, StyleSheet } from 'react-native';
 import AppText from '../atoms/AppText';
+import { darkTheme } from '../../theme/colors';
 
 interface SectionHeaderProps {
   label: string;
@@ -31,9 +32,9 @@ const styles = StyleSheet.create({
     fontSize: 10,
     fontWeight: '800',
     letterSpacing: 2,
-    color: '#2A3550',
+    color: darkTheme.text,
   },
-  sectionAction: { fontSize: 12, color: '#3D4F6E', fontWeight: '600' },
+  sectionAction: { fontSize: 12, color: darkTheme.textSecondary, fontWeight: '600' },
 });
 
 export default SectionHeader;

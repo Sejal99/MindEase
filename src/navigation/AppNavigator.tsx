@@ -15,22 +15,23 @@ import {
 } from 'lucide-react-native';
 
 import { ThemeProvider } from '../theme/ThemeProvider';
+import { darkTheme } from '../theme/colors';
 
-import OnboardingScreen from '../screens/OnboardingScreen';
-import HomeScreen from '../screens/HomeScreen';
-import StressFlowScreen from '../screens/StressFlowScreen';
-import ActionSelectionScreen from '../screens/ActionSelectionScreen';
-import InstantHelpScreen from '../screens/InstantHelpScreen';
-import GroundingScreen from '../screens/GroundingScreen';
-import BrainDumpScreen from '../screens/BrainDumpScreen';
-import MovementScreen from '../screens/MovementScreen';
-import PMRScreen from '../screens/PMRScreen';
-import FeedbackScreen from '../screens/FeedbackScreen';
-import HistoryScreen from '../screens/HistoryScreen';
-import InsightsScreen from '../screens/InsightsScreen';
-import AchievementsScreen from '../screens/AchievementsScreen';
-import SessionSummaryScreen from '../screens/SessionSummaryScreen';
-import NotificationSettingsScreen from '../screens/NotificationSettingsScreen';
+import OnboardingScreen from '../screens/OnboardingScreen/index';
+import HomeScreen from '../screens/HomeScreen/index';
+import StressFlowScreen from '../screens/StressFlowScreen/index';
+import ActionSelectionScreen from '../screens/ActionSelectionScreen/index';
+import InstantHelpScreen from '../screens/InstantHelpScreen/index';
+import GroundingScreen from '../screens/GroundingScreen/index';
+import BrainDumpScreen from '../screens/BrainDumpScreen/index';
+import MovementScreen from '../screens/MovementScreen/index';
+import PMRScreen from '../screens/PMRScreen/index';
+import FeedbackScreen from '../screens/FeedbackScreen/index';
+import HistoryScreen from '../screens/HistoryScreen/index';
+import InsightsScreen from '../screens/InsightsScreen/index';
+import AchievementsScreen from '../screens/AchievementsScreen/index';
+import SessionSummaryScreen from '../screens/SessionSummaryScreen/index';
+import NotificationSettingsScreen from '../screens/NotificationSettingsScreen/index';
 
 import { ActionType } from '../models/types';
 import useHomeViewModel from '../viewmodels/homeViewModel';
@@ -61,24 +62,6 @@ export type TabParamList = {
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 const Tab = createBottomTabNavigator<TabParamList>();
-
-// ─────────────────────────────────────────────
-// Warm Sunrise Theme
-// ─────────────────────────────────────────────
-const W = {
-  bg: '#FDF6EE',
-  surface: '#FFF8F2',
-  surfaceDeep: '#FFF0E6',
-
-  border: '#EDD9C4',
-
-  accent: '#E8956D',
-  accentDeep: '#C4855A',
-  accentLight: '#F5C9A8',
-
-  textMuted: '#C4A882',
-  textPrimary: '#3D2314',
-};
 
 // ─────────────────────────────────────────────
 // Tab Icon Wrapper
@@ -113,10 +96,6 @@ function TabNavigator() {
 
         tabBarHideOnKeyboard: true,
 
-        sceneContainerStyle: {
-          backgroundColor: W.bg,
-        },
-
         // ─────────────────────────────────
         // Sticky Bottom Navigation
         // ─────────────────────────────────
@@ -130,7 +109,7 @@ function TabNavigator() {
 
           borderTopWidth: 0,
 
-          shadowColor: '#C4855A',
+          shadowColor: darkTheme.primary,
           shadowOffset: {
             width: 0,
             height: -4,
@@ -142,15 +121,15 @@ function TabNavigator() {
 
         tabBarBackground: () => (
           <LinearGradient
-            colors={[W.surface, W.surfaceDeep]}
+            colors={[darkTheme.card, darkTheme.card]}
             start={{ x: 0, y: 0 }}
             end={{ x: 1, y: 1 }}
             style={styles.tabBarGradient}
           />
         ),
 
-        tabBarActiveTintColor: W.accentDeep,
-        tabBarInactiveTintColor: W.textMuted,
+        tabBarActiveTintColor: darkTheme.primary,
+        tabBarInactiveTintColor: darkTheme.textSecondary,
 
         tabBarLabelStyle: {
           fontSize: 11,
@@ -185,7 +164,7 @@ function TabNavigator() {
             <Pressable
               {...props}
               android_ripple={{
-                color: '#F5C9A850',
+                color: darkTheme.primary + '80',
                 borderless: true,
               }}
               onPressIn={(e) => {
@@ -218,7 +197,7 @@ function TabNavigator() {
             <Pressable
               {...props}
               android_ripple={{
-                color: '#F5C9A850',
+                color: darkTheme.primary + '80',
                 borderless: true,
               }}
               onPressIn={(e) => {
@@ -251,7 +230,7 @@ function TabNavigator() {
             <Pressable
               {...props}
               android_ripple={{
-                color: '#F5C9A850',
+                color: darkTheme.primary + '80',
                 borderless: true,
               }}
               onPressIn={(e) => {
@@ -284,7 +263,7 @@ function TabNavigator() {
             <Pressable
               {...props}
               android_ripple={{
-                color: '#F5C9A850',
+                color: darkTheme.primary + '80',
                 borderless: true,
               }}
               onPressIn={(e) => {
@@ -317,7 +296,7 @@ function TabNavigator() {
             <Pressable
               {...props}
               android_ripple={{
-                color: '#F5C9A850',
+                color: darkTheme.primary + '80',
                 borderless: true,
               }}
               onPressIn={(e) => {
@@ -351,7 +330,7 @@ const AppNavigator: React.FC = () => {
       <View style={styles.loadingContainer}>
         <AppText
           variant="h2"
-          style={{ color: W.textPrimary }}
+          style={{ color: darkTheme.text }}
         >
           Stress Guide
         </AppText>
@@ -364,7 +343,7 @@ const AppNavigator: React.FC = () => {
       <NavigationContainer>
         <StatusBar
           barStyle="dark-content"
-          backgroundColor={W.bg}
+          backgroundColor={darkTheme.background}
         />
 
         <Stack.Navigator
@@ -375,20 +354,20 @@ const AppNavigator: React.FC = () => {
           }
           screenOptions={{
             headerStyle: {
-              backgroundColor: W.surface,
+              backgroundColor: darkTheme.card,
             },
 
             headerShadowVisible: false,
 
-            headerTintColor: W.textPrimary,
+            headerTintColor: darkTheme.text,
 
             headerTitleStyle: {
               fontWeight: '700',
-              color: W.textPrimary,
+              color: darkTheme.text,
             },
 
             contentStyle: {
-              backgroundColor: W.bg,
+              backgroundColor: darkTheme.background,
             },
           }}
         >
@@ -471,7 +450,7 @@ const AppNavigator: React.FC = () => {
 const styles = StyleSheet.create({
   loadingContainer: {
     flex: 1,
-    backgroundColor: W.bg,
+    backgroundColor: darkTheme.background,
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -485,7 +464,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderBottomWidth: 0,
 
-    borderColor: W.border,
+    borderColor: darkTheme.border,
 
     overflow: 'hidden',
   },
@@ -501,10 +480,10 @@ const styles = StyleSheet.create({
   },
 
   iconWrapperFocused: {
-    backgroundColor: W.surfaceDeep,
+    backgroundColor: darkTheme.card,
 
     borderWidth: 1,
-    borderColor: W.accentLight,
+    borderColor: darkTheme.primary,
   },
 });
 

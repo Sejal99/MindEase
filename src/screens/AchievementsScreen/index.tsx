@@ -1,15 +1,19 @@
 import React, { useEffect } from 'react';
-import { View, StyleSheet, ScrollView } from 'react-native';
+import { View, ScrollView, StyleSheet } from 'react-native';
 import { NavigationProp } from '@react-navigation/native';
 import { RouteProp } from '@react-navigation/native';
-import { TabParamList } from '../navigation/AppNavigator';
+import { TabParamList } from '../../navigation/AppNavigator';
 
-import AppText from '../components/atoms/AppText';
-import Card from '../components/atoms/Card';
-import { Achievement, UserStats } from '../models/types';
-import { getXPProgress, getXPForNextLevel } from '../utils/achievements';
+import AppText from '../../components/atoms/AppText';
+import Card from '../../components/atoms/Card';
+import { Achievement, UserStats } from '../../models/types';
+import { getXPProgress, getXPForNextLevel } from '../../utils/achievements';
 import { useTranslation } from 'react-i18next';
-import useHomeViewModel from '../viewmodels/homeViewModel';
+import useHomeViewModel from '../../viewmodels/homeViewModel';
+import { styles } from './styles';
+import { COLORS } from '../../constants/colors';
+import { ACHIEVEMENT_STRINGS } from '../../constants/strings';
+import { darkTheme } from '../../theme/colors';
 
 type AchievementsScreenNavigationProp = NavigationProp<TabParamList>;
 type AchievementsScreenRouteProp = RouteProp<TabParamList, 'AchievementsTab'>;
@@ -32,10 +36,10 @@ const AchievementsScreen: React.FC<AchievementsScreenProps> = ({ navigation, rou
   };
 
   const categories = [
-    { id: 'streak', title: t(categoryTitleMap.streak) || 'Streak Achievements', color: '#F59E0B' },
-    { id: 'milestone', title: t(categoryTitleMap.milestone) || 'Milestones', color: '#10B981' },
-    { id: 'explorer', title: t(categoryTitleMap.explorer) || 'Explorer', color: '#6366F1' },
-    { id: 'master', title: t(categoryTitleMap.master) || 'Master', color: '#EC4899' },
+    { id: 'streak', title: t(categoryTitleMap.streak) || ACHIEVEMENT_STRINGS.CATEGORIES.STREAK, color: COLORS.ACHIEVEMENT_STREAK },
+    { id: 'milestone', title: t(categoryTitleMap.milestone) || ACHIEVEMENT_STRINGS.CATEGORIES.MILESTONE, color: COLORS.ACHIEVEMENT_MILESTONE },
+    { id: 'explorer', title: t(categoryTitleMap.explorer) || ACHIEVEMENT_STRINGS.CATEGORIES.EXPLORER, color: COLORS.ACHIEVEMENT_EXPLORER },
+    { id: 'master', title: t(categoryTitleMap.master) || ACHIEVEMENT_STRINGS.CATEGORIES.MASTER, color: COLORS.ACHIEVEMENT_MASTER },
   ];
 
   const unlockedCount = achievements.filter((a: Achievement) => a.unlockedAt).length;
@@ -47,7 +51,7 @@ const AchievementsScreen: React.FC<AchievementsScreenProps> = ({ navigation, rou
     <ScrollView style={styles.container} contentContainerStyle={styles.content}>
       <View style={styles.header}>
         <AppText variant="h2">{t('achievements.title')}</AppText>
-        <AppText variant="body" color="#9CA3AF" style={styles.subtitle}>
+        <AppText variant="body" color={darkTheme.textSecondary} style={styles.subtitle}>
           {t('achievements.subtitle')}
         </AppText>
       </View>
@@ -58,7 +62,7 @@ const AchievementsScreen: React.FC<AchievementsScreenProps> = ({ navigation, rou
             <AppText variant="h1" style={styles.statValue}>
               {userStats.level}
             </AppText>
-            <AppText variant="caption" color="#9CA3AF">
+            <AppText variant="caption" color={darkTheme.textSecondary}>
               {t('achievements.stats.level')}
             </AppText>
           </View>
@@ -67,7 +71,7 @@ const AchievementsScreen: React.FC<AchievementsScreenProps> = ({ navigation, rou
             <AppText variant="h1" style={styles.statValue}>
               {userStats.currentStreak}
             </AppText>
-            <AppText variant="caption" color="#9CA3AF">
+            <AppText variant="caption" color={darkTheme.textSecondary}>
               {t('achievements.stats.dayStreak')}
             </AppText>
           </View>
@@ -76,7 +80,7 @@ const AchievementsScreen: React.FC<AchievementsScreenProps> = ({ navigation, rou
             <AppText variant="h1" style={styles.statValue}>
               {userStats.totalExercises}
             </AppText>
-            <AppText variant="caption" color="#9CA3AF">
+            <AppText variant="caption" color={darkTheme.textSecondary}>
               {t('achievements.stats.exercises')}
             </AppText>
           </View>
@@ -86,14 +90,14 @@ const AchievementsScreen: React.FC<AchievementsScreenProps> = ({ navigation, rou
       <Card style={styles.xpCard}>
         <View style={styles.xpHeader}>
           <AppText variant="h3">{t('achievements.xp.title')}</AppText>
-          <AppText variant="body" color="#6366F1">
+          <AppText variant="body" color={darkTheme.primary}>
             {userStats.xp} XP
           </AppText>
         </View>
         <View style={styles.xpBar}>
           <View style={[styles.xpFill, { width: `${xpProgress}%` }]} />
         </View>
-        <AppText variant="caption" color="#9CA3AF" style={styles.xpText}>
+        <AppText variant="caption" color={darkTheme.textSecondary} style={styles.xpText}>
           {xpNeeded - (userStats.xp % 100)} XP to Level {userStats.level + 1}
         </AppText>
       </Card>
@@ -101,7 +105,7 @@ const AchievementsScreen: React.FC<AchievementsScreenProps> = ({ navigation, rou
       <Card style={styles.progressCard}>
         <View style={styles.progressRow}>
           <AppText variant="h3">{t('achievements.progress.title')}</AppText>
-          <AppText variant="body" color="#10B981">
+          <AppText variant="body" color={darkTheme.success}>
             {unlockedCount}/{totalCount} {t('achievements.progress.unlocked')}
           </AppText>
         </View>
@@ -141,18 +145,18 @@ const AchievementsScreen: React.FC<AchievementsScreenProps> = ({ navigation, rou
                   <View style={styles.achievementDetails}>
                     <AppText
                       variant="h3"
-                      color={achievement.unlockedAt ? '#F9FAFB' : '#6B7280'}
+                      color={achievement.unlockedAt ? darkTheme.text : darkTheme.textSecondary}
                     >
                       {t(`achievements.list.${achievement.id}.title`) || achievement.title}
                     </AppText>
                     <AppText
                       variant="body"
-                      color={achievement.unlockedAt ? '#9CA3AF' : '#4B5563'}
+                      color={achievement.unlockedAt ? darkTheme.textSecondary : darkTheme.textMuted}
                     >
                       {t(`achievements.list.${achievement.id}.description`) || achievement.description}
                     </AppText>
                     {achievement.unlockedAt && (
-                      <AppText variant="caption" color="#10B981" style={styles.unlockedText}>
+                      <AppText variant="caption" color={darkTheme.success} style={styles.unlockedText}>
                         ✓ {t('achievements.unlocked')}
                       </AppText>
                     )}
@@ -167,117 +171,5 @@ const AchievementsScreen: React.FC<AchievementsScreenProps> = ({ navigation, rou
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#111827',
-  },
-  content: {
-    padding: 20,
-  },
-  header: {
-    marginBottom: 24,
-  },
-  subtitle: {
-    marginTop: 8,
-  },
-  statsCard: {
-    marginBottom: 16,
-  },
-  statsRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    alignItems: 'center',
-  },
-  statItem: {
-    alignItems: 'center',
-  },
-  statValue: {
-    fontSize: 36,
-    fontWeight: '700',
-    color: '#6366F1',
-  },
-  statDivider: {
-    width: 1,
-    height: 40,
-    backgroundColor: '#374151',
-  },
-  xpCard: {
-    marginBottom: 16,
-  },
-  xpHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 12,
-  },
-  xpBar: {
-    height: 8,
-    backgroundColor: '#374151',
-    borderRadius: 4,
-    overflow: 'hidden',
-    marginBottom: 8,
-  },
-  xpFill: {
-    height: '100%',
-    backgroundColor: '#6366F1',
-  },
-  xpText: {
-    textAlign: 'center',
-  },
-  progressCard: {
-    marginBottom: 24,
-  },
-  progressRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 8,
-  },
-  progressBar: {
-    height: 8,
-    backgroundColor: '#374151',
-    borderRadius: 4,
-    overflow: 'hidden',
-  },
-  progressFill: {
-    height: '100%',
-    backgroundColor: '#10B981',
-  },
-  categorySection: {
-    marginBottom: 24,
-  },
-  categoryTitle: {
-    marginBottom: 12,
-  },
-  achievementCard: {
-    marginBottom: 12,
-  },
-  lockedCard: {
-    opacity: 0.6,
-  },
-  achievementContent: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  iconContainer: {
-    width: 56,
-    height: 56,
-    borderRadius: 28,
-    backgroundColor: '#374151',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginRight: 16,
-  },
-  achievementIcon: {
-    fontSize: 28,
-  },
-  achievementDetails: {
-    flex: 1,
-  },
-  unlockedText: {
-    marginTop: 4,
-  },
-});
 
 export default AchievementsScreen;

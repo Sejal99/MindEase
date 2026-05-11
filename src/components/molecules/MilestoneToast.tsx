@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { Animated, StyleSheet } from 'react-native';
 import AppText from '../atoms/AppText';
+import { darkTheme } from '../../theme/colors';
 
 interface MilestoneToastProps {
   visible: boolean;
@@ -57,12 +58,12 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 80,
     alignSelf: 'center',
-    backgroundColor: '#10B981',
+    backgroundColor: darkTheme.success,
     borderRadius: 20,
     paddingHorizontal: 16,
     paddingVertical: 8,
   },
-  toastText: { fontSize: 14, color: '#fff', fontWeight: '700' },
+  toastText: { fontSize: 14, color: darkTheme.text, fontWeight: '700' },
 });
 
 export default MilestoneToast;

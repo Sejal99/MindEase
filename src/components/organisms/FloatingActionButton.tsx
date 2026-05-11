@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { View, StyleSheet, Animated, Pressable, Platform } from 'react-native';
 import { Plus } from 'lucide-react-native';
 import RNHapticFeedback from 'react-native-haptic-feedback';
+import { darkTheme } from '../../theme/colors';
 
 interface FloatingActionButtonProps {
   onPress: () => void;
@@ -84,7 +85,7 @@ const FloatingActionButton: React.FC<FloatingActionButtonProps> = ({ onPress }) 
           ]}
           android_ripple={{ color: 'rgba(99, 102, 241, 0.3)', radius: 56 }}
         >
-          <Plus size={28} color="#FFFFFF" strokeWidth={2.5} />
+          <Plus size={28} color={darkTheme.text} strokeWidth={2.5} />
         </Pressable>
       </Animated.View>
     </View>
@@ -102,8 +103,8 @@ const styles = StyleSheet.create({
     width: 56,
     height: 56,
     borderRadius: 28,
-    backgroundColor: '#6366F1',
-    shadowColor: '#6366F1',
+    backgroundColor: darkTheme.primary,
+    shadowColor: darkTheme.primary,
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.3,
     shadowRadius: 8,

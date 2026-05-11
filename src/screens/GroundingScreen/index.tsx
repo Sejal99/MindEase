@@ -1,22 +1,24 @@
 import React, { useState, useRef, useCallback, useEffect } from 'react';
 import {
   View,
-  StyleSheet,
   ScrollView,
   Animated,
   KeyboardAvoidingView,
   Platform,
+  StyleSheet,
 } from 'react-native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RouteProp } from '@react-navigation/native';
-import { RootStackParamList } from '../navigation/AppNavigator';
-import AppText from '../components/atoms/AppText';
-import Button from '../components/atoms/Button';
-import BreathingOrb from '../components/atoms/BreathingOrb';
-import EntryItem from '../components/molecules/EntryItem';
-import ProgressDots, { Step } from '../components/molecules/ProgressDots';
-import { ActionType } from '../models/types';
+import { RootStackParamList } from '../../navigation/AppNavigator';
+import AppText from '../../components/atoms/AppText';
+import Button from '../../components/atoms/Button';
+import BreathingOrb from '../../components/atoms/BreathingOrb';
+import { styles } from './styles';
+import EntryItem from '../../components/molecules/EntryItem';
+import ProgressDots, { Step } from '../../components/molecules/ProgressDots';
+import { ActionType } from '../../models/types';
 import { Eye, Hand, Volume2, Wind, Droplets } from 'lucide-react-native';
+import { darkTheme } from '../../theme/colors';
 
 type GroundingScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'GroundingScreen'>;
 type GroundingScreenRouteProp = RouteProp<RootStackParamList, 'GroundingScreen'>;
@@ -31,40 +33,40 @@ const STEPS: Step[] = [
     id: 1, count: 5,
     label: 'SEE', verb: 'see',
     instruction: 'Look around slowly. Name each thing you notice.',
-    icon: <Eye color="#6366F1" size={14} />,
-    color: '#6366F1', dimColor: '#312E81',
+    icon: <Eye color={darkTheme.primary} size={14} />,
+    color: darkTheme.primary, dimColor: darkTheme.primaryDark,
     placeholder: (n) => ['A light on the ceiling...', 'Your hands...', 'Something blue...', 'A shadow...', 'Text on a screen...'][n - 1],
   },
   {
     id: 2, count: 4,
     label: 'TOUCH', verb: 'feel',
     instruction: 'What textures, temperatures, or surfaces can you feel?',
-    icon: <Hand color="#10B981" size={14} />,
-    color: '#10B981', dimColor: '#064E3B',
+    icon: <Hand color={darkTheme.success} size={14} />,
+    color: darkTheme.success, dimColor: darkTheme.success + '80',
     placeholder: (n) => ['The fabric on your seat...', 'Air on your skin...', 'Your feet on the floor...', 'Your phone in your hands...'][n - 1],
   },
   {
     id: 3, count: 3,
     label: 'HEAR', verb: 'hear',
     instruction: 'Close your eyes. What sounds reach you?',
-    icon: <Volume2 color="#F59E0B" size={14} />,
-    color: '#F59E0B', dimColor: '#78350F',
+    icon: <Volume2 color={darkTheme.warning} size={14} />,
+    color: darkTheme.warning, dimColor: darkTheme.warning + '80',
     placeholder: (n) => ['A distant hum...', 'Your own breathing...', 'Something outside...'][n - 1],
   },
   {
     id: 4, count: 2,
     label: 'SMELL', verb: 'smell',
     instruction: 'Take a slow breath. What do you notice?',
-    icon: <Wind color="#EC4899" size={14} />,
-    color: '#EC4899', dimColor: '#831843',
+    icon: <Wind color={darkTheme.accent} size={14} />,
+    color: darkTheme.accent, dimColor: darkTheme.accent + '80',
     placeholder: (n) => ['Fresh air...', 'Something nearby...'][n - 1],
   },
   {
     id: 5, count: 1,
     label: 'TASTE', verb: 'taste',
     instruction: "What's the faintest taste in your mouth right now?",
-    icon: <Droplets color="#14B8A6" size={14} />,
-    color: '#14B8A6', dimColor: '#134E4A',
+    icon: <Droplets color={darkTheme.primary} size={14} />,
+    color: darkTheme.primary, dimColor: darkTheme.primaryDark,
     placeholder: () => 'Something subtle...',
   },
 ];
@@ -153,7 +155,7 @@ const GroundingScreen: React.FC<GroundingScreenProps> = ({ navigation, route }) 
                   {step.count} things you can {step.verb}
                 </AppText>
               </View>
-              <AppText variant="body" color="#9CA3AF" style={styles.instruction}>
+              <AppText variant="body" color={darkTheme.textSecondary} style={styles.instruction}>
                 {step.instruction}
               </AppText>
             </View>
@@ -208,7 +210,7 @@ const GroundingScreen: React.FC<GroundingScreenProps> = ({ navigation, route }) 
           style={StyleSheet.flatten([styles.cta, canAdvance && { backgroundColor: step.color }])}
         />
 
-        <AppText variant="caption" color="#4B5563" style={styles.tip}>
+        <AppText variant="caption" color={darkTheme.textMuted} style={styles.tip}>
           Take your time. There's no rush.
         </AppText>
       </ScrollView>
@@ -216,63 +218,5 @@ const GroundingScreen: React.FC<GroundingScreenProps> = ({ navigation, route }) 
   );
 };
 
-const styles = StyleSheet.create({
-  root: { flex: 1, backgroundColor: '#0D1117' },
-  container: { flex: 1 },
-  content: { padding: 24, paddingBottom: 48 },
-
-  header: { marginBottom: 28 },
-  techniqueLabel: { fontSize: 11, fontWeight: '700', letterSpacing: 2.5, marginBottom: 10 },
-  title: { fontSize: 26, fontWeight: '700', color: '#F9FAFB', lineHeight: 34 },
-
-  // Progress dots
-  dotsRow: { flexDirection: 'row', alignItems: 'center', gap: 6, marginBottom: 28 },
-
-  // Step card
-  stepCard: {
-    backgroundColor: '#161B22',
-    borderRadius: 20,
-    padding: 20,
-    borderWidth: 1,
-    borderColor: '#21262D',
-    marginBottom: 24,
-  },
-
-  // Sense header
-  senseHeader: { flexDirection: 'row', alignItems: 'flex-start', marginBottom: 20 },
-  senseTextBlock: { flex: 1 },
-  sensePill: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    alignSelf: 'flex-start',
-    paddingHorizontal: 10,
-    paddingVertical: 5,
-    borderRadius: 20,
-    borderWidth: 1,
-    marginBottom: 8,
-    gap: 5,
-  },
-  sensePillText: { fontSize: 12, fontWeight: '700', letterSpacing: 0.5 },
-  instruction: { fontSize: 14, lineHeight: 20 },
-
-  // Entries
-  entriesBlock: { gap: 4, marginBottom: 20 },
-
-  // In-card progress
-  inCardProgress: { flexDirection: 'row', alignItems: 'center', gap: 10 },
-  inCardTrack: {
-    flex: 1,
-    height: 4,
-    backgroundColor: '#21262D',
-    borderRadius: 2,
-    overflow: 'hidden',
-  },
-  inCardFill: { height: '100%', borderRadius: 2 },
-  progressLabel: { fontSize: 11, fontWeight: '700', minWidth: 56, textAlign: 'right' },
-
-  // CTA
-  cta: { borderRadius: 14, marginBottom: 14 },
-  tip: { textAlign: 'center', fontSize: 12 },
-});
 
 export default GroundingScreen;

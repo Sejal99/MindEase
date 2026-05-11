@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Animated, StyleSheet } from 'react-native';
 import AppText from '../atoms/AppText';
+import { darkTheme } from '../../theme/colors';
 
 export type Phase = "tense" | "hold" | "release" | "rest";
 
@@ -14,10 +15,10 @@ const PhaseTimer: React.FC<PhaseTimerProps> = ({ phase, timeLeft, total }) => {
   const progress = (total - timeLeft) / total;
   
   const phaseConfig = {
-    tense: { label: "TENSE", color: "#D97706", instruction: "Squeeze tight" },
-    hold: { label: "HOLD", color: "#B45309", instruction: "Hold it…" },
-    release: { label: "RELEASE", color: "#78A96B", instruction: "Let go…" },
-    rest: { label: "REST", color: "#8B7355", instruction: "Notice…" },
+    tense: { label: "TENSE", color: darkTheme.warning, instruction: "Squeeze tight" },
+    hold: { label: "HOLD", color: darkTheme.warning + 'CC', instruction: "Hold it…" },
+    release: { label: "RELEASE", color: darkTheme.success, instruction: "Let go…" },
+    rest: { label: "REST", color: darkTheme.textSecondary, instruction: "Notice…" },
   };
 
   const config = phaseConfig[phase];
@@ -74,7 +75,7 @@ const styles = StyleSheet.create({
   timeLeft: {
     fontSize: 24,
     fontWeight: '800',
-    color: '#F9FAFB',
+    color: darkTheme.text,
   },
   instructionRow: {
     marginBottom: 16,

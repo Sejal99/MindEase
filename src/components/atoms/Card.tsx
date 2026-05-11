@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, StyleSheet, ViewStyle, StyleProp, TouchableOpacity } from 'react-native';
+import { darkTheme } from '../../theme/colors';
 
 interface CardProps {
   children: React.ReactNode;
@@ -24,11 +25,11 @@ const Card: React.FC<CardProps> = ({ children, style, onPress }) => {
 
 const styles = StyleSheet.create({
   card: {
-    backgroundColor: '#1F2937',
+    backgroundColor: darkTheme.card,
     borderRadius: 16,
     padding: 20,
     borderWidth: 1,
-    borderColor: '#374151',
+    borderColor: darkTheme.border,
   },
 });
 

@@ -2,6 +2,7 @@ import React from 'react';
 import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import AppText from '../atoms/AppText';
 import { TriggerType } from '../../models/types';
+import { darkTheme } from '../../theme/colors';
 
 interface TriggerChipsProps {
   selectedTrigger: TriggerType | null;
@@ -31,7 +32,7 @@ const TriggerChips: React.FC<TriggerChipsProps> = ({ selectedTrigger, onSelect }
         >
           <AppText
             variant="body"
-            color={selectedTrigger === trigger.value ? '#FFFFFF' : '#9CA3AF'}
+            color={selectedTrigger === trigger.value ? darkTheme.text : darkTheme.textSecondary}
           >
             {trigger.label}
           </AppText>
@@ -51,13 +52,13 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingVertical: 12,
     borderRadius: 24,
-    backgroundColor: '#374151',
+    backgroundColor: darkTheme.card,
     borderWidth: 1,
-    borderColor: '#4B5563',
+    borderColor: darkTheme.border,
   },
   chipSelected: {
-    backgroundColor: '#6366F1',
-    borderColor: '#6366F1',
+    backgroundColor: darkTheme.primary,
+    borderColor: darkTheme.primary,
   },
 });
 

@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { Animated, StyleSheet } from 'react-native';
 import AppText from '../atoms/AppText';
+import { darkTheme } from '../../theme/colors';
 
 interface StatBoxProps {
   value: string | number;
@@ -65,7 +66,7 @@ const styles = StyleSheet.create({
   statValue: { fontSize: 24, fontWeight: '800' },
   statLabel: {
     fontSize: 10,
-    color: '#6B7280',
+    color: darkTheme.textSecondary,
     fontWeight: '600',
     textAlign: 'center',
   },

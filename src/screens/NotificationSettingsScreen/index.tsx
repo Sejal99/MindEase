@@ -1,18 +1,19 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, ScrollView, Switch, Pressable } from 'react-native';
+import { View, ScrollView, Switch, Pressable } from 'react-native';
 import { NavigationProp } from '@react-navigation/native';
 import { RouteProp } from '@react-navigation/native';
-import { TabParamList } from '../navigation/AppNavigator';
+import { TabParamList } from '../../navigation/AppNavigator';
 
-import AppText from '../components/atoms/AppText';
-import Card from '../components/atoms/Card';
-import Button from '../components/atoms/Button';
-import ToggleRow from '../components/molecules/ToggleRow';
-import TimePickerModal from '../components/organisms/TimePickerModal';
-import DayPickerModal from '../components/organisms/DayPickerModal';
-import { NotificationService } from '../services/NotificationService';
-import { useNotificationStore } from '../store/notificationStore';
+import AppText from '../../components/atoms/AppText';
+import Card from '../../components/atoms/Card';
+import Button from '../../components/atoms/Button';
+import ToggleRow from '../../components/molecules/ToggleRow';
+import TimePickerModal from '../../components/organisms/TimePickerModal';
+import DayPickerModal from '../../components/organisms/DayPickerModal';
+import { NotificationService } from '../../services/NotificationService';
+import { useNotificationStore } from '../../store/notificationStore';
 import { useTranslation } from 'react-i18next';
+import { styles } from './styles';
 
 type NotificationSettingsScreenNavigationProp = NavigationProp<TabParamList>;
 type NotificationSettingsScreenRouteProp = RouteProp<TabParamList, 'NotificationSettingsTab'>;
@@ -187,141 +188,5 @@ const NotificationSettingsScreen: React.FC<NotificationSettingsScreenProps> = ()
   );
 };
 
-const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#080D18' },
-  header: { padding: 20, paddingTop: 24, paddingBottom: 8 },
-  headerTitle: { fontSize: 28, fontWeight: '800', color: '#E8EDF5', marginBottom: 6 },
-  headerDesc: { fontSize: 14, color: '#3D4F6E', lineHeight: 20 },
-
-  section: {
-    backgroundColor: '#0C1220',
-    borderRadius: 16,
-    borderWidth: 1,
-    borderColor: '#141E30',
-    marginHorizontal: 20,
-    marginBottom: 20,
-    overflow: 'hidden',
-  },
-  sectionTitle: {
-    fontSize: 11,
-    fontWeight: '800',
-    letterSpacing: 2,
-    color: '#2A3550',
-    marginHorizontal: 20,
-    marginBottom: 10,
-    marginTop: 8,
-    textTransform: 'uppercase',
-  },
-
-  masterRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    padding: 16,
-  },
-  masterLabel: { fontSize: 16, fontWeight: '700', color: '#E8EDF5' },
-
-  row: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    padding: 16,
-    gap: 12,
-  },
-  rowLeft: { flex: 1, gap: 2 },
-  rowLabel: { fontSize: 15, fontWeight: '700', color: '#E8EDF5' },
-  rowDesc: { fontSize: 13, color: '#3D4F6E', lineHeight: 18, marginTop: 2 },
-  rowMeta: { flexDirection: 'row', gap: 8, marginTop: 8 },
-
-  metaChip: {
-    backgroundColor: '#1A2235',
-    borderRadius: 8,
-    paddingHorizontal: 10,
-    paddingVertical: 4,
-    borderWidth: 1,
-    borderColor: '#2A3550',
-  },
-  metaChipText: { fontSize: 12, fontWeight: '700', color: '#60A5FA' },
-
-  toggle: {
-    width: 48,
-    height: 28,
-    borderRadius: 14,
-    backgroundColor: '#1A2235',
-    borderWidth: 1,
-    borderColor: '#2A3550',
-    justifyContent: 'center',
-    paddingHorizontal: 3,
-  },
-  toggleActive: {
-    backgroundColor: '#2563EB',
-    borderColor: '#2563EB',
-  },
-  toggleKnob: {
-    width: 20,
-    height: 20,
-    borderRadius: 10,
-    backgroundColor: '#3D4F6E',
-  },
-  toggleKnobActive: {
-    backgroundColor: '#fff',
-  },
-
-  divider: { height: 1, backgroundColor: '#141E30', marginHorizontal: 16 },
-
-  bottomPad: { height: 40 },
-
-  modalOverlay: {
-    flex: 1,
-    backgroundColor: '#000000AA',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  modalContent: {
-    backgroundColor: '#0C1220',
-    borderRadius: 20,
-    padding: 20,
-    width: 320,
-    maxHeight: '80%',
-    borderWidth: 1,
-    borderColor: '#141E30',
-  },
-  modalTitle: { fontSize: 18, fontWeight: '800', color: '#E8EDF5', marginBottom: 16, textAlign: 'center' },
-
-  pickerRow: { flexDirection: 'row', justifyContent: 'center', alignItems: 'center', height: 200 },
-  pickerColumn: { flex: 1, alignItems: 'center' },
-  pickerLabel: { fontSize: 12, fontWeight: '600', color: '#3D4F6E', marginBottom: 8 },
-  pickerList: { maxHeight: 180 },
-  pickerSeparator: { width: 32, alignItems: 'center', justifyContent: 'center' },
-  pickerColon: { fontSize: 20, fontWeight: '800', color: '#E8EDF5' },
-  pickerItem: {
-    paddingVertical: 8,
-    paddingHorizontal: 16,
-    borderRadius: 8,
-    alignItems: 'center',
-  },
-  pickerItemActive: { backgroundColor: '#1E3A5F' },
-  pickerItemText: { fontSize: 16, color: '#3D4F6E', fontWeight: '600' },
-  pickerItemTextActive: { color: '#60A5FA', fontWeight: '700' },
-
-  confirmBtn: {
-    backgroundColor: '#2563EB',
-    borderRadius: 12,
-    paddingVertical: 12,
-    alignItems: 'center',
-    marginTop: 16,
-  },
-  confirmBtnText: { fontSize: 15, fontWeight: '700', color: '#fff' },
-
-  dayItem: {
-    paddingVertical: 12,
-    paddingHorizontal: 16,
-    borderRadius: 10,
-    marginBottom: 4,
-  },
-  dayItemActive: { backgroundColor: '#1E3A5F' },
-  dayItemText: { fontSize: 15, color: '#E8EDF5', fontWeight: '600' },
-  dayItemTextActive: { color: '#60A5FA', fontWeight: '700' },
-});
 
 export default NotificationSettingsScreen;

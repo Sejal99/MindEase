@@ -4,6 +4,7 @@ import AppText from '../atoms/AppText';
 import { formatTrigger, formatDate } from '../../utils/formatters';
 import { formatActionName } from '../../utils/insights';
 import { ActionType } from '../../models/types';
+import { darkTheme } from '../../theme/colors';
 
 interface RecentSessionCardProps {
   trigger: string;
@@ -15,11 +16,11 @@ interface RecentSessionCardProps {
 
 const INTENSITY_COLOR = [
   '',
-  '#10B981',
-  '#6366F1',
-  '#F59E0B',
-  '#EF4444',
-  '#7C3AED',
+  darkTheme.success,
+  darkTheme.primary,
+  darkTheme.warning,
+  darkTheme.error,
+  darkTheme.accent,
 ];
 
 const RecentSessionCard: React.FC<RecentSessionCardProps> = ({
@@ -29,7 +30,7 @@ const RecentSessionCard: React.FC<RecentSessionCardProps> = ({
   createdAt,
   onPress,
 }) => {
-  const color = INTENSITY_COLOR[intensity] ?? '#6366F1';
+  const color = INTENSITY_COLOR[intensity] ?? darkTheme.primary;
 
   return (
     <Pressable style={styles.recentCard} onPress={onPress}>
@@ -57,10 +58,10 @@ const RecentSessionCard: React.FC<RecentSessionCardProps> = ({
 
 const styles = StyleSheet.create({
   recentCard: {
-    backgroundColor: '#0C1220',
+    backgroundColor: darkTheme.card,
     borderRadius: 16,
     borderWidth: 1,
-    borderColor: '#141E30',
+    borderColor: darkTheme.border,
     flexDirection: 'row',
     overflow: 'hidden',
     marginBottom: 24,
@@ -80,14 +81,14 @@ const styles = StyleSheet.create({
     paddingVertical: 3,
   },
   recentIntensityText: { fontSize: 11, fontWeight: '700' },
-  recentDate: { fontSize: 11, color: '#2A3550' },
+  recentDate: { fontSize: 11, color: darkTheme.textSecondary },
   recentTrigger: {
     fontSize: 15,
     fontWeight: '700',
-    color: '#C5D0E6',
+    color: darkTheme.text,
     marginBottom: 4,
   },
-  recentAction: { fontSize: 13, color: '#3D4F6E' },
+  recentAction: { fontSize: 13, color: darkTheme.textSecondary },
 });
 
 export default RecentSessionCard;

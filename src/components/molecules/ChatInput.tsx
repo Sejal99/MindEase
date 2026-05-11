@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { View, TextInput, TouchableOpacity, StyleSheet, Keyboard, Text } from 'react-native';
+import { darkTheme } from '../../theme/colors';
 
 interface ChatInputProps {
   onSendMessage: (message: string) => void;
@@ -37,7 +38,7 @@ const ChatInput: React.FC<ChatInputProps> = ({
           value={message}
           onChangeText={setMessage}
           placeholder={placeholder}
-          placeholderTextColor="#6B7280"
+          placeholderTextColor={darkTheme.textSecondary}
           multiline
           maxLength={500}
           editable={!disabled}
@@ -67,9 +68,9 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end',
     paddingHorizontal: 16,
     paddingVertical: 12,
-    backgroundColor: '#1F2937',
+    backgroundColor: darkTheme.card,
     borderTopWidth: 1,
-    borderTopColor: '#374151',
+    borderTopColor: darkTheme.border,
   },
   inputContainer: {
     flex: 1,
@@ -77,36 +78,36 @@ const styles = StyleSheet.create({
     minHeight: 44,
   },
   textInput: {
-    backgroundColor: '#374151',
+    backgroundColor: darkTheme.border,
     borderRadius: 22,
     paddingHorizontal: 16,
     paddingVertical: 12,
     fontSize: 16,
-    color: '#F9FAFB',
+    color: darkTheme.text,
     maxHeight: 100,
     textAlignVertical: 'top',
   },
   disabledInput: {
-    backgroundColor: '#1F2937',
-    color: '#6B7280',
+    backgroundColor: darkTheme.card,
+    color: darkTheme.textSecondary,
   },
   sendButton: {
     width: 44,
     height: 44,
     borderRadius: 22,
-    backgroundColor: '#6366F1',
+    backgroundColor: darkTheme.primary,
     justifyContent: 'center',
     alignItems: 'center',
   },
   disabledButton: {
-    backgroundColor: '#4B5563',
+    backgroundColor: darkTheme.textMuted,
   },
   sendIcon: {
     justifyContent: 'center',
     alignItems: 'center',
   },
   sendButtonText: {
-    color: '#F9FAFB',
+    color: darkTheme.text,
     fontSize: 18,
     fontWeight: 'bold',
   },

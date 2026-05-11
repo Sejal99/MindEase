@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { View, Animated, StyleSheet, Pressable } from 'react-native';
 import AppText from '../atoms/AppText';
+import { darkTheme } from '../../theme/colors';
 
 interface PMRIntroScreenProps {
   onStart: () => void;
@@ -23,7 +24,7 @@ const PMRIntroScreen: React.FC<PMRIntroScreenProps> = ({ onStart }) => {
         <AppText variant="h1" style={styles.introTitle}>
           Progressive Muscle Relaxation
         </AppText>
-        <AppText variant="body" color="#9CA3AF" style={styles.introDesc}>
+        <AppText variant="body" color={darkTheme.textSecondary} style={styles.introDesc}>
           Tense and release muscle groups systematically to release physical tension and calm your mind.
         </AppText>
         <View style={styles.introSteps}>
@@ -51,7 +52,7 @@ const PMRIntroScreen: React.FC<PMRIntroScreenProps> = ({ onStart }) => {
 const styles = StyleSheet.create({
   introContainer: {
     flex: 1,
-    backgroundColor: '#0D1117',
+    backgroundColor: darkTheme.background,
     justifyContent: 'center',
     alignItems: 'center',
     padding: 24,
@@ -63,13 +64,13 @@ const styles = StyleSheet.create({
   introTitle: {
     fontSize: 32,
     fontWeight: '800',
-    color: '#F9FAFB',
+    color: darkTheme.text,
     marginBottom: 16,
     textAlign: 'center',
   },
   introDesc: {
     fontSize: 16,
-    color: '#9CA3AF',
+    color: darkTheme.textSecondary,
     lineHeight: 24,
     textAlign: 'center',
     marginBottom: 32,
@@ -80,18 +81,18 @@ const styles = StyleSheet.create({
   },
   stepText: {
     fontSize: 16,
-    color: '#F9FAFB',
+    color: darkTheme.text,
     lineHeight: 24,
   },
   startButton: {
-    backgroundColor: '#6366F1',
+    backgroundColor: darkTheme.primary,
     paddingHorizontal: 32,
     paddingVertical: 16,
     borderRadius: 16,
     alignItems: 'center',
   },
   startButtonText: {
-    color: '#FFFFFF',
+    color: darkTheme.text,
     fontSize: 18,
     fontWeight: '700',
   },

@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { View, Animated, StyleSheet, Pressable } from 'react-native';
 import AppText from '../atoms/AppText';
+import { darkTheme } from '../../theme/colors';
 
 interface PMRDoneScreenProps {
   onContinue: () => void;
@@ -37,7 +38,7 @@ const PMRDoneScreen: React.FC<PMRDoneScreenProps> = ({ onContinue }) => {
         <AppText variant="h1" style={styles.doneTitle}>
           Complete!
         </AppText>
-        <AppText variant="body" color="#9CA3AF" style={styles.doneDesc}>
+        <AppText variant="body" color={darkTheme.textSecondary} style={styles.doneDesc}>
           You've released tension from head to toe. Take a moment to notice how you feel.
         </AppText>
         <Pressable style={styles.continueButton} onPress={onContinue}>
@@ -51,7 +52,7 @@ const PMRDoneScreen: React.FC<PMRDoneScreenProps> = ({ onContinue }) => {
 const styles = StyleSheet.create({
   doneContainer: {
     flex: 1,
-    backgroundColor: '#0D1117',
+    backgroundColor: darkTheme.background,
     justifyContent: 'center',
     alignItems: 'center',
     padding: 24,
@@ -63,26 +64,26 @@ const styles = StyleSheet.create({
   doneTitle: {
     fontSize: 32,
     fontWeight: '800',
-    color: '#F9FAFB',
+    color: darkTheme.text,
     marginBottom: 16,
     textAlign: 'center',
   },
   doneDesc: {
     fontSize: 16,
-    color: '#9CA3AF',
+    color: darkTheme.textSecondary,
     lineHeight: 24,
     textAlign: 'center',
     marginBottom: 32,
   },
   continueButton: {
-    backgroundColor: '#6366F1',
+    backgroundColor: darkTheme.primary,
     paddingHorizontal: 32,
     paddingVertical: 16,
     borderRadius: 16,
     alignItems: 'center',
   },
   continueButtonText: {
-    color: '#FFFFFF',
+    color: darkTheme.text,
     fontSize: 18,
     fontWeight: '700',
   },

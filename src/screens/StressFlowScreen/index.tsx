@@ -1,15 +1,17 @@
 import React from 'react';
-import { View, StyleSheet, ScrollView } from 'react-native';
+import { View, ScrollView } from 'react-native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { RootStackParamList } from '../navigation/AppNavigator';
+import { RootStackParamList } from '../../navigation/AppNavigator';
 
-import Button from '../components/atoms/Button';
-import AppText from '../components/atoms/AppText';
-import StressForm from '../components/organisms/StressForm';
-import useStressFlowViewModel from '../viewmodels/stressFlowViewModel';
-import useHomeViewModel from '../viewmodels/homeViewModel';
-import useSessionViewModel from '../viewmodels/sessionViewModel';
+import Button from '../../components/atoms/Button';
+import AppText from '../../components/atoms/AppText';
+import StressForm from '../../components/organisms/StressForm';
+import useStressFlowViewModel from '../../viewmodels/stressFlowViewModel';
+import useHomeViewModel from '../../viewmodels/homeViewModel';
+import useSessionViewModel from '../../viewmodels/sessionViewModel';
 import { useTranslation } from 'react-i18next';
+import { styles } from './styles';
+import { darkTheme } from '../../theme/colors';
 
 type StressFlowScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'StressFlow'>;
 
@@ -34,7 +36,7 @@ const StressFlowScreen: React.FC<StressFlowScreenProps> = ({ navigation }) => {
     <ScrollView style={styles.container} contentContainerStyle={styles.content}>
       <View style={styles.header}>
         <AppText variant="h2">{t('stressFlow.title')}</AppText>
-        <AppText variant="body" color="#9CA3AF" style={styles.subtitle}>
+        <AppText variant="body" color={darkTheme.textSecondary} style={styles.subtitle}>
           {t('stressFlow.subtitle')}
         </AppText>
       </View>
@@ -58,23 +60,5 @@ const StressFlowScreen: React.FC<StressFlowScreenProps> = ({ navigation }) => {
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#111827',
-  },
-  content: {
-    padding: 20,
-  },
-  header: {
-    marginBottom: 24,
-  },
-  subtitle: {
-    marginTop: 8,
-  },
-  buttonContainer: {
-    marginTop: 24,
-  },
-});
 
 export default StressFlowScreen;

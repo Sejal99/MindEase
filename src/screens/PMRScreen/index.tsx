@@ -1,20 +1,21 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import {
   View,
-  StyleSheet,
   ScrollView,
   Pressable,
   Animated,
 } from "react-native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RouteProp } from "@react-navigation/native";
-import { RootStackParamList } from "../navigation/AppNavigator";
-import AppText from "../components/atoms/AppText";
-import BodyMap from "../components/organisms/BodyMap";
-import PhaseTimer, { Phase } from "../components/organisms/PhaseTimer";
-import PMRIntroScreen from "../components/organisms/PMRIntroScreen";
-import PMRDoneScreen from "../components/organisms/PMRDoneScreen";
-import { ActionType } from "../models/types";
+import { RootStackParamList } from "../../navigation/AppNavigator";
+import AppText from "../../components/atoms/AppText";
+import BodyMap from "../../components/organisms/BodyMap";
+import PhaseTimer, { Phase } from "../../components/organisms/PhaseTimer";
+import PMRIntroScreen from "../../components/organisms/PMRIntroScreen";
+import { styles } from './styles';
+import PMRDoneScreen from "../../components/organisms/PMRDoneScreen";
+import { ActionType } from "../../models/types";
+import { darkTheme } from "../../theme/colors";
 
 type PMRScreenNavigationProp = NativeStackNavigationProp<
   RootStackParamList,
@@ -103,25 +104,25 @@ const PHASES: Record<
   tense: {
     label: "TENSE",
     duration: 5,
-    color: "#D97706",
+    color: darkTheme.warning,
     instruction: "Squeeze tight",
   },
   hold: {
     label: "HOLD",
     duration: 3,
-    color: "#B45309",
+    color: darkTheme.warning + '80',
     instruction: "Hold it…",
   },
   release: {
     label: "RELEASE",
     duration: 8,
-    color: "#78A96B",
+    color: darkTheme.success,
     instruction: "Let go…",
   },
   rest: {
     label: "REST",
     duration: 4,
-    color: "#8B7355",
+    color: darkTheme.textMuted,
     instruction: "Notice…",
   },
 };
@@ -204,7 +205,7 @@ const PMRScreen: React.FC<PMRScreenProps> = ({ navigation, route }) => {
           <AppText variant="h3" style={styles.groupName}>
             {currentGroup.name}
           </AppText>
-          <AppText variant="body" color="#9CA3AF" style={styles.groupInstruction}>
+          <AppText variant="body" color={darkTheme.textSecondary} style={styles.groupInstruction}>
             {currentPhase === 'rest' ? currentGroup.releaseNote : currentGroup.instruction}
           </AppText>
         </View>
@@ -222,7 +223,7 @@ const PMRScreen: React.FC<PMRScreenProps> = ({ navigation, route }) => {
         </View>
 
         <View style={styles.progressSection}>
-          <AppText variant="caption" color="#6B7280">
+          <AppText variant="caption" color={darkTheme.textMuted}>
             Muscle {currentGroupIndex + 1} of {MUSCLE_GROUPS.length}
           </AppText>
           <View style={styles.progressBar}>
@@ -242,55 +243,5 @@ const PMRScreen: React.FC<PMRScreenProps> = ({ navigation, route }) => {
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#0D1117',
-  },
-  content: {
-    padding: 24,
-    paddingBottom: 48,
-  },
-  header: {
-    marginBottom: 32,
-    alignItems: 'center',
-  },
-  groupName: {
-    fontSize: 24,
-    fontWeight: '700',
-    color: '#F9FAFB',
-    marginBottom: 8,
-    textAlign: 'center',
-  },
-  groupInstruction: {
-    fontSize: 16,
-    lineHeight: 24,
-    textAlign: 'center',
-  },
-  mainContent: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    marginBottom: 32,
-  },
-  timerSection: {
-    flex: 1,
-    marginLeft: 24,
-  },
-  progressSection: {
-    marginTop: 24,
-  },
-  progressBar: {
-    height: 4,
-    backgroundColor: '#21262D',
-    borderRadius: 2,
-    marginTop: 8,
-    overflow: 'hidden',
-  },
-  progressFill: {
-    height: '100%',
-    borderRadius: 2,
-  },
-});
 
 export default PMRScreen;

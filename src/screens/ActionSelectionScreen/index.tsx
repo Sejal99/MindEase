@@ -1,16 +1,18 @@
 import React from 'react';
-import { View, StyleSheet, ScrollView } from 'react-native';
+import { View, ScrollView } from 'react-native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RouteProp } from '@react-navigation/native';
-import { RootStackParamList } from '../navigation/AppNavigator';
+import { RootStackParamList } from '../../navigation/AppNavigator';
 
-import Button from '../components/atoms/Button';
-import AppText from '../components/atoms/AppText';
-import Card from '../components/atoms/Card';
-import { ActionType } from '../models/types';
-import useSessionViewModel from '../viewmodels/sessionViewModel';
+import Button from '../../components/atoms/Button';
+import AppText from '../../components/atoms/AppText';
+import Card from '../../components/atoms/Card';
+import { ActionType } from '../../models/types';
+import useSessionViewModel from '../../viewmodels/sessionViewModel';
 import { useTranslation } from 'react-i18next';
 import { Wind, Activity, PenLine, Dumbbell, CheckCircle2, Clock } from 'lucide-react-native';
+import { styles } from './styles';
+import { darkTheme } from '../../theme/colors';
 
 type ActionSelectionScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'ActionSelection'>;
 type ActionSelectionScreenRouteProp = RouteProp<RootStackParamList, 'ActionSelection'>;
@@ -32,40 +34,40 @@ const ACTIONS: {
     id: 'breathing',
     title: 'Breathing Exercise',
     description: 'Calm your mind with guided breathing',
-    icon: <Wind color="#F9FAFB" size={24} />,
-    completedIcon: <CheckCircle2 color="#10B981" size={24} />,
+    icon: <Wind color={darkTheme.text} size={24} />,
+    completedIcon: <CheckCircle2 color={darkTheme.success} size={24} />,
     duration: '2 min',
   },
   {
     id: 'grounding',
     title: '5-4-3-2-1 Grounding',
     description: 'Instant anxiety control using your senses',
-    icon: <Activity color="#F9FAFB" size={24} />,
-    completedIcon: <CheckCircle2 color="#10B981" size={24} />,
+    icon: <Activity color={darkTheme.text} size={24} />,
+    completedIcon: <CheckCircle2 color={darkTheme.success} size={24} />,
     duration: '3 min',
   },
   {
     id: 'brainDump',
     title: 'Brain Dump',
     description: 'Mental unload - write everything down',
-    icon: <PenLine color="#F9FAFB" size={24} />,
-    completedIcon: <CheckCircle2 color="#10B981" size={24} />,
+    icon: <PenLine color={darkTheme.text} size={24} />,
+    completedIcon: <CheckCircle2 color={darkTheme.success} size={24} />,
     duration: '2 min',
   },
   {
     id: 'movement',
     title: 'Movement Reset',
     description: 'Release stress through body movement',
-    icon: <Activity color="#F9FAFB" size={24} />,
-    completedIcon: <CheckCircle2 color="#10B981" size={24} />,
+    icon: <Activity color={darkTheme.text} size={24} />,
+    completedIcon: <CheckCircle2 color={darkTheme.success} size={24} />,
     duration: '2 min',
   },
   {
     id: 'pmr',
     title: 'Progressive Muscle Relaxation',
     description: 'Release tension by tensing and relaxing muscle groups',
-    icon: <Dumbbell color="#F9FAFB" size={24} />,
-    completedIcon: <CheckCircle2 color="#10B981" size={24} />,
+    icon: <Dumbbell color={darkTheme.text} size={24} />,
+    completedIcon: <CheckCircle2 color={darkTheme.success} size={24} />,
     duration: '5 min',
   },
 ];
@@ -124,7 +126,7 @@ const ActionSelectionScreen: React.FC<ActionSelectionScreenProps> = ({ navigatio
     <ScrollView style={styles.container} contentContainerStyle={styles.content}>
       <View style={styles.header}>
         <AppText variant="h2">{t('actionSelection.title')}</AppText>
-        <AppText variant="body" color="#9CA3AF" style={styles.subtitle}>
+        <AppText variant="body" color={darkTheme.textSecondary} style={styles.subtitle}>
           {t('actionSelection.subtitle')}
         </AppText>
         <AppText variant="caption" style={styles.progress}>
@@ -148,11 +150,11 @@ const ActionSelectionScreen: React.FC<ActionSelectionScreenProps> = ({ navigatio
                 <AppText variant="h3" style={isCompleted ? styles.textCompleted : styles.actionTitle}>
                   {t(actionTitleMap[action.title] || action.title)}
                 </AppText>
-                <AppText variant="body" color="#9CA3AF" style={styles.actionDescription}>
+                <AppText variant="body" color={darkTheme.textSecondary} style={styles.actionDescription}>
                   {t(actionDescriptionMap[action.description] || action.description)}
                 </AppText>
                 <View style={{ flexDirection: 'row', alignItems: 'center', gap: 4, marginTop: 4 }}>
-                  <Clock color="#9CA3AF" size={12} />
+                  <Clock color={darkTheme.textSecondary} size={12} />
                   <AppText variant="caption" style={styles.duration}>
                     {t(actionDurationMap[action.title] || action.duration)}
                   </AppText>
@@ -166,62 +168,5 @@ const ActionSelectionScreen: React.FC<ActionSelectionScreenProps> = ({ navigatio
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#111827',
-  },
-  content: {
-    padding: 20,
-  },
-  header: {
-    marginBottom: 24,
-  },
-  subtitle: {
-    marginTop: 8,
-  },
-  progress: {
-    marginTop: 8,
-    color: '#6366F1',
-    fontWeight: '600',
-  },
-  actionCard: {
-    marginBottom: 12,
-  },
-  actionContent: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  icon: {
-    marginRight: 16,
-    width: 24,
-    height: 24,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  iconCompleted: {
-    marginRight: 16,
-    width: 24,
-    height: 24,
-    justifyContent: 'center',
-    alignItems: 'center',
-    opacity: 0.7,
-  },
-  textCompleted: {
-    opacity: 0.7,
-  },
-  actionDetails: {
-    flex: 1,
-  },
-  actionTitle: {
-    marginBottom: 4,
-  },
-  actionDescription: {
-    marginBottom: 4,
-  },
-  duration: {
-    marginTop: 4,
-  },
-});
 
 export default ActionSelectionScreen;

@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { View, TextInput, Animated, StyleSheet } from 'react-native';
 import AppText from '../atoms/AppText';
+import { darkTheme } from '../../theme/colors';
 
 interface EntryItemProps {
   index: number;
@@ -32,15 +33,15 @@ const EntryItem: React.FC<EntryItemProps> = ({
 
   return (
     <Animated.View style={[styles.entryRow, { opacity: fadeAnim, transform: [{ translateY: slideAnim }] }]}>
-      <View style={[styles.indexBadge, { backgroundColor: isDone ? color : dimColor, borderColor: isDone ? color : '#374151' }]}>
-        <AppText variant="caption" style={[styles.indexText, { color: isDone ? '#fff' : '#6B7280' }]}>
+      <View style={[styles.indexBadge, { backgroundColor: isDone ? color : dimColor, borderColor: isDone ? color : darkTheme.border }]}>
+        <AppText variant="caption" style={[styles.indexText, { color: isDone ? darkTheme.text : darkTheme.textSecondary }]}>
           {isDone ? '✓' : String(index + 1)}
         </AppText>
       </View>
       <TextInput
-        style={[styles.entryInput, { borderBottomColor: isDone ? color : '#374151' }]}
+        style={[styles.entryInput, { borderBottomColor: isDone ? color : darkTheme.border }]}
         placeholder={placeholder}
-        placeholderTextColor="#4B5563"
+        placeholderTextColor={darkTheme.textMuted}
         value={value}
         onChangeText={onChange}
         multiline={false}
@@ -65,7 +66,7 @@ const styles = StyleSheet.create({
   indexText: { fontSize: 12, fontWeight: '700' },
   entryInput: {
     flex: 1,
-    color: '#F9FAFB',
+    color: darkTheme.text,
     fontSize: 15,
     fontWeight: '500',
     paddingBottom: 6,

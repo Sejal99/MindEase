@@ -6,6 +6,7 @@ import {
   Pressable,
 } from 'react-native';
 import AppText from './AppText';
+import { darkTheme } from '../../theme/colors';
 
 export interface IntensityLevel {
   value: number;
@@ -60,7 +61,7 @@ const IntensityButton: React.FC<IntensityButtonProps> = ({ level, isSelected, on
   const borderColor = glowAnim.interpolate({
     inputRange: [0, 1],
     outputRange: [
-      isSelected ? level.activeBorder : '#4B5563',
+      isSelected ? level.activeBorder : darkTheme.border,
       level.activeBorder,
     ],
   });
@@ -128,7 +129,7 @@ const styles = StyleSheet.create({
     paddingVertical: 14,
     paddingHorizontal: 4,
     borderRadius: 14,
-    backgroundColor: '#1F2937',
+    backgroundColor: darkTheme.card,
     overflow: 'visible',
     position: 'relative',
   },
@@ -149,10 +150,10 @@ const styles = StyleSheet.create({
     letterSpacing: 0.3,
   },
   labelDefault: {
-    color: '#6B7280',
+    color: darkTheme.textSecondary,
   },
   labelSelected: {
-    color: '#FFFFFF',
+    color: darkTheme.text,
   },
   dot: {
     width: 4,

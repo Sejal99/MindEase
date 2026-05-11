@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Pressable, StyleSheet } from 'react-native';
 import AppText from '../atoms/AppText';
+import { darkTheme } from '../../theme/colors';
 
 interface ToggleRowProps {
   label: string;
@@ -58,37 +59,37 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     paddingVertical: 16,
     borderBottomWidth: 1,
-    borderBottomColor: '#1F2937',
+    borderBottomColor: darkTheme.border,
   },
   rowLeft: { flex: 1, marginRight: 16 },
-  rowLabel: { fontSize: 16, fontWeight: '600', color: '#F9FAFB', marginBottom: 4 },
-  rowDesc: { fontSize: 13, color: '#9CA3AF', lineHeight: 18 },
+  rowLabel: { fontSize: 16, fontWeight: '600', color: darkTheme.text, marginBottom: 4 },
+  rowDesc: { fontSize: 13, color: darkTheme.textSecondary, lineHeight: 18 },
   rowMeta: { flexDirection: 'row', gap: 8, marginTop: 8 },
   metaChip: {
-    backgroundColor: '#1F2937',
+    backgroundColor: darkTheme.card,
     borderRadius: 8,
     paddingHorizontal: 10,
     paddingVertical: 4,
     borderWidth: 1,
-    borderColor: '#374151',
+    borderColor: darkTheme.border,
   },
-  metaChipText: { fontSize: 12, color: '#9CA3AF', fontWeight: '600' },
+  metaChipText: { fontSize: 12, color: darkTheme.textSecondary, fontWeight: '600' },
   toggle: {
     width: 50,
     height: 28,
     borderRadius: 14,
-    backgroundColor: '#374151',
+    backgroundColor: darkTheme.card,
     justifyContent: 'center',
     paddingHorizontal: 2,
   },
-  toggleActive: { backgroundColor: '#6366F1' },
+  toggleActive: { backgroundColor: darkTheme.primary },
   toggleKnob: {
     width: 24,
     height: 24,
     borderRadius: 12,
-    backgroundColor: '#9CA3AF',
+    backgroundColor: darkTheme.textSecondary,
   },
-  toggleKnobActive: { backgroundColor: '#FFFFFF' },
+  toggleKnobActive: { backgroundColor: darkTheme.text },
 });
 
 export default ToggleRow;
