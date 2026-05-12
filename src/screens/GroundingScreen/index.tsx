@@ -18,7 +18,7 @@ import EntryItem from '../../components/molecules/EntryItem';
 import ProgressDots, { Step } from '../../components/molecules/ProgressDots';
 import { ActionType } from '../../models/types';
 import { Eye, Hand, Volume2, Wind, Droplets } from 'lucide-react-native';
-import { darkTheme } from '../../theme/colors';
+import { N } from '../../theme/warm-colors';
 
 type GroundingScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'GroundingScreen'>;
 type GroundingScreenRouteProp = RouteProp<RootStackParamList, 'GroundingScreen'>;
@@ -33,40 +33,40 @@ const STEPS: Step[] = [
     id: 1, count: 5,
     label: 'SEE', verb: 'see',
     instruction: 'Look around slowly. Name each thing you notice.',
-    icon: <Eye color={darkTheme.primary} size={14} />,
-    color: darkTheme.primary, dimColor: darkTheme.primaryDark,
+    icon: <Eye color={N.accent} size={14} />,
+    color: N.accent, dimColor: N.accentDim,
     placeholder: (n) => ['A light on the ceiling...', 'Your hands...', 'Something blue...', 'A shadow...', 'Text on a screen...'][n - 1],
   },
   {
     id: 2, count: 4,
     label: 'TOUCH', verb: 'feel',
     instruction: 'What textures, temperatures, or surfaces can you feel?',
-    icon: <Hand color={darkTheme.success} size={14} />,
-    color: darkTheme.success, dimColor: darkTheme.success + '80',
+    icon: <Hand color={N.teal} size={14} />,
+    color: N.teal, dimColor: N.tealDim,
     placeholder: (n) => ['The fabric on your seat...', 'Air on your skin...', 'Your feet on the floor...', 'Your phone in your hands...'][n - 1],
   },
   {
     id: 3, count: 3,
     label: 'HEAR', verb: 'hear',
     instruction: 'Close your eyes. What sounds reach you?',
-    icon: <Volume2 color={darkTheme.warning} size={14} />,
-    color: darkTheme.warning, dimColor: darkTheme.warning + '80',
+    icon: <Volume2 color={N.amber} size={14} />,
+    color: N.amber, dimColor: N.amberDim,
     placeholder: (n) => ['A distant hum...', 'Your own breathing...', 'Something outside...'][n - 1],
   },
   {
     id: 4, count: 2,
     label: 'SMELL', verb: 'smell',
     instruction: 'Take a slow breath. What do you notice?',
-    icon: <Wind color={darkTheme.accent} size={14} />,
-    color: darkTheme.accent, dimColor: darkTheme.accent + '80',
+    icon: <Wind color={N.lavender} size={14} />,
+    color: N.lavender, dimColor: N.lavenderDim,
     placeholder: (n) => ['Fresh air...', 'Something nearby...'][n - 1],
   },
   {
     id: 5, count: 1,
     label: 'TASTE', verb: 'taste',
     instruction: "What's the faintest taste in your mouth right now?",
-    icon: <Droplets color={darkTheme.primary} size={14} />,
-    color: darkTheme.primary, dimColor: darkTheme.primaryDark,
+    icon: <Droplets color={N.blush} size={14} />,
+    color: N.blush, dimColor: N.blushDim,
     placeholder: () => 'Something subtle...',
   },
 ];
@@ -125,6 +125,8 @@ const GroundingScreen: React.FC<GroundingScreenProps> = ({ navigation, route }) 
       style={styles.root}
       behavior={Platform.OS === 'ios' ? 'padding' : undefined}
     >
+      <View pointerEvents="none" style={styles.blobTopRight} />
+      <View pointerEvents="none" style={styles.blobBottomLeft} />
       <ScrollView
         style={styles.container}
         contentContainerStyle={styles.content}
@@ -155,7 +157,7 @@ const GroundingScreen: React.FC<GroundingScreenProps> = ({ navigation, route }) 
                   {step.count} things you can {step.verb}
                 </AppText>
               </View>
-              <AppText variant="body" color={darkTheme.textSecondary} style={styles.instruction}>
+              <AppText variant="body" style={styles.instruction}>
                 {step.instruction}
               </AppText>
             </View>
@@ -210,7 +212,7 @@ const GroundingScreen: React.FC<GroundingScreenProps> = ({ navigation, route }) 
           style={StyleSheet.flatten([styles.cta, canAdvance && { backgroundColor: step.color }])}
         />
 
-        <AppText variant="caption" color={darkTheme.textMuted} style={styles.tip}>
+        <AppText variant="caption" style={styles.tip}>
           Take your time. There's no rush.
         </AppText>
       </ScrollView>

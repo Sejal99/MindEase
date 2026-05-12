@@ -15,7 +15,7 @@ import PMRIntroScreen from "../../components/organisms/PMRIntroScreen";
 import { styles } from './styles';
 import PMRDoneScreen from "../../components/organisms/PMRDoneScreen";
 import { ActionType } from "../../models/types";
-import { darkTheme } from "../../theme/colors";
+import { N } from "../../theme/warm-colors";
 
 type PMRScreenNavigationProp = NativeStackNavigationProp<
   RootStackParamList,
@@ -104,25 +104,25 @@ const PHASES: Record<
   tense: {
     label: "TENSE",
     duration: 5,
-    color: darkTheme.warning,
+    color: N.amber,
     instruction: "Squeeze tight",
   },
   hold: {
     label: "HOLD",
     duration: 3,
-    color: darkTheme.warning + '80',
+    color: N.amber + '80',
     instruction: "Hold it…",
   },
   release: {
     label: "RELEASE",
     duration: 8,
-    color: darkTheme.success,
+    color: N.accent,
     instruction: "Let go…",
   },
   rest: {
     label: "REST",
     duration: 4,
-    color: darkTheme.textMuted,
+    color: N.textMuted,
     instruction: "Notice…",
   },
 };
@@ -200,12 +200,14 @@ const PMRScreen: React.FC<PMRScreenProps> = ({ navigation, route }) => {
 
   return (
     <View style={styles.container}>
+      <View pointerEvents="none" style={styles.blobTopRight} />
+      <View pointerEvents="none" style={styles.blobBottomLeft} />
       <ScrollView contentContainerStyle={styles.content}>
         <View style={styles.header}>
           <AppText variant="h3" style={styles.groupName}>
             {currentGroup.name}
           </AppText>
-          <AppText variant="body" color={darkTheme.textSecondary} style={styles.groupInstruction}>
+          <AppText variant="body" style={styles.groupInstruction}>
             {currentPhase === 'rest' ? currentGroup.releaseNote : currentGroup.instruction}
           </AppText>
         </View>
@@ -223,7 +225,7 @@ const PMRScreen: React.FC<PMRScreenProps> = ({ navigation, route }) => {
         </View>
 
         <View style={styles.progressSection}>
-          <AppText variant="caption" color={darkTheme.textMuted}>
+          <AppText variant="caption" style={styles.progressText}>
             Muscle {currentGroupIndex + 1} of {MUSCLE_GROUPS.length}
           </AppText>
           <View style={styles.progressBar}>

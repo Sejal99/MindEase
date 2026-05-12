@@ -5,6 +5,7 @@ import AppText from '../atoms/AppText';
 import TriggerChips from '../molecules/TriggerChips';
 import IntensitySelector from '../molecules/IntensitySelector';
 import { TriggerType } from '../../models/types';
+import { N } from '../../theme/warm-colors';
 
 interface StressFormProps {
   selectedTrigger: TriggerType | null;
@@ -21,17 +22,23 @@ const StressForm: React.FC<StressFormProps> = ({
 }) => {
   return (
     <Card style={styles.card}>
-      <AppText variant="h3" style={styles.title}>
-        What's triggering your stress?
-      </AppText>
+      <View style={styles.sectionHeader}>
+        <AppText style={styles.stepLabel}>Step 1</AppText>
+        <AppText variant="h3" style={styles.title}>
+          What's triggering your stress?
+        </AppText>
+      </View>
       <TriggerChips
         selectedTrigger={selectedTrigger}
         onSelect={onTriggerSelect}
       />
 
-      <AppText variant="h3" style={styles.title}>
-        How intense is it?
-      </AppText>
+      <View style={[styles.sectionHeader, styles.intensityHeader]}>
+        <AppText style={styles.stepLabel}>Step 2</AppText>
+        <AppText variant="h3" style={styles.title}>
+          How intense is it?
+        </AppText>
+      </View>
       <IntensitySelector
         selectedIntensity={selectedIntensity}
         onSelect={onIntensitySelect}
@@ -42,11 +49,33 @@ const StressForm: React.FC<StressFormProps> = ({
 
 const styles = StyleSheet.create({
   card: {
+    backgroundColor: N.surface,
+    borderColor: N.border,
+    borderRadius: 24,
+    padding: 18,
     marginBottom: 16,
+    shadowColor: N.accentDeep,
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.05,
+    shadowRadius: 8,
+    elevation: 2,
+  },
+  sectionHeader: {
+    marginBottom: 12,
+  },
+  intensityHeader: {
+    marginTop: 24,
+  },
+  stepLabel: {
+    color: N.textMuted,
+    fontSize: 11,
+    fontWeight: '800',
+    letterSpacing: 1,
+    textTransform: 'uppercase',
+    marginBottom: 4,
   },
   title: {
-    marginTop: 16,
-    marginBottom: 12,
+    color: N.textPrimary,
   },
 });
 

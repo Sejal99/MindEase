@@ -1,10 +1,10 @@
 import { StyleSheet } from "react-native";
-import { darkTheme, insightsPalette } from "../../theme/colors";
+import { N } from "../../theme/warm-colors";
 
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: darkTheme.background,
+    backgroundColor: N.bg,
   },
 
   content: {
@@ -12,16 +12,38 @@ export const styles = StyleSheet.create({
     paddingBottom: 120,
   },
 
+  blobTopRight: {
+    position: "absolute",
+    top: -70,
+    right: -70,
+    width: 210,
+    height: 210,
+    borderRadius: 105,
+    backgroundColor: N.accentLight,
+    opacity: 0.28,
+  },
+
+  blobBottomLeft: {
+    position: "absolute",
+    bottom: 150,
+    left: -80,
+    width: 190,
+    height: 190,
+    borderRadius: 95,
+    backgroundColor: N.tealDim,
+    opacity: 0.42,
+  },
+
   loaderContainer: {
     flex: 1,
-    backgroundColor: darkTheme.background,
+    backgroundColor: N.bg,
     justifyContent: 'center',
     alignItems: 'center',
   },
 
   loadingText: {
     marginTop: 16,
-    color: darkTheme.textSecondary,
+    color: N.textSecondary,
   },
 
   header: {
@@ -32,8 +54,9 @@ export const styles = StyleSheet.create({
   },
 
   title: {
-    color: darkTheme.text,
+    color: N.textPrimary,
     marginBottom: 6,
+    letterSpacing: -0.6,
   },
 
   subtitle: {
@@ -44,7 +67,9 @@ export const styles = StyleSheet.create({
     width: 52,
     height: 52,
     borderRadius: 16,
-    backgroundColor: darkTheme.card,
+    backgroundColor: N.surfaceAlt,
+    borderWidth: 1,
+    borderColor: N.border,
     justifyContent: 'center',
     alignItems: 'center',
     marginLeft: 16,
@@ -58,28 +83,37 @@ export const styles = StyleSheet.create({
 
   overviewCard: {
     width: '48%',
-    borderRadius: 24,
+    borderRadius: 22,
     paddingVertical: 24,
     alignItems: 'center',
+    borderWidth: 1,
+    shadowColor: N.accentDeep,
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.05,
+    shadowRadius: 8,
+    elevation: 2,
   },
 
   purpleCard: {
-    backgroundColor: darkTheme.primary,
+    backgroundColor: N.heroFill,
+    borderColor: N.heroBorder,
   },
 
   blueCard: {
-    backgroundColor: insightsPalette.blue,
+    backgroundColor: N.tealDim,
+    borderColor: N.border,
   },
 
   overviewNumber: {
-    color: darkTheme.text,
+    color: N.textPrimary,
     fontSize: 34,
     fontWeight: '800',
   },
 
   overviewLabel: {
-    color: darkTheme.textSecondary,
+    color: N.textSecondary,
     marginTop: 6,
+    fontWeight: '600',
   },
 
   sectionSpacing: {
@@ -87,10 +121,16 @@ export const styles = StyleSheet.create({
   },
 
   card: {
-    backgroundColor: darkTheme.card,
-    borderRadius: 24,
+    backgroundColor: N.surface,
+    borderRadius: 22,
     padding: 20,
     marginBottom: 18,
+    borderColor: N.border,
+    shadowColor: N.accentDeep,
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.05,
+    shadowRadius: 8,
+    elevation: 2,
   },
 
   cardHeader: {
@@ -101,12 +141,12 @@ export const styles = StyleSheet.create({
   },
 
   cardTitle: {
-    color: darkTheme.text,
+    color: N.textPrimary,
   },
 
   triggerItem: {
     borderBottomWidth: 1,
-    borderBottomColor: darkTheme.border,
+    borderBottomColor: N.borderSoft,
     paddingBottom: 18,
     marginBottom: 18,
   },
@@ -124,7 +164,7 @@ export const styles = StyleSheet.create({
   },
 
   triggerTitle: {
-    color: darkTheme.text,
+    color: N.textPrimary,
     fontWeight: '600',
   },
 
@@ -133,7 +173,7 @@ export const styles = StyleSheet.create({
   },
 
   triggerPercentage: {
-    color: insightsPalette.accent,
+    color: N.accentDeep,
     fontWeight: '700',
     fontSize: 16,
   },
@@ -141,20 +181,21 @@ export const styles = StyleSheet.create({
   progressTrack: {
     width: '100%',
     height: 10,
-    backgroundColor: darkTheme.border,
+    backgroundColor: N.surfaceAlt,
     borderRadius: 20,
     overflow: 'hidden',
   },
 
   progressFill: {
     height: '100%',
-    backgroundColor: insightsPalette.accent,
+    backgroundColor: N.accent,
     borderRadius: 20,
   },
 
   motivationCard: {
-    backgroundColor: darkTheme.card,
-    borderRadius: 24,
+    backgroundColor: N.accentDim,
+    borderColor: N.accentLight,
+    borderRadius: 22,
     padding: 20,
   },
 
@@ -167,14 +208,16 @@ export const styles = StyleSheet.create({
     width: 56,
     height: 56,
     borderRadius: 18,
-    backgroundColor: darkTheme.card,
+    backgroundColor: N.surface,
+    borderWidth: 1,
+    borderColor: N.border,
     justifyContent: 'center',
     alignItems: 'center',
     marginRight: 16,
   },
 
   motivationTitle: {
-    color: darkTheme.text,
+    color: N.textPrimary,
     marginBottom: 6,
   },
 
@@ -183,15 +226,16 @@ export const styles = StyleSheet.create({
   },
 
   emptyCard: {
-    backgroundColor: darkTheme.card,
-    borderRadius: 28,
+    backgroundColor: N.surface,
+    borderColor: N.border,
+    borderRadius: 24,
     padding: 32,
     alignItems: 'center',
     marginTop: 40,
   },
 
   emptyTitle: {
-    color: darkTheme.text,
+    color: N.textPrimary,
     marginBottom: 12,
   },
 

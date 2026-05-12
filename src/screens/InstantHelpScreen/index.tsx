@@ -8,7 +8,6 @@ import Button from '../../components/atoms/Button';
 import AppText from '../../components/atoms/AppText';
 import Card from '../../components/atoms/Card';
 import { styles } from './styles';
-import { darkTheme } from '../../theme/colors';
 
 type InstantHelpScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'InstantHelp'>;
 type InstantHelpScreenRouteProp = RouteProp<RootStackParamList, 'InstantHelp'>;
@@ -102,11 +101,13 @@ const InstantHelpScreen: React.FC<InstantHelpScreenProps> = ({ navigation, route
 
   return (
     <View style={styles.container}>
+      <View pointerEvents="none" style={styles.blobTopRight} />
+      <View pointerEvents="none" style={styles.blobBottomLeft} />
       <View style={styles.content}>
         <AppText variant="h2" style={styles.title}>
           Breathing Exercise
         </AppText>
-        <AppText variant="body" color={darkTheme.textSecondary} style={styles.subtitle}>
+        <AppText variant="body" style={styles.subtitle}>
           Follow the circle to calm your mind
         </AppText>
 
@@ -137,6 +138,7 @@ const InstantHelpScreen: React.FC<InstantHelpScreenProps> = ({ navigation, route
           onPress={handleDone}
           variant="primary"
           style={styles.doneButton}
+          textStyle={styles.doneButtonText}
         />
       </View>
     </View>

@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Pressable, Modal, StyleSheet } from 'react-native';
 import AppText from '../atoms/AppText';
-import { darkTheme } from '../../theme/colors';
+import { N } from '../../theme/warm-colors';
 
 const DAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
@@ -39,32 +39,34 @@ const DayPickerModal: React.FC<DayPickerModalProps> = ({
 const styles = StyleSheet.create({
   modalOverlay: {
     flex: 1,
-    backgroundColor: 'rgba(0,0,0,0.7)',
+    backgroundColor: '#1A3A1A66',
     justifyContent: 'center',
     alignItems: 'center',
   },
   modalContent: {
-    backgroundColor: darkTheme.card,
-    borderRadius: 16,
+    backgroundColor: N.surface,
+    borderRadius: 20,
     padding: 20,
+    borderWidth: 1,
+    borderColor: N.border,
   },
-  modalTitle: { marginBottom: 16, textAlign: 'center' },
+  modalTitle: { marginBottom: 16, textAlign: 'center', color: N.textPrimary },
   dayItem: {
     paddingVertical: 12,
     borderRadius: 8,
     alignItems: 'center',
     marginVertical: 2,
-    backgroundColor: darkTheme.primary,
+    backgroundColor: N.surface,
   },
   dayItemActive: {
     paddingVertical: 12,
     borderRadius: 8,
     alignItems: 'center',
     marginVertical: 2,
-    backgroundColor: darkTheme.primary,
+    backgroundColor: N.accentDim,
   },
-  dayItemText: { fontSize: 16, color: darkTheme.text },
-  dayItemTextActive: { fontSize: 16, color: darkTheme.text, fontWeight: '700' },
+  dayItemText: { fontSize: 16, color: N.textSecondary },
+  dayItemTextActive: { fontSize: 16, color: N.accentDeep, fontWeight: '700' },
 });
 
 export default DayPickerModal;

@@ -118,11 +118,16 @@
       "exercises": "Exercises"
     },
     "xp": {
-      "title": "Experience Points"
+      "title": "Experience Points",
+      "toNextLevel": "{{count}} XP to Level {{level}}"
     },
     "progress": {
       "title": "Progress",
       "unlocked": "Unlocked"
+    },
+    "next": {
+      "title": "Up next",
+      "complete": "Collection complete"
     },
     "categories": {
       "streak": {
@@ -138,7 +143,8 @@
         "title": "Master"
       }
     },
-    "unlocked": "Unlocked"
+    "unlocked": "Unlocked",
+    "locked": "Locked"
   },
   "notifications": {
     "title": "Notifications",
@@ -208,12 +214,22 @@
   "stressFlow": {
     "title": "Log Your Stress",
     "subtitle": "Take a moment to understand what you're feeling",
-    "continue": "Continue"
+    "continue": "Continue",
+    "promptTitle": "Name it before you change it",
+    "promptBody": "Choose what is driving the stress, then rate the intensity so the next exercise can fit the moment.",
+    "summary": {
+      "trigger": "Trigger",
+      "intensity": "Intensity",
+      "notSelected": "Not selected"
+    }
   },
   "actionSelection": {
     "title": "Choose Your Action",
     "subtitle": "Select a technique to help you right now",
     "completed": "Completed",
+    "contextTitle": "For this moment",
+    "sectionTitle": "Choose a technique",
+    "recommended": "Recommended",
     "actions": [
       {
         "title": "Breathing Exercise",

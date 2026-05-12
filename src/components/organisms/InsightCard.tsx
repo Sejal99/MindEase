@@ -4,7 +4,7 @@ import Card from '../atoms/Card';
 import AppText from '../atoms/AppText';
 import { InsightData } from '../../models/types';
 import { formatTrigger } from '../../utils/formatters';
-import { darkTheme } from '../../theme/colors';
+import { N } from '../../theme/warm-colors';
 
 interface InsightCardProps {
   insights: InsightData;
@@ -50,9 +50,18 @@ const InsightCard: React.FC<InsightCardProps> = ({ insights }) => {
 
 const styles = StyleSheet.create({
   card: {
+    backgroundColor: N.surface,
+    borderColor: N.border,
+    borderRadius: 22,
     marginBottom: 16,
+    shadowColor: N.accentDeep,
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.05,
+    shadowRadius: 8,
+    elevation: 2,
   },
   title: {
+    color: N.textPrimary,
     marginBottom: 16,
   },
   insightRow: {
@@ -61,15 +70,17 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingVertical: 8,
     borderBottomWidth: 1,
-    borderBottomColor: darkTheme.border,
+    borderBottomColor: N.borderSoft,
   },
   label: {
     flex: 1,
+    color: N.textMuted,
   },
   value: {
     flex: 1,
     textAlign: 'right',
     fontWeight: '600',
+    color: N.textPrimary,
   },
 });
 

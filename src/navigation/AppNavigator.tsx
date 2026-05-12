@@ -15,7 +15,7 @@ import {
 } from 'lucide-react-native';
 
 import { ThemeProvider } from '../theme/ThemeProvider';
-import { darkTheme } from '../theme/colors';
+import { N } from '../theme/warm-colors';
 
 import OnboardingScreen from '../screens/OnboardingScreen/index';
 import HomeScreen from '../screens/HomeScreen/index';
@@ -102,44 +102,47 @@ function TabNavigator() {
         tabBarStyle: {
           backgroundColor: 'transparent',
 
-          height: Platform.OS === 'ios' ? 82 : 72,
+          height: Platform.OS === 'ios' ? 86 : 76,
 
-          paddingTop: 10,
+          paddingTop: 8,
           paddingBottom: Platform.OS === 'ios' ? 18 : 10,
+          paddingHorizontal: 10,
 
           borderTopWidth: 0,
 
-          shadowColor: darkTheme.primary,
+          shadowColor: N.accentDeep,
           shadowOffset: {
             width: 0,
             height: -4,
           },
-          shadowOpacity: 0.08,
-          shadowRadius: 12,
+          shadowOpacity: 0.1,
+          shadowRadius: 16,
           elevation: 10,
         },
 
         tabBarBackground: () => (
           <LinearGradient
-            colors={[darkTheme.card, darkTheme.card]}
+            colors={[N.surface, N.surfaceAlt]}
             start={{ x: 0, y: 0 }}
             end={{ x: 1, y: 1 }}
             style={styles.tabBarGradient}
           />
         ),
 
-        tabBarActiveTintColor: darkTheme.primary,
-        tabBarInactiveTintColor: darkTheme.textSecondary,
+        tabBarActiveTintColor: N.accentDeep,
+        tabBarInactiveTintColor: N.textMuted,
+        tabBarActiveBackgroundColor: 'transparent',
 
         tabBarLabelStyle: {
           fontSize: 11,
           fontWeight: '700',
-          marginTop: 2,
-          letterSpacing: 0.3,
+          marginTop: 0,
+          letterSpacing: 0,
         },
 
         tabBarItemStyle: {
-          paddingVertical: 2,
+          paddingVertical: 4,
+          borderRadius: 18,
         },
       }}
     >
@@ -154,7 +157,7 @@ function TabNavigator() {
             <TabIconWrapper focused={focused}>
               <Home
                 size={focused ? 22 : 20}
-                color={color}
+                color={focused ? N.surface : color}
                 strokeWidth={focused ? 2.6 : 2}
               />
             </TabIconWrapper>
@@ -164,7 +167,7 @@ function TabNavigator() {
             <Pressable
               {...props}
               android_ripple={{
-                color: darkTheme.primary + '80',
+                color: N.accentLight,
                 borderless: true,
               }}
               onPressIn={(e) => {
@@ -187,7 +190,7 @@ function TabNavigator() {
             <TabIconWrapper focused={focused}>
               <Clipboard
                 size={focused ? 22 : 20}
-                color={color}
+                color={focused ? N.surface : color}
                 strokeWidth={focused ? 2.6 : 2}
               />
             </TabIconWrapper>
@@ -197,7 +200,7 @@ function TabNavigator() {
             <Pressable
               {...props}
               android_ripple={{
-                color: darkTheme.primary + '80',
+                color: N.accentLight,
                 borderless: true,
               }}
               onPressIn={(e) => {
@@ -220,7 +223,7 @@ function TabNavigator() {
             <TabIconWrapper focused={focused}>
               <Lightbulb
                 size={focused ? 22 : 20}
-                color={color}
+                color={focused ? N.surface : color}
                 strokeWidth={focused ? 2.6 : 2}
               />
             </TabIconWrapper>
@@ -230,7 +233,7 @@ function TabNavigator() {
             <Pressable
               {...props}
               android_ripple={{
-                color: darkTheme.primary + '80',
+                color: N.accentLight,
                 borderless: true,
               }}
               onPressIn={(e) => {
@@ -253,7 +256,7 @@ function TabNavigator() {
             <TabIconWrapper focused={focused}>
               <Trophy
                 size={focused ? 22 : 20}
-                color={color}
+                color={focused ? N.surface : color}
                 strokeWidth={focused ? 2.6 : 2}
               />
             </TabIconWrapper>
@@ -263,7 +266,7 @@ function TabNavigator() {
             <Pressable
               {...props}
               android_ripple={{
-                color: darkTheme.primary + '80',
+                color: N.accentLight,
                 borderless: true,
               }}
               onPressIn={(e) => {
@@ -286,7 +289,7 @@ function TabNavigator() {
             <TabIconWrapper focused={focused}>
               <Bell
                 size={focused ? 22 : 20}
-                color={color}
+                color={focused ? N.surface : color}
                 strokeWidth={focused ? 2.6 : 2}
               />
             </TabIconWrapper>
@@ -296,7 +299,7 @@ function TabNavigator() {
             <Pressable
               {...props}
               android_ripple={{
-                color: darkTheme.primary + '80',
+                color: N.accentLight,
                 borderless: true,
               }}
               onPressIn={(e) => {
@@ -330,7 +333,7 @@ const AppNavigator: React.FC = () => {
       <View style={styles.loadingContainer}>
         <AppText
           variant="h2"
-          style={{ color: darkTheme.text }}
+          style={{ color: N.textPrimary }}
         >
           Stress Guide
         </AppText>
@@ -343,7 +346,7 @@ const AppNavigator: React.FC = () => {
       <NavigationContainer>
         <StatusBar
           barStyle="dark-content"
-          backgroundColor={darkTheme.background}
+          backgroundColor={N.bg}
         />
 
         <Stack.Navigator
@@ -354,20 +357,20 @@ const AppNavigator: React.FC = () => {
           }
           screenOptions={{
             headerStyle: {
-              backgroundColor: darkTheme.card,
+              backgroundColor: N.surface,
             },
 
             headerShadowVisible: false,
 
-            headerTintColor: darkTheme.text,
+            headerTintColor: N.textPrimary,
 
             headerTitleStyle: {
               fontWeight: '700',
-              color: darkTheme.text,
+              color: N.textPrimary,
             },
 
             contentStyle: {
-              backgroundColor: darkTheme.background,
+              backgroundColor: N.bg,
             },
           }}
         >
@@ -450,7 +453,7 @@ const AppNavigator: React.FC = () => {
 const styles = StyleSheet.create({
   loadingContainer: {
     flex: 1,
-    backgroundColor: darkTheme.background,
+    backgroundColor: N.bg,
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -464,26 +467,26 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderBottomWidth: 0,
 
-    borderColor: darkTheme.border,
+    borderColor: N.border,
 
     overflow: 'hidden',
   },
 
   iconWrapper: {
-    width: 42,
-    height: 42,
+    width: 44,
+    height: 34,
 
-    borderRadius: 16,
+    borderRadius: 17,
 
     alignItems: 'center',
     justifyContent: 'center',
   },
 
   iconWrapperFocused: {
-    backgroundColor: darkTheme.card,
+    backgroundColor: N.accent,
 
     borderWidth: 1,
-    borderColor: darkTheme.primary,
+    borderColor: N.accentDeep,
   },
 });
 

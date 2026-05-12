@@ -5,10 +5,8 @@ import {
   TouchableOpacity,
   ActivityIndicator,
 } from 'react-native';
-import { NavigationProp } from '@react-navigation/native';
-import { RouteProp } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
-import { insightsPalette as C } from '../../theme/colors';
+import { N } from '../../theme/warm-colors';
 import {
   Sparkles,
   Sprout,
@@ -19,13 +17,8 @@ import {
   Home as HomeIcon,
   AlertCircle,
   HeartPulse,
-  Circle,
-  HelpCircle,
-  Users,
   Heart,
 } from 'lucide-react-native';
-
-import { TabParamList } from '../../navigation/AppNavigator';
 
 import AppText from '../../components/atoms/AppText';
 import Card from '../../components/atoms/Card';
@@ -34,14 +27,7 @@ import useInsightsViewModel from '../../viewmodels/insightsViewModel';
 import { formatTrigger } from '../../utils/formatters';
 import { styles } from './styles';
 
-type InsightsScreenNavigationProp = NavigationProp<TabParamList>;
-type InsightsScreenRouteProp = RouteProp<TabParamList, 'InsightsTab'>;
-
-interface InsightsScreenProps {
-  navigation: InsightsScreenNavigationProp;
-}
-
-const InsightsScreen: React.FC<InsightsScreenProps> = () => {
+const InsightsScreen: React.FC = () => {
   const {
     insights,
     events,
@@ -69,7 +55,7 @@ const InsightsScreen: React.FC<InsightsScreenProps> = () => {
   if (loading) {
     return (
       <View style={styles.loaderContainer}>
-        <ActivityIndicator size="large" color={C.progressFill} />
+        <ActivityIndicator size="large" color={N.accent} />
 
         <AppText variant="body" style={styles.loadingText}>
           {t('insights.loading')}
@@ -80,6 +66,9 @@ const InsightsScreen: React.FC<InsightsScreenProps> = () => {
 
   return (
     <View style={styles.container}>
+      <View pointerEvents="none" style={styles.blobTopRight} />
+      <View pointerEvents="none" style={styles.blobBottomLeft} />
+
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.content}
@@ -93,7 +82,7 @@ const InsightsScreen: React.FC<InsightsScreenProps> = () => {
 
             <AppText
               variant="body"
-              color={C.textMuted}
+              color={N.textSecondary}
               style={styles.subtitle}
             >
               {t('insights.subtitle')}
@@ -101,7 +90,7 @@ const InsightsScreen: React.FC<InsightsScreenProps> = () => {
           </View>
 
           <TouchableOpacity activeOpacity={0.8} style={styles.headerBadge}>
-            <Sparkles color={C.white} size={22} />
+            <Sparkles color={N.accentDeep} size={22} />
           </TouchableOpacity>
         </View>
 
@@ -109,7 +98,7 @@ const InsightsScreen: React.FC<InsightsScreenProps> = () => {
         {events.length === 0 ? (
           <Card style={styles.emptyCard}>
             <View style={{ marginBottom: 20 }}>
-              <Sprout color={C.accent} size={56} />
+              <Sprout color={N.accent} size={56} />
             </View>
 
             <AppText variant="h2" style={styles.emptyTitle}>
@@ -118,7 +107,7 @@ const InsightsScreen: React.FC<InsightsScreenProps> = () => {
 
             <AppText
               variant="body"
-              color={C.textMuted}
+              color={N.textSecondary}
               style={styles.emptyDescription}
             >
               {t('insights.empty.description')}
@@ -130,7 +119,7 @@ const InsightsScreen: React.FC<InsightsScreenProps> = () => {
             <View style={styles.statsRow}>
               <Card style={[styles.overviewCard, styles.purpleCard]}>
                 <View style={{ marginBottom: 10 }}>
-                  <BarChart3 color={C.white} size={28} />
+                  <BarChart3 color={N.accentDeep} size={28} />
                 </View>
 
                 <AppText variant="h1" style={styles.overviewNumber}>
@@ -144,7 +133,7 @@ const InsightsScreen: React.FC<InsightsScreenProps> = () => {
 
               <Card style={[styles.overviewCard, styles.blueCard]}>
                 <View style={{ marginBottom: 10 }}>
-                  <Brain color={C.white} size={28} />
+                  <Brain color={N.teal} size={28} />
                 </View>
 
                 <AppText variant="h1" style={styles.overviewNumber}>
@@ -169,7 +158,7 @@ const InsightsScreen: React.FC<InsightsScreenProps> = () => {
                   {t('insights.triggers.title')}
                 </AppText>
 
-                <TrendingUp color={C.white} size={22} />
+                <TrendingUp color={N.accent} size={22} />
               </View>
 
               {triggerDistribution.map(
@@ -187,7 +176,7 @@ const InsightsScreen: React.FC<InsightsScreenProps> = () => {
                     <View style={styles.triggerTop}>
                       <View style={styles.triggerLeft}>
                         <View style={{ marginRight: 12 }}>
-                          {getTriggerIcon(trigger, C.white, 24)}
+                          {getTriggerIcon(trigger, N.accent, 24)}
                         </View>
 
                         <View>
@@ -200,7 +189,7 @@ const InsightsScreen: React.FC<InsightsScreenProps> = () => {
 
                           <AppText
                             variant="caption"
-                            color={C.textMuted}
+                            color={N.textMuted}
                             style={styles.triggerSubtitle}
                           >
                             {t('insights.triggers.events', { count })}
@@ -231,7 +220,7 @@ const InsightsScreen: React.FC<InsightsScreenProps> = () => {
             <Card style={styles.motivationCard}>
               <View style={styles.motivationRow}>
                 <View style={styles.motivationEmojiContainer}>
-                  <Heart color={C.white} size={28} />
+                  <Heart color={N.accentDeep} size={28} />
                 </View>
 
                 <View style={{ flex: 1 }}>
@@ -241,7 +230,7 @@ const InsightsScreen: React.FC<InsightsScreenProps> = () => {
 
                   <AppText
                     variant="body"
-                    color={C.textLight}
+                    color={N.textSecondary}
                     style={styles.motivationText}>
                     {t('insights.motivation.text')}
                   </AppText>

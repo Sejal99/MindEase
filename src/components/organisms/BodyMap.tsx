@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { View, Animated, StyleSheet, Easing } from 'react-native';
-import { darkTheme } from '../../theme/colors';
+import { N } from '../../theme/warm-colors';
 
 interface BodyMapProps {
   activePart: string;
@@ -38,63 +38,63 @@ const BodyMap: React.FC<BodyMapProps> = ({ activePart, phaseColor }) => {
           style={[
             styles.bodyPart,
             activePart === 'head' && styles.headActive,
-            { borderColor: activePart === 'head' ? phaseColor : darkTheme.border }
+            { borderColor: activePart === 'head' ? phaseColor : N.border }
           ]}
         />
         <Animated.View
           style={[
             styles.bodyPart,
             activePart === 'shoulders' && styles.shouldersActive,
-            { borderColor: activePart === 'shoulders' ? phaseColor : darkTheme.border }
+            { borderColor: activePart === 'shoulders' ? phaseColor : N.border }
           ]}
         />
         <Animated.View
           style={[
             styles.bodyPart,
             activePart === 'arms' && styles.armsActive,
-            { borderColor: activePart === 'arms' ? phaseColor : darkTheme.border }
+            { borderColor: activePart === 'arms' ? phaseColor : N.border }
           ]}
         />
         <Animated.View
           style={[
             styles.bodyPart,
             activePart === 'hands' && styles.handsActive,
-            { borderColor: activePart === 'hands' ? phaseColor : darkTheme.border }
+            { borderColor: activePart === 'hands' ? phaseColor : N.border }
           ]}
         />
         <Animated.View
           style={[
             styles.bodyPart,
             activePart === 'chest' && styles.chestActive,
-            { borderColor: activePart === 'chest' ? phaseColor : darkTheme.border }
+            { borderColor: activePart === 'chest' ? phaseColor : N.border }
           ]}
         />
         <Animated.View
           style={[
             styles.bodyPart,
             activePart === 'core' && styles.coreActive,
-            { borderColor: activePart === 'core' ? phaseColor : darkTheme.border }
+            { borderColor: activePart === 'core' ? phaseColor : N.border }
           ]}
         />
         <Animated.View
           style={[
             styles.bodyPart,
             activePart === 'thighs' && styles.thighsActive,
-            { borderColor: activePart === 'thighs' ? phaseColor : darkTheme.border }
+            { borderColor: activePart === 'thighs' ? phaseColor : N.border }
           ]}
         />
         <Animated.View
           style={[
             styles.bodyPart,
             activePart === 'calves' && styles.calvesActive,
-            { borderColor: activePart === 'calves' ? phaseColor : darkTheme.border }
+            { borderColor: activePart === 'calves' ? phaseColor : N.border }
           ]}
         />
         <Animated.View
           style={[
             styles.bodyPart,
             activePart === 'feet' && styles.feetActive,
-            { borderColor: activePart === 'feet' ? phaseColor : darkTheme.border }
+            { borderColor: activePart === 'feet' ? phaseColor : N.border }
           ]}
         />
       </View>

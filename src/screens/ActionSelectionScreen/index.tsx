@@ -4,15 +4,23 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RouteProp } from '@react-navigation/native';
 import { RootStackParamList } from '../../navigation/AppNavigator';
 
-import Button from '../../components/atoms/Button';
 import AppText from '../../components/atoms/AppText';
 import Card from '../../components/atoms/Card';
 import { ActionType } from '../../models/types';
 import useSessionViewModel from '../../viewmodels/sessionViewModel';
 import { useTranslation } from 'react-i18next';
-import { Wind, Activity, PenLine, Dumbbell, CheckCircle2, Clock } from 'lucide-react-native';
+import {
+  Activity,
+  CheckCircle2,
+  Clock,
+  Dumbbell,
+  Leaf,
+  PenLine,
+  Sparkles,
+  Wind,
+} from 'lucide-react-native';
 import { styles } from './styles';
-import { darkTheme } from '../../theme/colors';
+import { N } from '../../theme/warm-colors';
 
 type ActionSelectionScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'ActionSelection'>;
 type ActionSelectionScreenRouteProp = RouteProp<RootStackParamList, 'ActionSelection'>;
@@ -34,40 +42,40 @@ const ACTIONS: {
     id: 'breathing',
     title: 'Breathing Exercise',
     description: 'Calm your mind with guided breathing',
-    icon: <Wind color={darkTheme.text} size={24} />,
-    completedIcon: <CheckCircle2 color={darkTheme.success} size={24} />,
+    icon: <Wind color={N.accent} size={24} />,
+    completedIcon: <CheckCircle2 color={N.streakText} size={24} />,
     duration: '2 min',
   },
   {
     id: 'grounding',
     title: '5-4-3-2-1 Grounding',
     description: 'Instant anxiety control using your senses',
-    icon: <Activity color={darkTheme.text} size={24} />,
-    completedIcon: <CheckCircle2 color={darkTheme.success} size={24} />,
+    icon: <Leaf color={N.teal} size={24} />,
+    completedIcon: <CheckCircle2 color={N.streakText} size={24} />,
     duration: '3 min',
   },
   {
     id: 'brainDump',
     title: 'Brain Dump',
     description: 'Mental unload - write everything down',
-    icon: <PenLine color={darkTheme.text} size={24} />,
-    completedIcon: <CheckCircle2 color={darkTheme.success} size={24} />,
+    icon: <PenLine color={N.lavender} size={24} />,
+    completedIcon: <CheckCircle2 color={N.streakText} size={24} />,
     duration: '2 min',
   },
   {
     id: 'movement',
     title: 'Movement Reset',
     description: 'Release stress through body movement',
-    icon: <Activity color={darkTheme.text} size={24} />,
-    completedIcon: <CheckCircle2 color={darkTheme.success} size={24} />,
+    icon: <Activity color={N.amber} size={24} />,
+    completedIcon: <CheckCircle2 color={N.streakText} size={24} />,
     duration: '2 min',
   },
   {
     id: 'pmr',
     title: 'Progressive Muscle Relaxation',
     description: 'Release tension by tensing and relaxing muscle groups',
-    icon: <Dumbbell color={darkTheme.text} size={24} />,
-    completedIcon: <CheckCircle2 color={darkTheme.success} size={24} />,
+    icon: <Dumbbell color={N.blush} size={24} />,
+    completedIcon: <CheckCircle2 color={N.streakText} size={24} />,
     duration: '5 min',
   },
 ];
@@ -76,6 +84,13 @@ const ActionSelectionScreen: React.FC<ActionSelectionScreenProps> = ({ navigatio
   const { trigger, intensity } = route.params;
   const { isExerciseCompleted, getCompletedCount } = useSessionViewModel();
   const { t } = useTranslation();
+  const completedCount = getCompletedCount();
+  const recommendedAction = intensity >= 4 ? 'grounding' : 'breathing';
+
+  const formatTrigger = (value: string) =>
+    value
+      .replace(/([A-Z])/g, ' $1')
+      .replace(/^./, (char) => char.toUpperCase());
 
   const handleActionSelect = (action: ActionType) => {
     switch (action) {
@@ -123,48 +138,121 @@ const ActionSelectionScreen: React.FC<ActionSelectionScreenProps> = ({ navigatio
   };
 
   return (
-    <ScrollView style={styles.container} contentContainerStyle={styles.content}>
-      <View style={styles.header}>
-        <AppText variant="h2">{t('actionSelection.title')}</AppText>
-        <AppText variant="body" color={darkTheme.textSecondary} style={styles.subtitle}>
-          {t('actionSelection.subtitle')}
-        </AppText>
-        <AppText variant="caption" style={styles.progress}>
-          {getCompletedCount()}/5 {t('actionSelection.completed')}
-        </AppText>
-      </View>
+    <View style={styles.container}>
+      <View pointerEvents="none" style={styles.blobTopRight} />
+      <View pointerEvents="none" style={styles.blobBottomLeft} />
 
-      {ACTIONS.map((action) => {
-        const isCompleted = isExerciseCompleted(action.id);
-        return (
-          <Card
-            key={action.id}
-            style={styles.actionCard}
-            onPress={() => !isCompleted && handleActionSelect(action.id)}
-          >
-            <View style={styles.actionContent}>
-              <View style={isCompleted ? styles.iconCompleted : styles.icon}>
-                {isCompleted ? action.completedIcon : action.icon}
-              </View>
-              <View style={styles.actionDetails}>
-                <AppText variant="h3" style={isCompleted ? styles.textCompleted : styles.actionTitle}>
-                  {t(actionTitleMap[action.title] || action.title)}
-                </AppText>
-                <AppText variant="body" color={darkTheme.textSecondary} style={styles.actionDescription}>
-                  {t(actionDescriptionMap[action.description] || action.description)}
-                </AppText>
-                <View style={{ flexDirection: 'row', alignItems: 'center', gap: 4, marginTop: 4 }}>
-                  <Clock color={darkTheme.textSecondary} size={12} />
-                  <AppText variant="caption" style={styles.duration}>
-                    {t(actionDurationMap[action.title] || action.duration)}
+      <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.content}>
+        <View style={styles.header}>
+          <View style={styles.headerText}>
+            <AppText variant="h1" style={styles.title}>{t('actionSelection.title')}</AppText>
+            <AppText variant="body" style={styles.subtitle}>
+              {t('actionSelection.subtitle')}
+            </AppText>
+          </View>
+
+          <View style={styles.headerBadge}>
+            <Sparkles color={N.accentDeep} size={24} />
+          </View>
+        </View>
+
+        <View style={styles.contextCard}>
+          <View style={styles.contextTop}>
+            <AppText style={styles.contextTitle}>{t('actionSelection.contextTitle')}</AppText>
+            <View style={styles.progressPill}>
+              <AppText style={styles.progress}>
+                {completedCount}/5 {t('actionSelection.completed')}
+              </AppText>
+            </View>
+          </View>
+
+          <View style={styles.contextRow}>
+            <View style={styles.contextItem}>
+              <AppText style={styles.contextLabel}>{t('stressFlow.summary.trigger')}</AppText>
+              <AppText style={styles.contextValue}>{formatTrigger(trigger)}</AppText>
+            </View>
+            <View style={styles.contextItem}>
+              <AppText style={styles.contextLabel}>{t('stressFlow.summary.intensity')}</AppText>
+              <AppText style={styles.contextValue}>{intensity}/5</AppText>
+            </View>
+          </View>
+        </View>
+
+        <AppText style={styles.sectionTitle}>{t('actionSelection.sectionTitle')}</AppText>
+
+        {ACTIONS.map((action) => {
+          const isCompleted = isExerciseCompleted(action.id);
+          const isRecommended = action.id === recommendedAction && !isCompleted;
+
+          return (
+            <Card
+              key={action.id}
+              style={[
+                styles.actionCard,
+                isRecommended ? styles.recommendedCard : {},
+                isCompleted ? styles.completedCard : {},
+              ]}
+              onPress={() => !isCompleted && handleActionSelect(action.id)}
+            >
+              <View style={styles.actionContent}>
+                <View
+                  style={[
+                    isCompleted ? styles.iconCompleted : styles.icon,
+                    isRecommended ? styles.iconRecommended : {},
+                  ]}
+                >
+                  {isCompleted ? action.completedIcon : action.icon}
+                </View>
+
+                <View style={styles.actionDetails}>
+                  <View style={styles.actionTopRow}>
+                    <AppText
+                      variant="h3"
+                      style={isCompleted ? styles.textCompleted : styles.actionTitle}
+                    >
+                      {t(actionTitleMap[action.title], { defaultValue: action.title })}
+                    </AppText>
+
+                    {isRecommended && (
+                      <View style={styles.recommendedChip}>
+                        <AppText style={styles.recommendedText}>
+                          {t('actionSelection.recommended')}
+                        </AppText>
+                      </View>
+                    )}
+                  </View>
+
+                  <AppText variant="body" style={styles.actionDescription}>
+                    {t(actionDescriptionMap[action.description], {
+                      defaultValue: action.description,
+                    })}
                   </AppText>
+
+                  <View style={styles.metaRow}>
+                    <View style={styles.durationChip}>
+                      <Clock color={N.textSecondary} size={12} />
+                      <AppText variant="caption" style={styles.duration}>
+                        {t(actionDurationMap[action.title], {
+                          defaultValue: action.duration,
+                        })}
+                      </AppText>
+                    </View>
+
+                    {isCompleted && (
+                      <View style={styles.statusChip}>
+                        <AppText style={styles.statusText}>
+                          {t('actionSelection.completed')}
+                        </AppText>
+                      </View>
+                    )}
+                  </View>
                 </View>
               </View>
-            </View>
-          </Card>
-        );
-      })}
-    </ScrollView>
+            </Card>
+          );
+        })}
+      </ScrollView>
+    </View>
   );
 };
 

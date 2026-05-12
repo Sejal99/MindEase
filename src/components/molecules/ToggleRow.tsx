@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Pressable, StyleSheet } from 'react-native';
 import AppText from '../atoms/AppText';
-import { darkTheme } from '../../theme/colors';
+import { N } from '../../theme/warm-colors';
 
 interface ToggleRowProps {
   label: string;
@@ -58,38 +58,41 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     paddingVertical: 16,
+    paddingHorizontal: 16,
     borderBottomWidth: 1,
-    borderBottomColor: darkTheme.border,
+    borderBottomColor: N.borderSoft,
   },
   rowLeft: { flex: 1, marginRight: 16 },
-  rowLabel: { fontSize: 16, fontWeight: '600', color: darkTheme.text, marginBottom: 4 },
-  rowDesc: { fontSize: 13, color: darkTheme.textSecondary, lineHeight: 18 },
+  rowLabel: { fontSize: 16, fontWeight: '700', color: N.textPrimary, marginBottom: 4 },
+  rowDesc: { fontSize: 13, color: N.textSecondary, lineHeight: 18 },
   rowMeta: { flexDirection: 'row', gap: 8, marginTop: 8 },
   metaChip: {
-    backgroundColor: darkTheme.card,
+    backgroundColor: N.surfaceAlt,
     borderRadius: 8,
     paddingHorizontal: 10,
     paddingVertical: 4,
     borderWidth: 1,
-    borderColor: darkTheme.border,
+    borderColor: N.border,
   },
-  metaChipText: { fontSize: 12, color: darkTheme.textSecondary, fontWeight: '600' },
+  metaChipText: { fontSize: 12, color: N.accentDeep, fontWeight: '700' },
   toggle: {
     width: 50,
     height: 28,
     borderRadius: 14,
-    backgroundColor: darkTheme.card,
+    backgroundColor: N.surfaceAlt,
+    borderWidth: 1,
+    borderColor: N.border,
     justifyContent: 'center',
     paddingHorizontal: 2,
   },
-  toggleActive: { backgroundColor: darkTheme.primary },
+  toggleActive: { backgroundColor: N.accent, borderColor: N.accent },
   toggleKnob: {
-    width: 24,
-    height: 24,
-    borderRadius: 12,
-    backgroundColor: darkTheme.textSecondary,
+    width: 22,
+    height: 22,
+    borderRadius: 11,
+    backgroundColor: N.textMuted,
   },
-  toggleKnobActive: { backgroundColor: darkTheme.text },
+  toggleKnobActive: { backgroundColor: N.surface, marginLeft: 22 },
 });
 
 export default ToggleRow;

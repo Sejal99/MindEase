@@ -17,7 +17,7 @@ import NudgeChip from "../../components/molecules/NudgeChip";
 import MilestoneToast from "../../components/molecules/MilestoneToast";
 import DoneSummary from "../../components/organisms/DoneSummary";
 import { ActionType } from "../../models/types";
-import { darkTheme } from "../../theme/colors";
+import { N } from "../../theme/warm-colors";
 
 type BrainDumpScreenNavigationProp = NativeStackNavigationProp<
   RootStackParamList,
@@ -132,6 +132,8 @@ const BrainDumpScreen: React.FC<BrainDumpScreenProps> = ({
   if (phase === "done") {
     return (
       <View style={styles.doneScreen}>
+        <View pointerEvents="none" style={styles.blobTopRight} />
+        <View pointerEvents="none" style={styles.blobBottomLeft} />
         <CircularTimer timeLeft={0} total={DURATION} phase="done" />
         <DoneSummary
           wordCount={wordCount}
@@ -147,6 +149,8 @@ const BrainDumpScreen: React.FC<BrainDumpScreenProps> = ({
       style={styles.root}
       behavior={Platform.OS === "ios" ? "padding" : undefined}
     >
+      <View pointerEvents="none" style={styles.blobTopRight} />
+      <View pointerEvents="none" style={styles.blobBottomLeft} />
       <ScrollView
         style={styles.container}
         contentContainerStyle={styles.content}
@@ -202,13 +206,13 @@ const BrainDumpScreen: React.FC<BrainDumpScreenProps> = ({
             placeholder={
               "Just start typing...\n\nIt doesn't need to make sense."
             }
-            placeholderTextColor={darkTheme.border}
+            placeholderTextColor={N.textMuted}
             multiline
             autoFocus
             value={text}
             onChangeText={handleTextChange}
             textAlignVertical="top"
-            selectionColor={darkTheme.primary}
+            selectionColor={N.accent}
           />
         </View>
 

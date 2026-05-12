@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
-import { darkTheme } from '../../theme/colors';
+import { N } from '../../theme/warm-colors';
 
 export interface Step {
   id: number;
@@ -30,7 +30,7 @@ const ProgressDots: React.FC<ProgressDotsProps> = ({ current, steps }) => (
             styles.dot,
             isActive && { backgroundColor: s.color, width: 24, borderRadius: 6 },
             isDone && { backgroundColor: s.color + '60' },
-            !isActive && !isDone && { backgroundColor: darkTheme.border },
+            !isActive && !isDone && { backgroundColor: N.border },
           ]} />
         </View>
       );
@@ -41,7 +41,7 @@ const ProgressDots: React.FC<ProgressDotsProps> = ({ current, steps }) => (
 const styles = StyleSheet.create({
   dotsRow: { flexDirection: 'row', alignItems: 'center', gap: 6, marginBottom: 28 },
   dotWrapper: {},
-  dot: { width: 8, height: 8, borderRadius: 4, backgroundColor: darkTheme.border },
+  dot: { width: 8, height: 8, borderRadius: 4, backgroundColor: N.border },
 });
 
 export default ProgressDots;

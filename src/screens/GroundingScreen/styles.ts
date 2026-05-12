@@ -1,29 +1,49 @@
 import { StyleSheet } from "react-native";
-import { darkTheme } from "../../theme/colors";
+import { N } from "../../theme/warm-colors";
 
 export const styles = StyleSheet.create({
-  root: { flex: 1, backgroundColor: darkTheme.background },
+  root: { flex: 1, backgroundColor: N.bg },
   container: { flex: 1 },
-  content: { padding: 24, paddingBottom: 48 },
-
-  header: { marginBottom: 28 },
-  techniqueLabel: { fontSize: 11, fontWeight: '700', letterSpacing: 2.5, marginBottom: 10 },
-  title: { fontSize: 26, fontWeight: '700', color: darkTheme.text, lineHeight: 34 },
-
-  // Progress dots
-  dotsRow: { flexDirection: 'row', alignItems: 'center', gap: 6, marginBottom: 28 },
-
-  // Step card
-  stepCard: {
-    backgroundColor: darkTheme.card,
-    borderRadius: 20,
-    padding: 20,
-    borderWidth: 1,
-    borderColor: darkTheme.border,
-    marginBottom: 24,
+  content: { padding: 24, paddingBottom: 100 },
+  blobTopRight: {
+    position: "absolute",
+    top: -70,
+    right: -70,
+    width: 210,
+    height: 210,
+    borderRadius: 105,
+    backgroundColor: N.accentLight,
+    opacity: 0.28,
+  },
+  blobBottomLeft: {
+    position: "absolute",
+    bottom: 150,
+    left: -80,
+    width: 190,
+    height: 190,
+    borderRadius: 95,
+    backgroundColor: N.tealDim,
+    opacity: 0.42,
   },
 
-  // Sense header
+  header: { marginBottom: 24 },
+  techniqueLabel: { fontSize: 11, fontWeight: '800', letterSpacing: 1.4, marginBottom: 10 },
+  title: { fontSize: 28, fontWeight: '800', color: N.textPrimary, lineHeight: 36 },
+  dotsRow: { flexDirection: 'row', alignItems: 'center', gap: 6, marginBottom: 24 },
+
+  stepCard: {
+    backgroundColor: N.surface,
+    borderRadius: 24,
+    padding: 20,
+    borderWidth: 1,
+    borderColor: N.border,
+    marginBottom: 24,
+    shadowColor: N.accentDeep,
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.05,
+    shadowRadius: 8,
+    elevation: 2,
+  },
   senseHeader: { flexDirection: 'row', alignItems: 'flex-start', marginBottom: 20 },
   senseTextBlock: { flex: 1 },
   sensePill: {
@@ -37,25 +57,19 @@ export const styles = StyleSheet.create({
     marginBottom: 8,
     gap: 5,
   },
-  sensePillText: { fontSize: 12, fontWeight: '700', letterSpacing: 0.5 },
-  instruction: { fontSize: 14, lineHeight: 20 },
-
-  // Entries
+  sensePillText: { fontSize: 12, fontWeight: '800', letterSpacing: 0.2 },
+  instruction: { fontSize: 14, lineHeight: 20, color: N.textSecondary },
   entriesBlock: { gap: 4, marginBottom: 20 },
-
-  // In-card progress
   inCardProgress: { flexDirection: 'row', alignItems: 'center', gap: 10 },
   inCardTrack: {
     flex: 1,
-    height: 4,
-    backgroundColor: darkTheme.border,
-    borderRadius: 2,
+    height: 5,
+    backgroundColor: N.surfaceAlt,
+    borderRadius: 3,
     overflow: 'hidden',
   },
-  inCardFill: { height: '100%', borderRadius: 2 },
-  progressLabel: { fontSize: 11, fontWeight: '700', minWidth: 56, textAlign: 'right' },
-
-  // CTA
-  cta: { borderRadius: 14, marginBottom: 14 },
-  tip: { textAlign: 'center', fontSize: 12 },
+  inCardFill: { height: '100%', borderRadius: 3 },
+  progressLabel: { fontSize: 11, fontWeight: '800', minWidth: 56, textAlign: 'right' },
+  cta: { borderRadius: 18, marginBottom: 14 },
+  tip: { textAlign: 'center', fontSize: 12, color: N.textMuted },
 });

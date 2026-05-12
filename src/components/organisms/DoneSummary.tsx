@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { View, Animated, StyleSheet } from 'react-native';
 import AppText from '../atoms/AppText';
 import Button from '../atoms/Button';
-import { darkTheme } from '../../theme/colors';
+import { N } from '../../theme/warm-colors';
 
 interface DoneSummaryProps {
   wordCount: number;
@@ -66,26 +66,26 @@ const DoneSummary: React.FC<DoneSummaryProps> = ({ wordCount, charCount, onDone 
 
 const styles = StyleSheet.create({
   summaryCard: {
-    backgroundColor: darkTheme.card,
+    backgroundColor: N.surface,
     borderRadius: 20,
     padding: 24,
     marginTop: 28,
     width: '100%',
     borderWidth: 1,
-    borderColor: darkTheme.border,
+    borderColor: N.border,
     alignItems: 'center',
   },
   summaryEmoji: { fontSize: 40, marginBottom: 12 },
   summaryTitle: {
     fontSize: 20,
     fontWeight: '700',
-    color: darkTheme.text,
+    color: N.textPrimary,
     marginBottom: 10,
     textAlign: 'center',
   },
   summaryBody: {
     fontSize: 14,
-    color: darkTheme.textSecondary,
+    color: N.textSecondary,
     lineHeight: 22,
     textAlign: 'center',
     marginBottom: 20,
@@ -97,9 +97,9 @@ const styles = StyleSheet.create({
     gap: 20,
   },
   statBox: { alignItems: 'center' },
-  statValue: { fontSize: 32, fontWeight: '800', color: darkTheme.primary },
-  statLabel: { fontSize: 12, color: darkTheme.textSecondary, fontWeight: '600' },
-  statDivider: { width: 1, height: 40, backgroundColor: darkTheme.border },
+  statValue: { fontSize: 32, fontWeight: '800', color: N.accent },
+  statLabel: { fontSize: 12, color: N.textSecondary, fontWeight: '600' },
+  statDivider: { width: 1, height: 40, backgroundColor: N.border },
   continueBtn: { width: '100%', borderRadius: 14 },
 });
 

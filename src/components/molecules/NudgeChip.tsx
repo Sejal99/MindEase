@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { Pressable, Animated, StyleSheet } from 'react-native';
 import AppText from '../atoms/AppText';
-import { darkTheme } from '../../theme/colors';
+import { N } from '../../theme/warm-colors';
 
 interface NudgeChipProps {
   prompt: string;
@@ -45,18 +45,18 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: 8,
-    backgroundColor: darkTheme.background,
-    borderRadius: 12,
+    backgroundColor: N.surface,
+    borderRadius: 14,
     paddingHorizontal: 14,
     paddingVertical: 10,
     borderWidth: 1,
-    borderColor: darkTheme.primary + '60',
+    borderColor: N.accent + '60',
     marginBottom: 12,
   },
   nudgeIcon: { fontSize: 16 },
   nudgeText: {
     fontSize: 13,
-    color: darkTheme.textSecondary,
+    color: N.textSecondary,
     fontWeight: '500',
     flex: 1,
     lineHeight: 18,

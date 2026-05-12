@@ -14,9 +14,7 @@ import RingTimer from "../../components/organisms/RingTimer";
 import { ActionType } from '../../models';
 import { styles } from './styles';
 import { PersonStanding, Sun, RotateCcw, User, Dumbbell } from 'lucide-react-native';
-import { COLORS } from '../../constants/colors';
-import { EXERCISE_CONFIG } from '../../constants';
-import { darkTheme } from '../../theme/colors';
+import { N } from '../../theme/warm-colors';
 
 type MovementScreenNavigationProp = NativeStackNavigationProp<
   RootStackParamList,
@@ -47,9 +45,9 @@ const EXERCISES: Exercise[] = [
     title: "Quick Walk",
     description: "Reset your nervous system with movement",
     durationSecs: 120,
-    icon: <PersonStanding color={darkTheme.primary} size={20} />,
-    color: darkTheme.primary,
-    dimColor: darkTheme.primaryDark,
+    icon: <PersonStanding color={N.accent} size={20} />,
+    color: N.accent,
+    dimColor: N.accentDim,
     tag: "2 min",
     steps: [
       "Stand up and find a clear space.",
@@ -66,9 +64,9 @@ const EXERCISES: Exercise[] = [
     title: "Full Stretch",
     description: "Open your chest, spine, and sides",
     durationSecs: 120,
-    icon: <Sun color={darkTheme.success} size={20} />,
-    color: darkTheme.success,
-    dimColor: darkTheme.success + '80',
+    icon: <Sun color={N.teal} size={20} />,
+    color: N.teal,
+    dimColor: N.tealDim,
     tag: "2 min",
     steps: [
       "Reach both arms high above your head.",
@@ -85,9 +83,9 @@ const EXERCISES: Exercise[] = [
     title: "Neck Release",
     description: "Melt the tension in your neck & jaw",
     durationSecs: 60,
-    icon: <RotateCcw color={darkTheme.warning} size={20} />,
-    color: darkTheme.warning,
-    dimColor: darkTheme.warning + '80',
+    icon: <RotateCcw color={N.amber} size={20} />,
+    color: N.amber,
+    dimColor: N.amberDim,
     tag: "1 min",
     steps: [
       "Sit upright. Drop your shoulders away from your ears.",
@@ -104,9 +102,9 @@ const EXERCISES: Exercise[] = [
     title: "Shoulder Shrugs",
     description: "Release trapped stress from your shoulders",
     durationSecs: 60,
-    icon: <User color={darkTheme.accent} size={20} />,
-    color: darkTheme.accent,
-    dimColor: darkTheme.accent + '80',
+    icon: <User color={N.lavender} size={20} />,
+    color: N.lavender,
+    dimColor: N.lavenderDim,
     tag: "1 min",
     steps: [
       "Stand or sit with arms relaxed at your sides.",
@@ -122,9 +120,9 @@ const EXERCISES: Exercise[] = [
     title: "Power Squats",
     description: "Ground yourself with a full-body reset",
     durationSecs: 60,
-    icon: <Dumbbell color={darkTheme.primary} size={20} />,
-    color: darkTheme.primary,
-    dimColor: darkTheme.primaryDark,
+    icon: <Dumbbell color={N.accent} size={20} />,
+    color: N.accent,
+    dimColor: N.accentDim,
     tag: "1 min",
     steps: [
       "Stand with feet shoulder-width apart.",
@@ -251,12 +249,14 @@ const MovementScreen: React.FC<MovementScreenProps> = ({ navigation, route }) =>
   if (!selectedExercise) {
     return (
       <View style={styles.container}>
+        <View pointerEvents="none" style={styles.blobTopRight} />
+        <View pointerEvents="none" style={styles.blobBottomLeft} />
         <ScrollView contentContainerStyle={styles.content}>
           <View style={styles.header}>
             <AppText variant="h2" style={styles.title}>
               Choose Your Movement
             </AppText>
-            <AppText variant="body" color={darkTheme.textSecondary} style={styles.subtitle}>
+            <AppText variant="body" style={styles.subtitle}>
               Select an exercise to release physical tension and reset your mind.
             </AppText>
           </View>
@@ -275,12 +275,14 @@ const MovementScreen: React.FC<MovementScreenProps> = ({ navigation, route }) =>
 
   return (
     <View style={styles.container}>
+      <View pointerEvents="none" style={styles.blobTopRight} />
+      <View pointerEvents="none" style={styles.blobBottomLeft} />
       <ScrollView contentContainerStyle={styles.content}>
         <View style={styles.exerciseHeader}>
           <AppText variant="h3" style={styles.exerciseTitle}>
             {selectedExercise.title}
           </AppText>
-          <AppText variant="body" color={darkTheme.textSecondary} style={styles.exerciseSubtitle}>
+          <AppText variant="body" style={styles.exerciseSubtitle}>
             {selectedExercise.description}
           </AppText>
         </View>
@@ -297,7 +299,7 @@ const MovementScreen: React.FC<MovementScreenProps> = ({ navigation, route }) =>
           style={[styles.stepContainer, { opacity: fadeAnim, transform: [{ translateX: slideAnim }] }]}
         >
           <View style={styles.stepHeader}>
-            <AppText variant="caption" color={darkTheme.textSecondary}>
+            <AppText variant="caption" style={styles.stepMeta}>
               Step {currentStep + 1} of {selectedExercise.steps.length}
             </AppText>
             <Pressable style={styles.stepDot} />
@@ -312,7 +314,7 @@ const MovementScreen: React.FC<MovementScreenProps> = ({ navigation, route }) =>
               style={[styles.actionButton, styles.backButton]}
               onPress={handleBack}
             >
-              <AppText style={styles.actionText}>← Back</AppText>
+              <AppText style={[styles.actionText, styles.backButtonText]}>← Back</AppText>
             </Pressable>
 
             {!isActive && !exerciseDone && (
@@ -358,7 +360,7 @@ const MovementScreen: React.FC<MovementScreenProps> = ({ navigation, route }) =>
             <AppText variant="h3" style={styles.doneTitle}>
               Great job!
             </AppText>
-            <AppText variant="body" color={darkTheme.textSecondary} style={styles.doneText}>
+            <AppText variant="body" style={styles.doneText}>
               You've completed the exercise. Take a moment to notice how you feel.
             </AppText>
             <Pressable

@@ -1,30 +1,46 @@
 import { StyleSheet } from "react-native";
-import { darkTheme } from "../../theme/colors";
+import { N } from "../../theme/warm-colors";
 
 export const styles = StyleSheet.create({
-  root: { flex: 1, backgroundColor: darkTheme.background },
+  root: { flex: 1, backgroundColor: N.bg },
   container: { flex: 1 },
-  content: { padding: 24, paddingBottom: 60 },
-
-  // Header
+  content: { padding: 24, paddingBottom: 100 },
+  blobTopRight: {
+    position: "absolute",
+    top: -70,
+    right: -70,
+    width: 210,
+    height: 210,
+    borderRadius: 105,
+    backgroundColor: N.accentLight,
+    opacity: 0.28,
+  },
+  blobBottomLeft: {
+    position: "absolute",
+    bottom: 150,
+    left: -80,
+    width: 190,
+    height: 190,
+    borderRadius: 95,
+    backgroundColor: N.lavenderDim,
+    opacity: 0.44,
+  },
   label: {
     fontSize: 11,
-    fontWeight: "700",
-    letterSpacing: 2.5,
-    color: darkTheme.primary,
+    fontWeight: "800",
+    letterSpacing: 1.4,
+    color: N.lavender,
     marginBottom: 10,
   },
   title: {
-    fontSize: 26,
-    fontWeight: "700",
-    color: darkTheme.text,
-    lineHeight: 34,
+    fontSize: 28,
+    fontWeight: "800",
+    color: N.textPrimary,
+    lineHeight: 36,
     marginBottom: 8,
   },
-  subtitle: { fontSize: 14, color: darkTheme.textSecondary, lineHeight: 20 },
+  subtitle: { fontSize: 14, color: N.textSecondary, lineHeight: 20 },
   header: { marginBottom: 28 },
-
-  // Timer row
   timerRow: {
     flexDirection: "row",
     alignItems: "center",
@@ -33,62 +49,59 @@ export const styles = StyleSheet.create({
   },
   statsColumn: { gap: 12 },
   statMini: {
-    backgroundColor: darkTheme.card,
-    borderRadius: 12,
+    backgroundColor: N.surface,
+    borderRadius: 16,
     paddingVertical: 10,
     paddingHorizontal: 16,
     borderWidth: 1,
-    borderColor: darkTheme.border,
+    borderColor: N.border,
     alignItems: "center",
   },
   statMiniBottom: {},
-  statMiniValue: { fontSize: 22, fontWeight: "800", color: darkTheme.text },
+  statMiniValue: { fontSize: 22, fontWeight: "800", color: N.textPrimary },
   statMiniLabel: {
     fontSize: 10,
-    color: darkTheme.textSecondary,
-    fontWeight: "600",
+    color: N.textMuted,
+    fontWeight: "700",
     letterSpacing: 0.5,
   },
-
-  // Urgent
   urgentBanner: {
-    backgroundColor: darkTheme.error + "20",
-    borderRadius: 10,
+    backgroundColor: N.blushDim,
+    borderRadius: 14,
     paddingHorizontal: 14,
     paddingVertical: 8,
     borderWidth: 1,
-    borderColor: darkTheme.error + "40",
+    borderColor: N.moodOverwhelmedBorder,
     marginBottom: 12,
     alignItems: "center",
   },
-  urgentText: { fontSize: 13, color: darkTheme.error, fontWeight: "600" },
-
-  // Editor
+  urgentText: { fontSize: 13, color: N.blush, fontWeight: "700" },
   editorCard: {
-    backgroundColor: darkTheme.card,
-    borderRadius: 16,
+    backgroundColor: N.surface,
+    borderRadius: 22,
     borderWidth: 1,
-    borderColor: darkTheme.border,
+    borderColor: N.border,
     padding: 16,
     minHeight: 220,
     marginBottom: 16,
+    shadowColor: N.accentDeep,
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.05,
+    shadowRadius: 8,
+    elevation: 2,
   },
   editor: {
     flex: 1,
     minHeight: 200,
-    color: darkTheme.text,
+    color: N.textPrimary,
     fontSize: 16,
     lineHeight: 26,
   },
-
-  // Skip
   skipBtn: { alignItems: "center", paddingVertical: 8 },
-  skipText: { fontSize: 13, color: darkTheme.textSecondary, fontWeight: "600" },
-
-  // Done screen
+  skipText: { fontSize: 13, color: N.accentDeep, fontWeight: "800" },
   doneScreen: {
     flex: 1,
-    backgroundColor: darkTheme.background,
+    backgroundColor: N.bg,
     alignItems: "center",
     padding: 24,
     paddingTop: 80,

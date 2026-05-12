@@ -1,12 +1,8 @@
 import React, { useState } from 'react';
-import { View, ScrollView, Switch, Pressable } from 'react-native';
-import { NavigationProp } from '@react-navigation/native';
-import { RouteProp } from '@react-navigation/native';
-import { TabParamList } from '../../navigation/AppNavigator';
+import { View, ScrollView, Pressable } from 'react-native';
+import { Bell } from 'lucide-react-native';
 
 import AppText from '../../components/atoms/AppText';
-import Card from '../../components/atoms/Card';
-import Button from '../../components/atoms/Button';
 import ToggleRow from '../../components/molecules/ToggleRow';
 import TimePickerModal from '../../components/organisms/TimePickerModal';
 import DayPickerModal from '../../components/organisms/DayPickerModal';
@@ -14,16 +10,9 @@ import { NotificationService } from '../../services/NotificationService';
 import { useNotificationStore } from '../../store/notificationStore';
 import { useTranslation } from 'react-i18next';
 import { styles } from './styles';
+import { N } from '../../theme/warm-colors';
 
-type NotificationSettingsScreenNavigationProp = NavigationProp<TabParamList>;
-type NotificationSettingsScreenRouteProp = RouteProp<TabParamList, 'NotificationSettingsTab'>;
-
-interface NotificationSettingsScreenProps {
-  navigation: NotificationSettingsScreenNavigationProp;
-  route: NotificationSettingsScreenRouteProp;
-}
-
-const NotificationSettingsScreen: React.FC<NotificationSettingsScreenProps> = () => {
+const NotificationSettingsScreen: React.FC = () => {
   const {
     allEnabled,
     dailyCheckInEnabled,
@@ -83,90 +72,102 @@ const NotificationSettingsScreen: React.FC<NotificationSettingsScreenProps> = ()
   };
 
   return (
-    <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
-      <View style={styles.header}>
-        <AppText variant="h1" style={styles.headerTitle}>{t('notifications.title')}</AppText>
-        <AppText style={styles.headerDesc}>{t('notifications.description')}</AppText>
-      </View>
+    <View style={styles.container}>
+      <View pointerEvents="none" style={styles.blobTopRight} />
+      <View pointerEvents="none" style={styles.blobBottomLeft} />
 
-      <View style={styles.section}>
-        <View style={styles.masterRow}>
-          <AppText style={styles.masterLabel}>{t('notifications.allNotifications')}</AppText>
-          <Pressable
-            style={[styles.toggle, allEnabled && styles.toggleActive]}
-            onPress={() => handleToggle(setAllEnabled, allEnabled)}
-          >
-            <View style={[styles.toggleKnob, allEnabled && styles.toggleKnobActive]} />
-          </Pressable>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={styles.content}
+      >
+        <View style={styles.header}>
+          <View style={styles.headerText}>
+            <AppText variant="h1" style={styles.headerTitle}>{t('notifications.title')}</AppText>
+            <AppText style={styles.headerDesc}>{t('notifications.description')}</AppText>
+          </View>
+
+          <View style={styles.headerBadge}>
+            <Bell color={N.accentDeep} size={24} />
+          </View>
         </View>
-      </View>
 
-      <AppText style={styles.sectionTitle}>{t('notifications.scheduledReminders.title')}</AppText>
-      <View style={styles.section}>
-        <ToggleRow
-          label={t('notifications.scheduledReminders.dailyCheckIn.label')}
-          description={t('notifications.scheduledReminders.dailyCheckIn.description')}
-          enabled={allEnabled && dailyCheckInEnabled}
-          onToggle={() => handleToggle((e) => setDailyCheckIn(e), dailyCheckInEnabled)}
-          time={dailyCheckInTime}
-          onTimePress={() => { setEditingField('daily'); setTimePickerVisible(true); }}
-        />
-        <View style={styles.divider} />
-        <ToggleRow
-          label={t('notifications.scheduledReminders.streakReminder.label')}
-          description={t('notifications.scheduledReminders.streakReminder.description')}
-          enabled={allEnabled && streakReminderEnabled}
-          onToggle={() => handleToggle((e) => setStreakReminder(e), streakReminderEnabled)}
-          time={streakReminderTime}
-          onTimePress={() => { setEditingField('streak'); setTimePickerVisible(true); }}
-        />
-        <View style={styles.divider} />
-        <ToggleRow
-          label={t('notifications.scheduledReminders.mindfulBreak.label')}
-          description={t('notifications.scheduledReminders.mindfulBreak.description')}
-          enabled={allEnabled && mindfulBreakEnabled}
-          onToggle={() => handleToggle((e) => setMindfulBreak(e), mindfulBreakEnabled)}
-          time={mindfulBreakTime}
-          onTimePress={() => { setEditingField('break'); setTimePickerVisible(true); }}
-        />
-        <View style={styles.divider} />
-        <ToggleRow
-          label={t('notifications.scheduledReminders.weeklyInsights.label')}
-          description={t('notifications.scheduledReminders.weeklyInsights.description')}
-          enabled={allEnabled && weeklyInsightsEnabled}
-          onToggle={() => handleToggle((e) => setWeeklyInsights(e), weeklyInsightsEnabled)}
-          day={weeklyInsightsDay}
-          onDayPress={() => setDayPickerVisible(true)}
-          time={weeklyInsightsTime}
-          onTimePress={() => { setEditingField('weekly'); setTimePickerVisible(true); }}
-        />
-      </View>
+        <View style={[styles.section, styles.masterSection]}>
+          <View style={styles.masterRow}>
+            <View style={styles.masterCopy}>
+              <AppText style={styles.masterLabel}>{t('notifications.allNotifications')}</AppText>
+              <AppText style={styles.masterDesc}>{t('notifications.description')}</AppText>
+            </View>
+            <Pressable
+              style={[styles.toggle, allEnabled && styles.toggleActive]}
+              onPress={() => handleToggle(setAllEnabled, allEnabled)}
+            >
+              <View style={[styles.toggleKnob, allEnabled && styles.toggleKnobActive]} />
+            </Pressable>
+          </View>
+        </View>
 
-      <AppText style={styles.sectionTitle}>{t('notifications.smartNotifications.title')}</AppText>
-      <View style={styles.section}>
-        <ToggleRow
-          label={t('notifications.smartNotifications.postSessionCheckIn.label')}
-          description={t('notifications.smartNotifications.postSessionCheckIn.description')}
-          enabled={allEnabled && postSessionFollowUpEnabled}
-          onToggle={() => handleToggle(setPostSessionFollowUp, postSessionFollowUpEnabled)}
-        />
-        <View style={styles.divider} />
-        <ToggleRow
-          label={t('notifications.smartNotifications.achievementCelebrations.label')}
-          description={t('notifications.smartNotifications.achievementCelebrations.description')}
-          enabled={allEnabled && achievementEnabled}
-          onToggle={() => handleToggle(setAchievementEnabled, achievementEnabled)}
-        />
-        <View style={styles.divider} />
-        <ToggleRow
-          label={t('notifications.smartNotifications.reEngagement.label')}
-          description={t('notifications.smartNotifications.reEngagement.description')}
-          enabled={allEnabled && inactivityReminderEnabled}
-          onToggle={() => handleToggle(setInactivityReminder, inactivityReminderEnabled)}
-        />
-      </View>
+        <AppText style={styles.sectionTitle}>{t('notifications.scheduledReminders.title')}</AppText>
+        <View style={styles.section}>
+          <ToggleRow
+            label={t('notifications.scheduledReminders.dailyCheckIn.label')}
+            description={t('notifications.scheduledReminders.dailyCheckIn.description')}
+            enabled={allEnabled && dailyCheckInEnabled}
+            onToggle={() => handleToggle((e) => setDailyCheckIn(e), dailyCheckInEnabled)}
+            time={dailyCheckInTime}
+            onTimePress={() => { setEditingField('daily'); setTimePickerVisible(true); }}
+          />
+          <ToggleRow
+            label={t('notifications.scheduledReminders.streakReminder.label')}
+            description={t('notifications.scheduledReminders.streakReminder.description')}
+            enabled={allEnabled && streakReminderEnabled}
+            onToggle={() => handleToggle((e) => setStreakReminder(e), streakReminderEnabled)}
+            time={streakReminderTime}
+            onTimePress={() => { setEditingField('streak'); setTimePickerVisible(true); }}
+          />
+          <ToggleRow
+            label={t('notifications.scheduledReminders.mindfulBreak.label')}
+            description={t('notifications.scheduledReminders.mindfulBreak.description')}
+            enabled={allEnabled && mindfulBreakEnabled}
+            onToggle={() => handleToggle((e) => setMindfulBreak(e), mindfulBreakEnabled)}
+            time={mindfulBreakTime}
+            onTimePress={() => { setEditingField('break'); setTimePickerVisible(true); }}
+          />
+          <ToggleRow
+            label={t('notifications.scheduledReminders.weeklyInsights.label')}
+            description={t('notifications.scheduledReminders.weeklyInsights.description')}
+            enabled={allEnabled && weeklyInsightsEnabled}
+            onToggle={() => handleToggle((e) => setWeeklyInsights(e), weeklyInsightsEnabled)}
+            day={weeklyInsightsDay}
+            onDayPress={() => setDayPickerVisible(true)}
+            time={weeklyInsightsTime}
+            onTimePress={() => { setEditingField('weekly'); setTimePickerVisible(true); }}
+          />
+        </View>
 
-      <View style={styles.bottomPad} />
+        <AppText style={styles.sectionTitle}>{t('notifications.smartNotifications.title')}</AppText>
+        <View style={styles.section}>
+          <ToggleRow
+            label={t('notifications.smartNotifications.postSessionCheckIn.label')}
+            description={t('notifications.smartNotifications.postSessionCheckIn.description')}
+            enabled={allEnabled && postSessionFollowUpEnabled}
+            onToggle={() => handleToggle(setPostSessionFollowUp, postSessionFollowUpEnabled)}
+          />
+          <ToggleRow
+            label={t('notifications.smartNotifications.achievementCelebrations.label')}
+            description={t('notifications.smartNotifications.achievementCelebrations.description')}
+            enabled={allEnabled && achievementEnabled}
+            onToggle={() => handleToggle(setAchievementEnabled, achievementEnabled)}
+          />
+          <ToggleRow
+            label={t('notifications.smartNotifications.reEngagement.label')}
+            description={t('notifications.smartNotifications.reEngagement.description')}
+            enabled={allEnabled && inactivityReminderEnabled}
+            onToggle={() => handleToggle(setInactivityReminder, inactivityReminderEnabled)}
+          />
+        </View>
+
+        <View style={styles.bottomPad} />
+      </ScrollView>
 
       <TimePickerModal
         visible={timePickerVisible}
@@ -184,7 +185,7 @@ const NotificationSettingsScreen: React.FC<NotificationSettingsScreenProps> = ()
         }}
         onClose={() => setDayPickerVisible(false)}
       />
-    </ScrollView>
+    </View>
   );
 };
 

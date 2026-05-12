@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Animated, StyleSheet } from 'react-native';
 import AppText from '../atoms/AppText';
-import { darkTheme } from '../../theme/colors';
+import { N } from '../../theme/warm-colors';
 
 interface RingTimerProps {
   timeLeft: number;
@@ -32,7 +32,7 @@ const RingTimer: React.FC<RingTimerProps> = ({ timeLeft, total, color }) => {
         <AppText variant="h3" style={[styles.time, { color }]}>
           {minutes}:{seconds.toString().padStart(2, "0")}
         </AppText>
-        <AppText variant="caption" color={darkTheme.textSecondary} style={styles.label}>
+        <AppText variant="caption" style={styles.label}>
           remaining
         </AppText>
       </View>
@@ -72,6 +72,7 @@ const styles = StyleSheet.create({
     fontWeight: "800",
   },
   label: {
+    color: N.textSecondary,
     marginTop: 2,
   },
 });
