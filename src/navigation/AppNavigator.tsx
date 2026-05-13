@@ -12,6 +12,7 @@ import {
   Lightbulb,
   Trophy,
   Bell,
+  Headphones,
 } from 'lucide-react-native';
 
 import { ThemeProvider } from '../theme/ThemeProvider';
@@ -37,6 +38,7 @@ import { ActionType } from '../models/types';
 import useHomeViewModel from '../viewmodels/homeViewModel';
 
 import AppText from '../components/atoms/AppText';
+import AudioTherapyScreen from '../screens/AudioTherapy/index';
 
 export type RootStackParamList = {
   Onboarding: undefined;
@@ -58,6 +60,7 @@ export type TabParamList = {
   InsightsTab: undefined;
   AchievementsTab: undefined;
   NotificationSettingsTab: undefined;
+    AudioTherapyTab: undefined;
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -211,6 +214,39 @@ function TabNavigator() {
           ),
         }}
       />
+
+      {/* AUDIO THERAPY */}
+<Tab.Screen
+  name="AudioTherapyTab"
+  component={AudioTherapyScreen}
+  options={{
+    tabBarLabel: 'Therapy',
+
+    tabBarIcon: ({ color, focused }) => (
+      <TabIconWrapper focused={focused}>
+        <Headphones
+          size={focused ? 22 : 20}
+          color={focused ? N.surface : color}
+          strokeWidth={focused ? 2.6 : 2}
+        />
+      </TabIconWrapper>
+    ),
+
+    tabBarButton: (props) => (
+      <Pressable
+        {...props}
+        android_ripple={{
+          color: N.accentLight,
+          borderless: true,
+        }}
+        onPressIn={(e) => {
+          RNHapticFeedback.trigger('impactLight');
+          props.onPressIn?.(e);
+        }}
+      />
+    ),
+  }}
+/>
 
       {/* INSIGHTS */}
       <Tab.Screen

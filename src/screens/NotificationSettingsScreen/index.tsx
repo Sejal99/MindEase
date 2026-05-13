@@ -11,6 +11,7 @@ import { useNotificationStore } from '../../store/notificationStore';
 import { useTranslation } from 'react-i18next';
 import { styles } from './styles';
 import { N } from '../../theme/warm-colors';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const NotificationSettingsScreen: React.FC = () => {
   const {
@@ -72,7 +73,7 @@ const NotificationSettingsScreen: React.FC = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <View pointerEvents="none" style={styles.blobTopRight} />
       <View pointerEvents="none" style={styles.blobBottomLeft} />
 
@@ -185,7 +186,7 @@ const NotificationSettingsScreen: React.FC = () => {
         }}
         onClose={() => setDayPickerVisible(false)}
       />
-    </View>
+    </SafeAreaView>
   );
 };
 

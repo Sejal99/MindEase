@@ -21,6 +21,7 @@ import {
 } from 'lucide-react-native';
 import { styles } from './styles';
 import { N } from '../../theme/warm-colors';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 type ActionSelectionScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'ActionSelection'>;
 type ActionSelectionScreenRouteProp = RouteProp<RootStackParamList, 'ActionSelection'>;
@@ -138,7 +139,7 @@ const ActionSelectionScreen: React.FC<ActionSelectionScreenProps> = ({ navigatio
   };
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <View pointerEvents="none" style={styles.blobTopRight} />
       <View pointerEvents="none" style={styles.blobBottomLeft} />
 
@@ -252,7 +253,7 @@ const ActionSelectionScreen: React.FC<ActionSelectionScreenProps> = ({ navigatio
           );
         })}
       </ScrollView>
-    </View>
+    </SafeAreaView>
   );
 };
 

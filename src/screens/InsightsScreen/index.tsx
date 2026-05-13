@@ -26,6 +26,7 @@ import InsightCard from '../../components/organisms/InsightCard';
 import useInsightsViewModel from '../../viewmodels/insightsViewModel';
 import { formatTrigger } from '../../utils/formatters';
 import { styles } from './styles';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const InsightsScreen: React.FC = () => {
   const {
@@ -65,7 +66,7 @@ const InsightsScreen: React.FC = () => {
   }
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <View pointerEvents="none" style={styles.blobTopRight} />
       <View pointerEvents="none" style={styles.blobBottomLeft} />
 
@@ -240,7 +241,7 @@ const InsightsScreen: React.FC = () => {
           </>
         )}
       </ScrollView>
-    </View>
+    </SafeAreaView>
   );
 };
 

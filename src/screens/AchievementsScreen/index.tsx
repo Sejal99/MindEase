@@ -18,6 +18,7 @@ import useHomeViewModel from '../../viewmodels/homeViewModel';
 import { styles } from './styles';
 import { ACHIEVEMENT_STRINGS } from '../../constants/strings';
 import { N } from '../../theme/warm-colors';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const AchievementsScreen: React.FC = () => {
   const { achievements, userStats } = useHomeViewModel();
@@ -64,7 +65,7 @@ const AchievementsScreen: React.FC = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <View pointerEvents="none" style={styles.blobTopRight} />
       <View pointerEvents="none" style={styles.blobBottomLeft} />
 
@@ -246,7 +247,7 @@ const AchievementsScreen: React.FC = () => {
           );
         })}
       </ScrollView>
-    </View>
+    </SafeAreaView>
   );
 };
 

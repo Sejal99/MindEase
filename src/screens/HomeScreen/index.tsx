@@ -62,6 +62,7 @@ import {
   IntentionKey,
   QuickActionDef
 } from "../../constants/home-screen";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 // ─── Subcomponents ────────────────────────────────────────────────────────────
 
@@ -261,7 +262,7 @@ export default function HomeScreen({ navigation }: HomeScreenProps) {
     });
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <StatusBar barStyle="dark-content" backgroundColor={N.bg} />
 
       {/* Ambient blobs */}
@@ -609,6 +610,6 @@ export default function HomeScreen({ navigation }: HomeScreenProps) {
           accessibilityLabel="Start a session"
         />
       </Animated.View>
-    </View>
+    </SafeAreaView>
   );
 }

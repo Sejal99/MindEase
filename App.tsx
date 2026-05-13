@@ -13,6 +13,7 @@ const App: React.FC = () => {
       await NotificationService.requestPermissions();
       await NotificationService.rescheduleAllNotifications();
       await NotificationService.cancelInactivityReminder();
+      
     };
     setup();
   }, []);
