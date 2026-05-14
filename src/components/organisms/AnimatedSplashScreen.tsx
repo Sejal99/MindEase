@@ -12,8 +12,6 @@ import {
 import LinearGradient from "react-native-linear-gradient";
 import { Sparkles, BrainCircuit } from "lucide-react-native";
 
-import { N } from "../../theme/warm-colors";
-
 interface AnimatedSplashScreenProps {
   onFinish: () => void;
 }
@@ -29,7 +27,6 @@ export default function AnimatedSplashScreen({
 }: AnimatedSplashScreenProps) {
   const { height, width } = useWindowDimensions();
 
-  // MAIN ANIMS
   const intro = useRef(new Animated.Value(0)).current;
   const pulse = useRef(new Animated.Value(0)).current;
   const rotate = useRef(new Animated.Value(0)).current;
@@ -39,7 +36,12 @@ export default function AnimatedSplashScreen({
   const loader = useRef(new Animated.Value(0)).current;
   const exit = useRef(new Animated.Value(1)).current;
 
-  // PARTICLES
+  const letters = "CALMORA".split("");
+
+  const letterAnimations = useRef(
+    letters.map(() => new Animated.Value(0)),
+  ).current;
+
   const particles = useRef(
     [...Array(18)].map(() => ({
       x: new Animated.Value(0),
@@ -70,10 +72,27 @@ export default function AnimatedSplashScreen({
 
       Animated.timing(loader, {
         toValue: 1,
-        duration: 3200,
+        duration: 4200,
         easing: Easing.out(Easing.cubic),
         useNativeDriver: true,
       }),
+    ]).start();
+
+    // PREMIUM LETTER ANIMATION
+    Animated.sequence([
+      Animated.delay(700),
+
+      Animated.stagger(
+        140,
+        letterAnimations.map((anim) =>
+          Animated.spring(anim, {
+            toValue: 1,
+            friction: 5,
+            tension: 90,
+            useNativeDriver: true,
+          }),
+        ),
+      ),
     ]).start();
 
     // FLOATING PARTICLES
@@ -87,31 +106,36 @@ export default function AnimatedSplashScreen({
               easing: Easing.inOut(Easing.ease),
               useNativeDriver: true,
             }),
+
             Animated.timing(p.y, {
               toValue: Math.random() * 160 - 80,
               duration: 3000 + i * 140,
               easing: Easing.inOut(Easing.ease),
               useNativeDriver: true,
             }),
+
             Animated.timing(p.scale, {
               toValue: 1,
               duration: 900,
               useNativeDriver: true,
             }),
+
             Animated.timing(p.opacity, {
               toValue: 1,
               duration: 900,
               useNativeDriver: true,
             }),
           ]),
+
           Animated.parallel([
             Animated.timing(p.scale, {
               toValue: 0.4,
               duration: 2000,
               useNativeDriver: true,
             }),
+
             Animated.timing(p.opacity, {
-              toValue: 0.3,
+              toValue: 0.2,
               duration: 2000,
               useNativeDriver: true,
             }),
@@ -120,7 +144,7 @@ export default function AnimatedSplashScreen({
       ).start();
     });
 
-    // ROTATING ENERGY RING
+    // ROTATION
     Animated.loop(
       Animated.timing(rotate, {
         toValue: 1,
@@ -130,7 +154,7 @@ export default function AnimatedSplashScreen({
       }),
     ).start();
 
-    // BREATHING EFFECT
+    // BREATHING
     Animated.loop(
       Animated.sequence([
         Animated.timing(breathe, {
@@ -139,6 +163,7 @@ export default function AnimatedSplashScreen({
           easing: Easing.inOut(Easing.ease),
           useNativeDriver: true,
         }),
+
         Animated.timing(breathe, {
           toValue: 0,
           duration: 2600,
@@ -148,7 +173,7 @@ export default function AnimatedSplashScreen({
       ]),
     ).start();
 
-    // GLOW PULSE
+    // GLOW
     Animated.loop(
       Animated.sequence([
         Animated.timing(glow, {
@@ -157,6 +182,7 @@ export default function AnimatedSplashScreen({
           easing: Easing.inOut(Easing.ease),
           useNativeDriver: false,
         }),
+
         Animated.timing(glow, {
           toValue: 0,
           duration: 1800,
@@ -175,6 +201,7 @@ export default function AnimatedSplashScreen({
           easing: Easing.inOut(Easing.ease),
           useNativeDriver: true,
         }),
+
         Animated.timing(pulse, {
           toValue: 0,
           duration: 1200,
@@ -185,15 +212,13 @@ export default function AnimatedSplashScreen({
     ).start();
 
     const timeout = setTimeout(() => {
-      Animated.parallel([
-        Animated.timing(exit, {
-          toValue: 0,
-          duration: 550,
-          easing: Easing.in(Easing.exp),
-          useNativeDriver: true,
-        }),
-      ]).start(onFinish);
-    }, 4200);
+      Animated.timing(exit, {
+        toValue: 0,
+        duration: 600,
+        easing: Easing.in(Easing.exp),
+        useNativeDriver: true,
+      }).start(onFinish);
+    }, 4500);
 
     return () => clearTimeout(timeout);
   }, []);
@@ -210,7 +235,7 @@ export default function AnimatedSplashScreen({
 
   const scalePulse = pulse.interpolate({
     inputRange: [0, 1],
-    outputRange: [1, 1.06],
+    outputRange: [1, 1.05],
   });
 
   const breatheScale = breathe.interpolate({
@@ -246,7 +271,6 @@ export default function AnimatedSplashScreen({
         },
       ]}
     >
-      {/* BACKGROUND */}
       <LinearGradient
         colors={["#FDFCF8", "#EEF7F3", "#F6F1FF", "#FFF8F3"]}
         locations={[0, 0.35, 0.7, 1]}
@@ -255,7 +279,7 @@ export default function AnimatedSplashScreen({
         style={StyleSheet.absoluteFill}
       />
 
-      {/* MASSIVE FLOATING BLUR ORBS */}
+      {/* BACKGROUND ORBS */}
       {FLOATING_ORBS.map((orb, index) => (
         <Animated.View
           key={index}
@@ -307,7 +331,6 @@ export default function AnimatedSplashScreen({
       >
         {/* ENERGY SYSTEM */}
         <View style={styles.energyWrap}>
-          {/* OUTER ROTATION */}
           <Animated.View
             style={[
               styles.energyRing,
@@ -318,7 +341,6 @@ export default function AnimatedSplashScreen({
             ]}
           />
 
-          {/* MIDDLE ROTATION */}
           <Animated.View
             style={[
               styles.energyRing,
@@ -329,7 +351,6 @@ export default function AnimatedSplashScreen({
             ]}
           />
 
-          {/* GLOW */}
           <Animated.View
             style={[
               styles.glow,
@@ -339,7 +360,7 @@ export default function AnimatedSplashScreen({
             ]}
           />
 
-          {/* MAIN LOGO CONTAINER */}
+          {/* LOGO */}
           <Animated.View
             style={[
               styles.logoContainer,
@@ -352,7 +373,6 @@ export default function AnimatedSplashScreen({
               colors={["#FFFFFF", "#F7F9F8"]}
               style={styles.logoGradient}
             >
-              {/* GLASS OVERLAY */}
               <View style={styles.glassOverlay} />
 
               <View style={styles.iconCore}>
@@ -362,12 +382,10 @@ export default function AnimatedSplashScreen({
                 />
               </View>
 
-              {/* FLOATING CHIP */}
               <View style={styles.aiBadge}>
                 <BrainCircuit color="#2F6E63" size={15} />
               </View>
 
-              {/* SHIMMER */}
               <Animated.View
                 style={[
                   styles.shimmer,
@@ -387,16 +405,11 @@ export default function AnimatedSplashScreen({
             </LinearGradient>
           </Animated.View>
 
-          {/* FLOATING STAR */}
           <Animated.View
             style={[
               styles.sparkle,
               {
-                transform: [
-                  {
-                    scale: scalePulse,
-                  },
-                ],
+                transform: [{ scale: scalePulse }],
               },
             ]}
           >
@@ -404,21 +417,61 @@ export default function AnimatedSplashScreen({
           </Animated.View>
         </View>
 
-        {/* TYPOGRAPHY */}
+        {/* TITLE */}
         <Animated.View
           style={{
             opacity: textReveal,
             transform: [{ translateY: titleTranslate }],
           }}
         >
-          <Text style={styles.title}>MindEase</Text>
+          <View style={styles.titleRow}>
+            {letters.map((letter, index) => {
+              const anim = letterAnimations[index];
 
-          <Text style={styles.subtitle}>
-            Your safe space to breathe, reset & heal
-          </Text>
+              const opacity = anim.interpolate({
+                inputRange: [0, 1],
+                outputRange: [0, 1],
+              });
+
+              const translateY = anim.interpolate({
+                inputRange: [0, 1],
+                outputRange: [80, 0],
+              });
+
+              const scale = anim.interpolate({
+                inputRange: [0, 0.6, 1],
+                outputRange: [0.2, 1.25, 1],
+              });
+
+              const rotateX = anim.interpolate({
+                inputRange: [0, 1],
+                outputRange: ["90deg", "0deg"],
+              });
+
+              return (
+                <Animated.View
+                  key={`${letter}-${index}`}
+                  style={{
+                    opacity,
+                    transform: [
+                      { perspective: 900 },
+                      { translateY },
+                      { scale },
+                      { rotateX },
+                    ],
+                  }}
+                >
+                  <Text style={styles.titleGlow}>{letter}</Text>
+                  <Text style={styles.title}>{letter}</Text>
+                </Animated.View>
+              );
+            })}
+          </View>
+
+          <Text style={styles.subtitle}>Find calm in the chaos</Text>
         </Animated.View>
 
-        {/* ADVANCED LOADER */}
+        {/* LOADER */}
         <View style={styles.loaderWrap}>
           <View style={styles.loaderTrack}>
             <Animated.View
@@ -472,7 +525,6 @@ const styles = StyleSheet.create({
 
   bgOrb: {
     position: "absolute",
-    opacity: 1,
   },
 
   particle: {
@@ -611,12 +663,31 @@ const styles = StyleSheet.create({
     elevation: 8,
   },
 
+  titleRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+
   title: {
-    fontSize: 48,
+    fontSize: 40,
     fontWeight: "900",
-    color: "#64a89d",
-    letterSpacing: -2,
-    textAlign: "center"
+    color: "#4D9C8D",
+    letterSpacing: 4,
+    textAlign: "center",
+    includeFontPadding: false,
+    textTransform: "uppercase",
+  },
+
+  titleGlow: {
+    position: "absolute",
+    fontSize: 40,
+    fontWeight: "400",
+    color: "#CFF4EA",
+    opacity: 0.55,
+    letterSpacing: 4,
+    textTransform: "uppercase",
+    transform: [{ scale: 1.12 }],
   },
 
   subtitle: {

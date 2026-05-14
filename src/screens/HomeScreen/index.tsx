@@ -45,22 +45,18 @@ import { useTranslation } from "react-i18next";
 
 import AppText from "../../components/atoms/AppText";
 import InsightCard from "../../components/organisms/InsightCard";
-import RecentSessionCard from "../../components/organisms/RecentSessionCard";
-import FloatingActionButton from "../../components/organisms/FloatingActionButton";
 import useHomeViewModel from "../../viewmodels/homeViewModel";
 import { getGreeting } from "../../utils/formatters";
 import { styles } from "./styles";
 import { HomeScreenProps, MoodKey } from "../../models/homestypes";
 import { N } from "../../theme/warm-colors";
-import { 
-  MOODS, 
-  QUICK_ACTIONS, 
-  INTENTIONS, 
-  AFFIRMATIONS, 
+import {
+  MOODS,
+  QUICK_ACTIONS,
+  INTENTIONS,
   getDailyAffirmation,
   MoodDef,
   IntentionKey,
-  QuickActionDef
 } from "../../constants/home-screen";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -598,18 +594,6 @@ export default function HomeScreen({ navigation }: HomeScreenProps) {
           </View>
         </Animated.View>
       </ScrollView>
-
-      {/* FAB — invisible while hero is on screen (no duplicate CTA).
-          Fades in as user scrolls down; carries mood + intention context. */}
-      <Animated.View
-        style={[styles.fabContainer, { opacity: fabOpacity }]}
-        pointerEvents={heroVisible ? "none" : "auto"}
-      >
-        <FloatingActionButton
-          onPress={navigateToStressFlow}
-          accessibilityLabel="Start a session"
-        />
-      </Animated.View>
     </SafeAreaView>
   );
 }
