@@ -954,10 +954,15 @@ PODS:
     - MMKV (>= 1.3.3)
     - RCT-Folly (= 2022.05.16.00)
     - React-Core
-  - react-native-notifications (5.2.2):
-    - React-Core
   - react-native-safe-area-context (4.8.2):
     - React-Core
+  - react-native-slider (4.5.2):
+    - glog
+    - RCT-Folly (= 2022.05.16.00)
+    - React-Core
+  - react-native-track-player (4.1.2):
+    - React-Core
+    - SwiftAudioEx (= 1.1.0)
   - React-nativeconfig (0.73.0)
   - React-NativeModulesApple (0.73.0):
     - glog
@@ -1138,13 +1143,15 @@ PODS:
     - glog
     - RCT-Folly (= 2022.05.16.00)
     - React-Core
-  - RNScreens (3.27.0):
+  - RNScreens (3.35.0):
     - glog
     - RCT-Folly (= 2022.05.16.00)
     - React-Core
-  - RNSVG (14.1.0):
+    - React-RCTImage
+  - RNSVG (14.2.0):
     - React-Core
   - SocketRocket (0.6.1)
+  - SwiftAudioEx (1.1.0)
   - Yoga (1.14.0)
 
 DEPENDENCIES:
@@ -1202,8 +1209,9 @@ DEPENDENCIES:
   - React-logger (from `../node_modules/react-native/ReactCommon/logger`)
   - React-Mapbuffer (from `../node_modules/react-native/ReactCommon`)
   - react-native-mmkv (from `../node_modules/react-native-mmkv`)
-  - react-native-notifications (from `../node_modules/react-native-notifications`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
+  - "react-native-slider (from `../node_modules/@react-native-community/slider`)"
+  - react-native-track-player (from `../node_modules/react-native-track-player`)
   - React-nativeconfig (from `../node_modules/react-native/ReactCommon`)
   - React-NativeModulesApple (from `../node_modules/react-native/ReactCommon/react/nativemodule/core/platform/ios`)
   - React-perflogger (from `../node_modules/react-native/ReactCommon/reactperflogger`)
@@ -1248,6 +1256,7 @@ SPEC REPOS:
     - MMKVCore
     - OpenSSL-Universal
     - SocketRocket
+    - SwiftAudioEx
 
 EXTERNAL SOURCES:
   boost:
@@ -1309,10 +1318,12 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon"
   react-native-mmkv:
     :path: "../node_modules/react-native-mmkv"
-  react-native-notifications:
-    :path: "../node_modules/react-native-notifications"
   react-native-safe-area-context:
     :path: "../node_modules/react-native-safe-area-context"
+  react-native-slider:
+    :path: "../node_modules/@react-native-community/slider"
+  react-native-track-player:
+    :path: "../node_modules/react-native-track-player"
   React-nativeconfig:
     :path: "../node_modules/react-native/ReactCommon"
   React-NativeModulesApple:
@@ -1410,8 +1421,9 @@ SPEC CHECKSUMS:
   React-logger: 42ab166ad561dcbc09452a93cc339359b5f6bc50
   React-Mapbuffer: 0e82a445929fa5f27e1d6f31e90c6a461d15cbef
   react-native-mmkv: 72b086044a58b5d1d92a05a6f3485ecf19a46f29
-  react-native-notifications: e2d3c022d6077de7e420ba5c01b4bd9464f3941d
   react-native-safe-area-context: bf9d9d58f0f6726d4a6257088044c2595017579d
+  react-native-slider: e37e02c1d19d3d13aeaebf2351260a85c0dac170
+  react-native-track-player: dd56f9948e03756a217c75e0a61aa04aab65b5a1
   React-nativeconfig: a063483672b8add47a4875b0281e202908ff6747
   React-NativeModulesApple: c68bb78c2de1522f8bc41a23e404d8d4cbd5de30
   React-perflogger: b61e5db8e5167f5e70366e820766c492847c082e
@@ -1435,9 +1447,10 @@ SPEC CHECKSUMS:
   RNGestureHandler: 7c72d2c6f7e1cfd960527a226d85d2f26d1be8cd
   RNNotifee: 5e3b271e8ea7456a36eec994085543c9adca9168
   RNReactNativeHapticFeedback: ca37b9e053a3557c6149b815a46057eaa4935358
-  RNScreens: f1532e279e61b58c73479c63d7b8c967990f1aca
-  RNSVG: 6d5ed33b6635ed6d6ecb50744dcf127580c39ed5
+  RNScreens: 21da79a31c4419656d8cc4c6e9412cfc9c461551
+  RNSVG: 043f603fc70d48d289bc3f2ceedbb05ce2636f5c
   SocketRocket: f32cd54efbe0f095c4d7594881e52619cfe80b17
+  SwiftAudioEx: f6aa653770f3a0d3851edaf8d834a30aee4a7646
   Yoga: 44003f970aa541b79dfdd59cf236fda41bd5890f
 
 PODFILE CHECKSUM: ab64934db8e0ae71ab0deb09e56b4c15f9482689

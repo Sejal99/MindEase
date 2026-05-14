@@ -1,74 +1,136 @@
 import { StyleSheet } from "react-native";
-import { darkTheme } from "../../theme/colors";
+import { N } from "../../theme/warm-colors";
 
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: darkTheme.background,
+    backgroundColor: N.bg,
   },
-  scrollView: {
+  header: {
+    paddingHorizontal: 24,
+    paddingTop: 8,
+    paddingBottom: 8,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
+  brand: {
+    fontSize: 17,
+    lineHeight: 22,
+    fontWeight: "900",
+    color: N.textPrimary,
+  },
+  skip: {
+    fontSize: 14,
+    lineHeight: 18,
+    fontWeight: "700",
+    color: N.textMuted,
+  },
+  slider: {
     flex: 1,
   },
   slide: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 20,
   },
-  content: {
-    alignItems: 'center',
-    maxWidth: 400,
+  slideInner: {
+    flex: 1,
+    paddingHorizontal: 28,
+    alignItems: "center",
+    justifyContent: "center",
   },
-  iconContainer: {
-    width: 120,
-    height: 120,
-    borderRadius: 60,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginBottom: 32,
+  visualWrap: {
+    height: 230,
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom: 26,
+  },
+  outerRing: {
+    width: 178,
+    height: 178,
+    borderRadius: 89,
+    borderWidth: 18,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  iconHalo: {
+    width: 118,
+    height: 118,
+    borderRadius: 59,
+    borderWidth: 1,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  iconCore: {
+    width: 74,
+    height: 74,
+    borderRadius: 37,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  copy: {
+    maxWidth: 330,
+    alignItems: "center",
+  },
+  note: {
+    fontSize: 12,
+    lineHeight: 16,
+    fontWeight: "800",
+    color: N.textMuted,
+    textTransform: "uppercase",
+    letterSpacing: 0.7,
+    marginBottom: 10,
   },
   title: {
-    textAlign: 'center',
-    marginBottom: 16,
+    fontSize: 34,
+    lineHeight: 40,
+    fontWeight: "900",
+    color: N.textPrimary,
+    textAlign: "center",
+    marginBottom: 14,
   },
   description: {
-    textAlign: 'center',
+    fontSize: 16,
     lineHeight: 24,
+    fontWeight: "500",
+    color: N.textSecondary,
+    textAlign: "center",
   },
   footer: {
-    padding: 20,
-    paddingBottom: 40,
-    backgroundColor: darkTheme.background,
+    paddingHorizontal: 24,
+    paddingTop: 12,
+    paddingBottom: 22,
   },
-  pagination: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    marginBottom: 24,
+  dots: {
+    height: 14,
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    gap: 8,
+    marginBottom: 22,
   },
   dot: {
     width: 8,
     height: 8,
     borderRadius: 4,
-    marginHorizontal: 4,
+    backgroundColor: N.border,
   },
-  activeDot: {
-    backgroundColor: darkTheme.primary,
-    width: 24,
+  cta: {
+    minHeight: 58,
+    borderRadius: 20,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 8,
+    shadowColor: N.accentDeep,
+    shadowOffset: { width: 0, height: 5 },
+    shadowOpacity: 0.14,
+    shadowRadius: 12,
+    elevation: 4,
   },
-  inactiveDot: {
-    backgroundColor: darkTheme.border,
-  },
-  buttonContainer: {
-    flexDirection: 'row',
-    gap: 12,
-  },
-  skipButton: {
-    flex: 1,
-  },
-  nextButton: {
-    flex: 2,
-  },
-  fullButton: {
-    flex: 1,
+  ctaText: {
+    fontSize: 16,
+    lineHeight: 20,
+    fontWeight: "900",
+    color: N.surface,
   },
 });

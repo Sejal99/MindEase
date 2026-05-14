@@ -57,7 +57,7 @@ export const styles = StyleSheet.create({
   appName: {
     fontSize: 27,
     fontWeight: "800",
-    color: N.textPrimary,
+    color: '#64a89d',
     letterSpacing: -0.9,
     lineHeight: 32,
   },

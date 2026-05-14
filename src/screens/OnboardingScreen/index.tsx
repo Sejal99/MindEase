@@ -1,181 +1,285 @@
-import React, { useState, useRef } from 'react';
-import { View, ScrollView, Dimensions } from 'react-native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { RootStackParamList } from '../../navigation/AppNavigator';
-import { Activity, PenLine, Target, BarChart3, Sparkles } from 'lucide-react-native';
-import { useTranslation } from 'react-i18next';
+import React, { useEffect, useRef, useState } from "react";
+import {
+  Animated,
+  Dimensions,
+  Pressable,
+  StatusBar,
+  View,
+} from "react-native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { SafeAreaView } from "react-native-safe-area-context";
+import {
+  ArrowRight,
+  BarChart3,
+  CheckCircle2,
+  Leaf,
+  PenLine,
+  Wind,
+} from "lucide-react-native";
+import { useTranslation } from "react-i18next";
 
-import Button from '../../components/atoms/Button';
-import AppText from '../../components/atoms/AppText';
-import Card from '../../components/atoms/Card';
-import useHomeViewModel from '../../viewmodels/homeViewModel';
-import { styles } from './styles';
-import { darkTheme } from '../../theme/colors';
+import AppText from "../../components/atoms/AppText";
+import useHomeViewModel from "../../viewmodels/homeViewModel";
+import { RootStackParamList } from "../../navigation/AppNavigator";
+import { N } from "../../theme/warm-colors";
+import { styles } from "./styles";
 
-type OnboardingScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'Onboarding'>;
+type OnboardingScreenNavigationProp = NativeStackNavigationProp<
+  RootStackParamList,
+  "Onboarding"
+>;
 
 interface OnboardingScreenProps {
   navigation: OnboardingScreenNavigationProp;
 }
 
-const { width } = Dimensions.get('window');
+const { width } = Dimensions.get("window");
 
-interface OnboardingSlide {
-  id: number;
+type Slide = {
+  id: string;
   title: string;
   description: string;
-  icon: React.ReactNode;
+  note: string;
   color: string;
-}
+  soft: string;
+  icon: React.ElementType;
+};
 
-const SLIDES: OnboardingSlide[] = [
+const SLIDES: Slide[] = [
   {
-    id: 1,
-    title: 'Welcome to Stress Guide',
-    description: 'Your personal mental wellness companion. Track your stress, practice relief techniques, and build healthy habits.',
-    icon: <Activity color={darkTheme.primary} size={48} />,
-    color: darkTheme.primary,
+    id: "notice",
+    title: "Notice stress early.",
+    description:
+      "Check in with your body and name what is happening before it builds up.",
+    note: "A calmer first step",
+    color: N.accent,
+    soft: N.accentDim,
+    icon: Leaf,
   },
   {
-    id: 2,
-    title: 'Log Your Stress',
-    description: 'When you feel stressed, tap "I\'m Stressed" to log your trigger and intensity level.',
-    icon: <PenLine color={darkTheme.success} size={48} />,
-    color: darkTheme.success,
+    id: "log",
+    title: "Log it in seconds.",
+    description:
+      "Capture your trigger and intensity with a simple flow made for real moments.",
+    note: "Quick, private, useful",
+    color: N.teal,
+    soft: N.tealDim,
+    icon: PenLine,
   },
   {
-    id: 3,
-    title: 'Choose Your Relief',
-    description: 'Select from 5 evidence-based techniques: Breathing, Grounding, Brain Dump, Movement, or Thought Reframing.',
-    icon: <Target color={darkTheme.warning} size={48} />,
-    color: darkTheme.warning,
+    id: "reset",
+    title: "Choose a reset.",
+    description:
+      "Breathing, grounding, movement, reflection, and sound are ready when you need them.",
+    note: "Tools for the moment",
+    color: N.lavender,
+    soft: N.lavenderDim,
+    icon: Wind,
   },
   {
-    id: 4,
-    title: 'Track Your Progress',
-    description: 'View your history, gain insights from your patterns, and unlock achievements as you build your streak.',
-    icon: <BarChart3 color={darkTheme.accent} size={48} />,
-    color: darkTheme.accent,
-  },
-  {
-    id: 5,
-    title: 'Build Healthy Habits',
-    description: 'Consistent practice leads to better stress management. Start your journey today!',
-    icon: <Sparkles color={darkTheme.primary} size={48} />,
-    color: darkTheme.primary,
+    id: "learn",
+    title: "See your patterns.",
+    description:
+      "Gentle insights help you understand what supports you over time.",
+    note: "Progress without pressure",
+    color: N.blush,
+    soft: N.blushDim,
+    icon: BarChart3,
   },
 ];
 
 const OnboardingScreen: React.FC<OnboardingScreenProps> = ({ navigation }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const scrollViewRef = useRef<ScrollView>(null);
+  const scrollRef = useRef<any>(null);
+  const scrollX = useRef(new Animated.Value(0)).current;
+  const pulse = useRef(new Animated.Value(1)).current;
+  const fade = useRef(new Animated.Value(0)).current;
   const { completeOnboarding } = useHomeViewModel();
   const { t } = useTranslation();
 
-  const handleNext = () => {
-    if (currentIndex < SLIDES.length - 1) {
-      const nextIndex = currentIndex + 1;
-      setCurrentIndex(nextIndex);
-      scrollViewRef.current?.scrollTo({ x: nextIndex * width, animated: true });
-    } else {
-      handleComplete();
-    }
-  };
+  const currentSlide = SLIDES[currentIndex];
 
-  const handleSkip = () => {
-    handleComplete();
-  };
+  useEffect(() => {
+    StatusBar.setBarStyle("dark-content");
 
-  const handleComplete = () => {
+    Animated.timing(fade, {
+      toValue: 1,
+      duration: 450,
+      useNativeDriver: true,
+    }).start();
+
+    const loop = Animated.loop(
+      Animated.sequence([
+        Animated.timing(pulse, {
+          toValue: 1.06,
+          duration: 1800,
+          useNativeDriver: true,
+        }),
+        Animated.timing(pulse, {
+          toValue: 1,
+          duration: 1800,
+          useNativeDriver: true,
+        }),
+      ]),
+    );
+
+    loop.start();
+    return () => {
+      loop.stop();
+      pulse.stopAnimation();
+    };
+  }, [fade, pulse]);
+
+  const finish = () => {
     completeOnboarding();
-    navigation.replace('MainTabs');
+    navigation.replace("MainTabs");
   };
 
-  const handleScroll = (event: any) => {
-    const offsetX = event.nativeEvent.contentOffset.x;
-    const newIndex = Math.round(offsetX / width);
-    setCurrentIndex(newIndex);
+  const next = () => {
+    if (currentIndex === SLIDES.length - 1) {
+      finish();
+      return;
+    }
+
+    const nextIndex = currentIndex + 1;
+    setCurrentIndex(nextIndex);
+    scrollRef.current?.scrollTo({
+      x: nextIndex * width,
+      animated: true,
+    });
   };
 
-  // Create a mapping from original titles to translation keys
-  const slideTitleMap: Record<string, string> = {
-    'Welcome to Stress Guide': 'onboarding.slides.0.title',
-    'Log Your Stress': 'onboarding.slides.1.title',
-    'Choose Your Relief': 'onboarding.slides.2.title',
-    'Track Your Progress': 'onboarding.slides.3.title',
-    'Build Healthy Habits': 'onboarding.slides.4.title',
-  };
-
-  const slideDescriptionMap: Record<string, string> = {
-    'Your personal mental wellness companion. Track your stress, practice relief techniques, and build healthy habits.': 'onboarding.slides.0.description',
-    'When you feel stressed, tap "I\'m Stressed" to log your trigger and intensity level.': 'onboarding.slides.1.description',
-    'Select from 5 evidence-based techniques: Breathing, Grounding, Brain Dump, Movement, or Thought Reframing.': 'onboarding.slides.2.description',
-    'View your history, gain insights from your patterns, and unlock achievements as you build your streak.': 'onboarding.slides.3.description',
-    'Consistent practice leads to better stress management. Start your journey today!': 'onboarding.slides.4.description',
+  const onScrollEnd = (event: {
+    nativeEvent: { contentOffset: { x: number } };
+  }) => {
+    setCurrentIndex(Math.round(event.nativeEvent.contentOffset.x / width));
   };
 
   return (
-    <View style={styles.container}>
-      <ScrollView
-        ref={scrollViewRef}
+    <SafeAreaView style={styles.container}>
+      <Animated.View style={[styles.header, { opacity: fade }]}>
+        <AppText style={styles.brand}>Stress Guide</AppText>
+        <Pressable onPress={finish} hitSlop={12}>
+          <AppText style={styles.skip}>{t("onboarding.skip")}</AppText>
+        </Pressable>
+      </Animated.View>
+
+      <Animated.ScrollView
+        ref={scrollRef}
         horizontal
         pagingEnabled
         showsHorizontalScrollIndicator={false}
-        onMomentumScrollEnd={handleScroll}
-        style={styles.scrollView}
+        onMomentumScrollEnd={onScrollEnd}
+        onScroll={Animated.event(
+          [{ nativeEvent: { contentOffset: { x: scrollX } } }],
+          { useNativeDriver: true },
+        )}
+        scrollEventThrottle={16}
+        style={styles.slider}
       >
-        {SLIDES.map((slide) => (
-          <View key={slide.id} style={[styles.slide, { width }]}>
-            <View style={styles.content}>
-              <View style={[styles.iconContainer, { backgroundColor: slide.color + '20' }]}>
-                {slide.icon}
-              </View>
+        {SLIDES.map((slide, index) => {
+          const Icon = slide.icon;
+          const inputRange = [
+            (index - 1) * width,
+            index * width,
+            (index + 1) * width,
+          ];
+          const opacity = scrollX.interpolate({
+            inputRange,
+            outputRange: [0.3, 1, 0.3],
+            extrapolate: "clamp",
+          });
+          const translateY = scrollX.interpolate({
+            inputRange,
+            outputRange: [18, 0, 18],
+            extrapolate: "clamp",
+          });
 
-              <AppText variant="h2" style={styles.title}>
-                {t(slideTitleMap[slide.title] || slide.title)}
-              </AppText>
+          return (
+            <View key={slide.id} style={[styles.slide, { width }]}>
+              <Animated.View
+                style={[
+                  styles.slideInner,
+                  {
+                    opacity,
+                    transform: [{ translateY }],
+                  },
+                ]}
+              >
+                <View style={styles.visualWrap}>
+                  <Animated.View
+                    style={[
+                      styles.outerRing,
+                      {
+                        borderColor: slide.soft,
+                        transform: [{ scale: index === currentIndex ? pulse : 1 }],
+                      },
+                    ]}
+                  >
+                    <View
+                      style={[
+                        styles.iconHalo,
+                        { backgroundColor: slide.soft, borderColor: slide.color },
+                      ]}
+                    >
+                      <View
+                        style={[
+                          styles.iconCore,
+                          { backgroundColor: slide.color },
+                        ]}
+                      >
+                        <Icon color={N.surface} size={34} strokeWidth={2.2} />
+                      </View>
+                    </View>
+                  </Animated.View>
+                </View>
 
-              <AppText variant="body" color={darkTheme.textSecondary} style={styles.description}>
-                {t(slideDescriptionMap[slide.description] || slide.description)}
-              </AppText>
+                <View style={styles.copy}>
+                  <AppText style={styles.note}>{slide.note}</AppText>
+                  <AppText style={styles.title}>{slide.title}</AppText>
+                  <AppText style={styles.description}>{slide.description}</AppText>
+                </View>
+              </Animated.View>
             </View>
-          </View>
-        ))}
-      </ScrollView>
+          );
+        })}
+      </Animated.ScrollView>
 
       <View style={styles.footer}>
-        <View style={styles.pagination}>
-          {SLIDES.map((_, index) => (
+        <View style={styles.dots}>
+          {SLIDES.map((slide, index) => (
             <View
-              key={index}
+              key={slide.id}
               style={[
                 styles.dot,
-                index === currentIndex ? styles.activeDot : styles.inactiveDot,
+                index === currentIndex && {
+                  width: 26,
+                  backgroundColor: currentSlide.color,
+                },
               ]}
             />
           ))}
         </View>
 
-        <View style={styles.buttonContainer}>
-          {currentIndex < SLIDES.length - 1 && (
-            <Button
-              title={t('onboarding.skip')}
-              onPress={handleSkip}
-              variant="secondary"
-              style={styles.skipButton}
-            />
+        <Pressable
+          onPress={next}
+          style={[styles.cta, { backgroundColor: currentSlide.color }]}
+        >
+          {currentIndex === SLIDES.length - 1 ? (
+            <CheckCircle2 color={N.surface} size={19} />
+          ) : null}
+          <AppText style={styles.ctaText}>
+            {currentIndex === SLIDES.length - 1
+              ? t("onboarding.getStarted")
+              : t("onboarding.next")}
+          </AppText>
+          {currentIndex === SLIDES.length - 1 ? null : (
+            <ArrowRight color={N.surface} size={19} />
           )}
-          <Button
-            title={currentIndex === SLIDES.length - 1 ? t('onboarding.getStarted') : t('onboarding.next')}
-            onPress={handleNext}
-            variant="primary"
-            style={currentIndex === SLIDES.length - 1 ? styles.fullButton : styles.nextButton}
-          />
-        </View>
+        </Pressable>
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
-
 
 export default OnboardingScreen;

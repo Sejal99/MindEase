@@ -1,4 +1,4 @@
-import { getSessionForMood } from '../models/audio-sessions';
+import { ALL_TRACKS, getSessionForMood } from '../models/audio-sessions';
 import TrackPlayer, {
   AppKilledPlaybackBehavior,
   Capability,
@@ -84,6 +84,19 @@ class AudioTherapyService {
   async setVolume(volume: number) { // 0.0 – 1.0
     await TrackPlayer.setVolume(volume);
   }
+
+  async playTrackById(trackId: string) {
+  await this.init();
+  const track = ALL_TRACKS.find(t => t.id === trackId);
+  if (!track) return;
+  this.currentSessionId = track.id;
+  await TrackPlayer.reset();
+  await TrackPlayer.add({ id: track.id, url: track.url, title: track.title, artist: track.artist });
+  if (!track.duration) await TrackPlayer.setRepeatMode(RepeatMode.Track);
+  await TrackPlayer.play();
 }
+}
+
+
 
 export default new AudioTherapyService();
