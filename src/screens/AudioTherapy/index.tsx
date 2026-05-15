@@ -147,6 +147,21 @@ export default function AudioTherapyScreen({ route }: Props) {
     return () => loop.stop();
   }, [isPlaying]);
 
+  // Initialize TrackPlayer on mount
+  useEffect(() => {
+    const setupPlayer = async () => {
+      try {
+        await TrackPlayer.setupPlayer({
+          maxCacheSize: 1024 * 5,
+        });
+      } catch (error) {
+        // Player already initialized
+        console.log('TrackPlayer already initialized');
+      }
+    };
+    setupPlayer();
+  }, []);
+
   // Auto-start mood-matched track on first load
   useEffect(() => {
     const moodTrackMap: Record<string, string> = {
@@ -274,21 +289,6 @@ export default function AudioTherapyScreen({ route }: Props) {
           </Pressable>
         </View>
 
-        {/* Volume */}
-        <View style={s.volRow}>
-          <Volume2 color={N.textMuted} size={16} />
-          <Slider
-            style={{ flex: 1 }}
-            minimumValue={0}
-            maximumValue={1}
-            step={0.01}
-            value={volume}
-            onValueChange={handleVolumeChange}
-            minimumTrackTintColor={cc.icon}
-            maximumTrackTintColor={N.border}
-            thumbTintColor={cc.icon}
-          />
-        </View>
       </View>
 
       {/* ── LIBRARY ──────────────────────────────────────────────────── */}

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { View, StyleSheet, Pressable, Platform } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, NavigatorScreenParams } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { StatusBar } from 'react-native';
@@ -39,10 +39,11 @@ import useHomeViewModel from '../viewmodels/homeViewModel';
 
 import AppText from '../components/atoms/AppText';
 import AudioTherapyScreen from '../screens/AudioTherapy/index';
+import { flushPendingNavigation, navigationRef } from './navigationRef';
 
 export type RootStackParamList = {
   Onboarding: undefined;
-  MainTabs: undefined;
+  MainTabs: NavigatorScreenParams<TabParamList> | undefined;
   StressFlow: undefined;
   ActionSelection: { trigger: string; intensity: number };
   InstantHelp: { trigger: string; intensity: number };
@@ -65,6 +66,33 @@ export type TabParamList = {
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 const Tab = createBottomTabNavigator<TabParamList>();
+
+const linking = {
+  prefixes: ["mindease://", "calmora://"],
+
+  config: {
+    screens: {
+      MainTabs: {
+        screens: {
+          HomeTab: "home",
+          AudioTherapyTab: "therapy",
+          InsightsTab: "insights",
+          AchievementsTab: "awards",
+          NotificationSettingsTab: "alerts",
+          HistoryTab: "history",
+        },
+      },
+
+      StressFlow: "stress-flow",
+      InstantHelp: "breathing",
+      GroundingScreen: "grounding",
+      BrainDumpScreen: "brain-dump",
+      MovementScreen: "movement",
+      PMRScreen: "pmr",
+    },
+  },
+};
+
 
 // ─────────────────────────────────────────────
 // Tab Icon Wrapper
@@ -379,7 +407,11 @@ const AppNavigator: React.FC = () => {
 
   return (
     <ThemeProvider>
-      <NavigationContainer>
+      <NavigationContainer
+        linking={linking}
+        ref={navigationRef}
+        onReady={flushPendingNavigation}
+      >
         <StatusBar
           barStyle="dark-content"
           backgroundColor={N.bg}

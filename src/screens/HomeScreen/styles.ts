@@ -55,11 +55,11 @@ export const styles = StyleSheet.create({
     letterSpacing: 0.4,
   },
   appName: {
-    fontSize: 27,
+    fontSize: 33,
     fontWeight: "800",
-    color: "#64a89d",
+    color: "#016f48",
     letterSpacing: -0.9,
-    lineHeight: 32,
+    lineHeight: 38,
   },
   progressPill: {
     backgroundColor: N.surfaceAlt,
