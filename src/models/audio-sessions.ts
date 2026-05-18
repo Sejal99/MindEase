@@ -10,14 +10,6 @@ export interface BrowsableTrack {
   iconName: string;
 }
 
-export interface AudioSession {
-  id: string;
-  label: string;
-  moodKeys: string[];
-  intensityRange: [number, number];
-  base: BrowsableTrack;
-  voice?: BrowsableTrack;
-}
 
 export const ALL_TRACKS: BrowsableTrack[] = [
   // Nature
@@ -128,56 +120,6 @@ export const ALL_TRACKS: BrowsableTrack[] = [
   },
 ];
 
-export const AUDIO_SESSIONS: AudioSession[] = [
-  {
-    id: 'calm-forest',
-    label: 'Forest calm',
-    moodKeys: ['calm'],
-    intensityRange: [1, 2],
-    base: ALL_TRACKS.find(t => t.id === 'forest-birds')!,
-  },
-  {
-    id: 'tense-rain',
-    label: 'Rain release',
-    moodKeys: ['tense'],
-    intensityRange: [2, 3],
-    base: ALL_TRACKS.find(t => t.id === 'gentle-rain')!,
-  },
-  {
-    id: 'anxious-ocean',
-    label: 'Ocean grounding',
-    moodKeys: ['anxious'],
-    intensityRange: [3, 3],
-    base: ALL_TRACKS.find(t => t.id === 'ocean-waves')!,
-  },
-  {
-    id: 'exhausted-ambient',
-    label: 'Deep restore',
-    moodKeys: ['exhausted'],
-    intensityRange: [4, 4],
-    base: ALL_TRACKS.find(t => t.id === 'deep-ambient')!,
-  },
-  {
-    id: 'overwhelmed-stillness',
-    label: 'Emergency stillness',
-    moodKeys: ['overwhelmed'],
-    intensityRange: [5, 5],
-    base: ALL_TRACKS.find(t => t.id === 'stillness')!,
-  },
-];
-
-export function getSessionForMood(
-  moodKey: string,
-  intensity: number,
-): AudioSession {
-  const match = AUDIO_SESSIONS.find(
-    s =>
-      s.moodKeys.includes(moodKey) &&
-      intensity >= s.intensityRange[0] &&
-      intensity <= s.intensityRange[1],
-  );
-  return match ?? AUDIO_SESSIONS[0];
-}
 
 export const TRACK_CATEGORIES: { key: TrackCategory | 'all'; label: string }[] = [
   { key: 'all',     label: 'All'     },

@@ -1,11 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
-import {
-  View,
-  ScrollView,
-  Pressable,
-  Animated,
-  StyleSheet,
-} from "react-native";
+import { View, ScrollView, Pressable, Animated } from "react-native";
+
 import TrackPlayer, {
   usePlaybackState,
   useProgress,
@@ -14,49 +9,36 @@ import TrackPlayer, {
 } from "react-native-track-player";
 import { SafeAreaView } from "react-native-safe-area-context";
 import {
-  Leaf,
-  Droplets,
-  Waves,
-  Flame,
   Music,
-  Radio,
-  Stars,
   Heart,
-  Brain,
-  Wind,
-  Moon,
   Play,
   Pause,
   SkipBack,
   SkipForward,
   Volume2,
-  ChevronDown,
+  Volume,
+  RotateCcw,
+  RotateCw,
 } from "lucide-react-native";
 import Slider from "@react-native-community/slider";
 
 import AppText from "../../components/atoms/AppText";
-import { N } from "../../theme/warm-colors";
 import {
   ALL_TRACKS,
   TRACK_CATEGORIES,
   BrowsableTrack,
   TrackCategory,
 } from "../../models/audio-sessions";
-
-// ── Icon map ────────────────────────────────────────────────────────────────
-const ICON_MAP: Record<string, React.FC<{ color: string; size: number }>> = {
-  Leaf,
-  Droplets,
-  Waves,
-  Flame,
-  Music,
-  Radio,
-  Stars,
-  Heart,
-  Brain,
-  Wind,
-  Moon,
-};
+import { COLORS } from "../../constants/colors";
+import { styles } from "./styles";
+import {
+  CAT_THEME,
+  fmt,
+  ICON_MAP,
+  MOOD_TILES,
+  Props,
+  wvHeights,
+} from "../../constants/audio";
 
 const TrackIcon = ({
   name,
@@ -71,59 +53,86 @@ const TrackIcon = ({
   return <Icon color={color} size={size} />;
 };
 
-// ── Category colors ─────────────────────────────────────────────────────────
-const CATEGORY_COLORS: Record<
-  TrackCategory,
-  { bg: string; icon: string; border: string }
-> = {
-  nature: { bg: "#E1F5EE", icon: "#0F6E56", border: "#9FE1CB" },
-  music: { bg: "#EEEDFE", icon: "#534AB7", border: "#AFA9EC" },
-  guided: { bg: "#FBEAF0", icon: "#993556", border: "#ED93B1" },
-  sleep: { bg: "#E6F1FB", icon: "#185FA5", border: "#85B7EB" },
+// ── Animated waveform bar ────────────────────────────────────────────────────
+const WaveBar = ({
+  delay,
+  height,
+  active,
+}: {
+  delay: number;
+  height: number;
+  active: boolean;
+}) => {
+  const anim = useRef(new Animated.Value(1)).current;
+  useEffect(() => {
+    if (!active) {
+      anim.setValue(1);
+      return;
+    }
+    const loop = Animated.loop(
+      Animated.sequence([
+        Animated.timing(anim, {
+          toValue: 0.35,
+          duration: 700 + delay * 60,
+          useNativeDriver: true,
+        }),
+        Animated.timing(anim, {
+          toValue: 1,
+          duration: 700 + delay * 60,
+          useNativeDriver: true,
+        }),
+      ]),
+    );
+    loop.start();
+    return () => loop.stop();
+  }, [active]);
+  return (
+    <Animated.View
+      style={{
+        width: 3,
+        height,
+        borderRadius: 2,
+        backgroundColor: active ? COLORS.ACCENT : COLORS.ACCENT_DARK,
+        opacity: active ? 1 : 0.3,
+        transform: [{ scaleY: anim }],
+      }}
+    />
+  );
 };
 
-// ── Format seconds ──────────────────────────────────────────────────────────
-const fmt = (s: number) => {
-  const m = Math.floor(s / 60);
-  const sec = Math.floor(s % 60);
-  return `${m}:${sec.toString().padStart(2, "0")}`;
-};
-
-interface Props {
-  route?: { params?: { mood?: string; intensity?: number } };
-}
+// ── Playing indicator (3 bars) ───────────────────────────────────────────────
+const NowIndicator = () => (
+  <View
+    style={{ flexDirection: "row", alignItems: "flex-end", gap: 2, height: 14 }}
+  >
+    {[6, 12, 8].map((h, i) => (
+      <WaveBar key={i} delay={i * 2} height={h} active />
+    ))}
+  </View>
+);
 
 export default function AudioTherapyScreen({ route }: Props) {
   const mood = route?.params?.mood ?? "calm";
-  const intensity = route?.params?.intensity ?? 1;
-
   const playbackState = usePlaybackState();
   const progress = useProgress();
   const isPlaying = playbackState.state === State.Playing;
-
   const [activeCategory, setActiveCategory] = useState<TrackCategory | "all">(
     "all",
   );
+  const [activeMood, setActiveMood] = useState<string>(mood);
   const [currentTrack, setCurrentTrack] = useState<BrowsableTrack | null>(null);
   const [volume, setVolume] = useState(0.8);
 
+  // Dynamic greeting based on time of day
+  const getGreeting = () => {
+    const hour = new Date().getHours();
+    if (hour < 12) return "Good morning";
+    if (hour < 17) return "Good afternoon";
+    return "Good evening";
+  };
+
+  // Orb pulse
   const orbAnim = useRef(new Animated.Value(1)).current;
-
-  // Filtered track list
-  const filteredTracks =
-    activeCategory === "all"
-      ? ALL_TRACKS
-      : ALL_TRACKS.filter((t) => t.category === activeCategory);
-
-  // Group for rendering
-  const grouped = TRACK_CATEGORIES.filter((c) => c.key !== "all")
-    .map((c) => ({
-      ...c,
-      tracks: filteredTracks.filter((t) => t.category === c.key),
-    }))
-    .filter((g) => g.tracks.length > 0);
-
-  // Orb pulse while playing
   useEffect(() => {
     if (!isPlaying) {
       orbAnim.setValue(1);
@@ -132,13 +141,13 @@ export default function AudioTherapyScreen({ route }: Props) {
     const loop = Animated.loop(
       Animated.sequence([
         Animated.timing(orbAnim, {
-          toValue: 1.1,
-          duration: 3000,
+          toValue: 1.06,
+          duration: 2800,
           useNativeDriver: true,
         }),
         Animated.timing(orbAnim, {
           toValue: 1,
-          duration: 3000,
+          duration: 2800,
           useNativeDriver: true,
         }),
       ]),
@@ -147,22 +156,12 @@ export default function AudioTherapyScreen({ route }: Props) {
     return () => loop.stop();
   }, [isPlaying]);
 
-  // Initialize TrackPlayer on mount
+  // Setup player
   useEffect(() => {
-    const setupPlayer = async () => {
-      try {
-        await TrackPlayer.setupPlayer({
-          maxCacheSize: 1024 * 5,
-        });
-      } catch (error) {
-        // Player already initialized
-        console.log('TrackPlayer already initialized');
-      }
-    };
-    setupPlayer();
+    TrackPlayer.setupPlayer({ maxCacheSize: 1024 * 5 }).catch(() => {});
   }, []);
 
-  // Auto-start mood-matched track on first load
+  // Auto-start mood track
   useEffect(() => {
     const moodTrackMap: Record<string, string> = {
       calm: "forest-birds",
@@ -185,8 +184,9 @@ export default function AudioTherapyScreen({ route }: Props) {
       title: track.title,
       artist: track.artist,
     });
-    if (!track.duration) await TrackPlayer.setRepeatMode(RepeatMode.Track);
-    else await TrackPlayer.setRepeatMode(RepeatMode.Off);
+    await TrackPlayer.setRepeatMode(
+      track.duration ? RepeatMode.Off : RepeatMode.Track,
+    );
     await TrackPlayer.setVolume(volume);
     await TrackPlayer.play();
   };
@@ -206,330 +206,351 @@ export default function AudioTherapyScreen({ route }: Props) {
     await playTrack(next);
   };
 
-  const cc = currentTrack
-    ? CATEGORY_COLORS[currentTrack.category]
-    : CATEGORY_COLORS.nature;
+  const seekRelative = async (delta: number) => {
+    const pos = Math.max(0, progress.position + delta);
+    await TrackPlayer.seekTo(pos);
+  };
+
+  // Filtered + grouped tracks
+  const filtered =
+    activeCategory === "all"
+      ? ALL_TRACKS
+      : ALL_TRACKS.filter((t) => t.category === activeCategory);
+
+  const grouped = TRACK_CATEGORIES.filter((c) => c.key !== "all")
+    .map((c) => ({
+      ...c,
+      tracks: filtered.filter((t) => t.category === c.key),
+    }))
+    .filter((g) => g.tracks.length > 0);
+
+  const ct = currentTrack ? CAT_THEME[currentTrack.category] : CAT_THEME.nature;
 
   return (
-    <SafeAreaView style={s.root}>
-      {/* ── NOW PLAYING HERO ─────────────────────────────────────────── */}
-      <View style={s.hero}>
-        {/* Mood pill */}
-        <View style={s.moodPill}>
-          <View style={[s.moodDot, { backgroundColor: cc.icon }]} />
-          <AppText style={s.moodPillText}>
-            Tuned for{" "}
-            <AppText style={[s.moodPillBold, { color: cc.icon }]}>
+    <SafeAreaView style={styles.root}>
+      <ScrollView showsVerticalScrollIndicator={false} bounces>
+        <View style={styles.hero}>
+          <AppText style={styles.eyebrow}>Audio therapy</AppText>
+          <AppText style={styles.heroTitle}>
+            {getGreeting()},{"\n"}
+            <AppText style={[styles.heroAccent, { color: COLORS.ACCENT }]}>
               {mood}
             </AppText>
+            <AppText style={styles.heroTitle}> mode</AppText>
           </AppText>
-        </View>
+          <AppText style={styles.heroSub}>
+            7 tracks matched to your mood
+          </AppText>
 
-        {/* Orb */}
-        <Animated.View
-          style={[
-            s.orbOuter,
-            {
-              backgroundColor: cc.bg,
-              borderColor: cc.border,
-              transform: [{ scale: orbAnim }],
-            },
-          ]}
-        >
-          <View style={[s.orbInner, { backgroundColor: cc.icon }]}>
-            {currentTrack && (
-              <TrackIcon name={currentTrack.iconName} color="#fff" size={26} />
-            )}
-          </View>
-        </Animated.View>
+          <View style={[styles.playerCard, { shadowColor: ct.icon }]}>
+            {/* Soft bg blobs */}
+            <View
+              style={[styles.blobTR, { backgroundColor: COLORS.ACCENT_LIGHT }]}
+            />
+            <View
+              style={[styles.blobBL, { backgroundColor: COLORS.SAGE_LIGHT }]}
+            />
 
-        {/* Track info */}
-        <AppText style={s.trackTitle}>{currentTrack?.title ?? "—"}</AppText>
-        <AppText style={s.trackArtist}>{currentTrack?.artist ?? ""}</AppText>
-
-        {/* Progress */}
-        <View style={s.progressWrap}>
-          <Slider
-            style={{ width: "100%" }}
-            minimumValue={0}
-            maximumValue={progress.duration || 1}
-            value={progress.position}
-            onSlidingComplete={(v) => TrackPlayer.seekTo(v)}
-            minimumTrackTintColor={cc.icon}
-            maximumTrackTintColor={N.border}
-            thumbTintColor={cc.icon}
-          />
-          <View style={s.progressTimes}>
-            <AppText style={s.progressTime}>{fmt(progress.position)}</AppText>
-            <AppText style={s.progressTime}>
-              {currentTrack?.duration ? fmt(currentTrack.duration) : "∞"}
-            </AppText>
-          </View>
-        </View>
-
-        {/* Controls */}
-        <View style={s.controls}>
-          <Pressable style={s.ctrlBtn} onPress={() => skipTrack("prev")}>
-            <SkipBack color={N.textMuted} size={20} />
-          </Pressable>
-          <Pressable
-            style={[s.playBtn, { backgroundColor: cc.icon }]}
-            onPress={() =>
-              isPlaying ? TrackPlayer.pause() : TrackPlayer.play()
-            }
-          >
-            {isPlaying ? (
-              <Pause color="#fff" size={26} />
-            ) : (
-              <Play color="#fff" size={26} />
-            )}
-          </Pressable>
-          <Pressable style={s.ctrlBtn} onPress={() => skipTrack("next")}>
-            <SkipForward color={N.textMuted} size={20} />
-          </Pressable>
-        </View>
-
-      </View>
-
-      {/* ── LIBRARY ──────────────────────────────────────────────────── */}
-      <View style={s.libraryHeader}>
-        <AppText style={s.libraryTitle}>Sound library</AppText>
-        <AppText style={s.libraryCount}>{ALL_TRACKS.length} tracks</AppText>
-      </View>
-
-      {/* Category filter chips */}
-      <ScrollView
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        style={s.chipScroll}
-        contentContainerStyle={{ paddingHorizontal: 16, gap: 6 }}
-      >
-        {TRACK_CATEGORIES.map((c) => {
-          const active = activeCategory === c.key;
-          return (
-            <Pressable
-              key={c.key}
-              style={[s.chip, active && s.chipActive]}
-              onPress={() => setActiveCategory(c.key)}
-            >
-              <AppText style={[s.chipText, active && s.chipTextActive]}>
-                {c.label}
-              </AppText>
-            </Pressable>
-          );
-        })}
-      </ScrollView>
-
-      {/* Track list */}
-      <ScrollView style={s.trackList} showsVerticalScrollIndicator={false}>
-        {grouped.map((group) => (
-          <View key={group.key}>
-            <AppText style={s.groupLabel}>{group.label.toUpperCase()}</AppText>
-            {group.tracks.map((track) => {
-              const isActive = currentTrack?.id === track.id;
-              const colors = CATEGORY_COLORS[track.category];
-              return (
-                <Pressable
-                  key={track.id}
+            {/* Top row */}
+            <View style={styles.playerTop}>
+              <View style={styles.albumWrap}>
+                <Animated.View
                   style={[
-                    s.trackRow,
-                    isActive && { backgroundColor: colors.bg },
+                    styles.albumPulse,
+                    { borderColor: ct.border, transform: [{ scale: orbAnim }] },
                   ]}
-                  onPress={() => playTrack(track)}
+                />
+                <View
+                  style={[
+                    styles.albumArt,
+                    {
+                      backgroundColor: COLORS.ACCENT_LIGHT,
+                      borderColor: COLORS.ACCENT_ALPHA_20,
+                    },
+                  ]}
+                >
+                  {currentTrack && (
+                    <TrackIcon
+                      name={currentTrack.iconName}
+                      color={COLORS.ACCENT}
+                      size={26}
+                    />
+                  )}
+                </View>
+              </View>
+
+              <View style={styles.playerInfo}>
+                <AppText style={styles.playerTrack}>
+                  {currentTrack?.title ?? "—"}
+                </AppText>
+                <AppText style={styles.playerArtist}>
+                  {currentTrack?.artist ?? ""}
+                </AppText>
+                <View
+                  style={[
+                    styles.nowBadge,
+                    {
+                      backgroundColor: COLORS.ACCENT_LIGHT,
+                      borderColor: COLORS.ACCENT_ALPHA_25,
+                    },
+                  ]}
                 >
                   <View
                     style={[
-                      s.trackOrb,
-                      { backgroundColor: isActive ? colors.icon : colors.bg },
+                      styles.badgeDot,
+                      { backgroundColor: COLORS.ACCENT },
                     ]}
-                  >
-                    <TrackIcon
-                      name={track.iconName}
-                      color={isActive ? "#fff" : colors.icon}
-                      size={16}
-                    />
-                  </View>
+                  />
+                  <AppText style={[styles.badgeTxt, { color: COLORS.ACCENT }]}>
+                    Now playing
+                  </AppText>
+                </View>
+              </View>
 
-                  <View style={s.trackInfo}>
-                    <AppText
-                      style={[s.trackName, isActive && { color: colors.icon }]}
-                    >
-                      {track.title}
-                    </AppText>
-                    <AppText style={s.trackMeta}>
-                      {track.artist} ·{" "}
-                      {track.duration ? fmt(track.duration) : "Looping"}
-                    </AppText>
-                  </View>
+              <Pressable
+                style={[
+                  styles.iconBtn,
+                  {
+                    backgroundColor: COLORS.ACCENT_LIGHT,
+                    borderColor: COLORS.ACCENT_ALPHA_25,
+                  },
+                ]}
+              >
+                <Heart color={COLORS.ACCENT} size={16} />
+              </Pressable>
+            </View>
 
-                  {isActive ? (
-                    <View
-                      style={[s.playingBadge, { backgroundColor: colors.icon }]}
-                    >
-                      <AppText style={s.playingBadgeText}>Playing</AppText>
-                    </View>
-                  ) : (
-                    <View style={s.playIconWrap}>
-                      <Play color={N.textMuted} size={13} />
-                    </View>
-                  )}
+            {/* Waveform */}
+            <View style={styles.waveform}>
+              {wvHeights.map((h, i) => (
+                <WaveBar key={i} delay={i} height={h} active={isPlaying} />
+              ))}
+              <AppText style={styles.wvTime}>
+                {currentTrack?.duration ? fmt(currentTrack.duration) : "∞ loop"}
+              </AppText>
+            </View>
+
+            <View style={styles.progressWrap}>
+              <Slider
+                style={{ width: "100%", height: 20 }}
+                minimumValue={0}
+                maximumValue={progress.duration || 1}
+                value={progress.position}
+                onSlidingComplete={(v) => TrackPlayer.seekTo(v)}
+                minimumTrackTintColor={COLORS.ACCENT}
+                maximumTrackTintColor={COLORS.BLACK_ALPHA_08}
+                thumbTintColor={COLORS.ACCENT}
+              />
+              <View style={styles.progressTimes}>
+                <AppText style={styles.progressTime}>
+                  {fmt(progress.position)}
+                </AppText>
+                <AppText style={styles.progressTime}>
+                  {currentTrack?.duration
+                    ? fmt(currentTrack.duration)
+                    : "looping"}
+                </AppText>
+              </View>
+            </View>
+
+            <View style={styles.controls}>
+              <View style={styles.ctrlGroup}>
+                <Pressable
+                  style={styles.ctrlBtn}
+                  onPress={() => skipTrack("prev")}
+                >
+                  <SkipBack color={COLORS.TEXT_SECONDARY} size={15} />
                 </Pressable>
-              );
-            })}
+                <Pressable
+                  style={styles.ctrlBtn}
+                  onPress={() => seekRelative(-10)}
+                >
+                  <RotateCcw color={COLORS.TEXT_SECONDARY} size={15} />
+                </Pressable>
+              </View>
+
+              <Pressable
+                style={[
+                  styles.playBtn,
+                  {
+                    backgroundColor: COLORS.ACCENT,
+                    shadowColor: COLORS.ACCENT,
+                  },
+                ]}
+                onPress={() =>
+                  isPlaying ? TrackPlayer.pause() : TrackPlayer.play()
+                }
+              >
+                {isPlaying ? (
+                  <Pause color={COLORS.WHITE} size={22} />
+                ) : (
+                  <Play color={COLORS.WHITE} size={22} />
+                )}
+              </Pressable>
+
+              <View style={styles.ctrlGroup}>
+                <Pressable
+                  style={styles.ctrlBtn}
+                  onPress={() => seekRelative(10)}
+                >
+                  <RotateCw color={COLORS.TEXT_SECONDARY} size={15} />
+                </Pressable>
+                <Pressable
+                  style={styles.ctrlBtn}
+                  onPress={() => skipTrack("next")}
+                >
+                  <SkipForward color={COLORS.TEXT_SECONDARY} size={15} />
+                </Pressable>
+              </View>
+            </View>
           </View>
-        ))}
-        <View style={{ height: 32 }} />
+
+          <View style={styles.volRow}>
+            <Volume2 color={COLORS.TEXT_TERTIARY} size={14} />
+            <Slider
+              style={{ flex: 1, height: 20 }}
+              minimumValue={0}
+              maximumValue={1}
+              step={0.01}
+              value={volume}
+              onValueChange={handleVolumeChange}
+              minimumTrackTintColor={COLORS.ACCENT_DARK}
+              maximumTrackTintColor={COLORS.BLACK_ALPHA_08}
+              thumbTintColor={COLORS.ACCENT_DARK}
+            />
+            <Volume color={COLORS.TEXT_TERTIARY} size={14} />
+          </View>
+        </View>
+
+        {/* ── MOOD TILES ───────────────────────────────────────────── */}
+        <View style={styles.sectionHead}>
+          <AppText style={styles.secTitle}>Browse by mood</AppText>
+          <AppText style={[styles.secLink, { color: COLORS.ACCENT }]}>
+            See all
+          </AppText>
+        </View>
+        <View style={styles.moodGrid}>
+          {MOOD_TILES.map((tile) => {
+            const active = activeMood === tile.key;
+            return (
+              <Pressable
+                key={tile.key}
+                style={[
+                  styles.moodTile,
+                  active && {
+                    borderColor: COLORS.ACCENT_ALPHA_30,
+                    backgroundColor: COLORS.ACCENT_LIGHT,
+                  },
+                ]}
+                onPress={() => setActiveMood(tile.key)}
+              >
+                <View style={[styles.tileIcon, { backgroundColor: tile.bg }]}>
+                  <TrackIcon
+                    name={tile.iconName}
+                    color={tile.color}
+                    size={18}
+                  />
+                </View>
+                <AppText style={styles.tileLabel}>{tile.label}</AppText>
+                <AppText style={styles.tileCount}>{tile.count} tracks</AppText>
+              </Pressable>
+            );
+          })}
+        </View>
+
+        {/* ── CATEGORY CHIPS ───────────────────────────────────────── */}
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          style={styles.chipScroll}
+          contentContainerStyle={{ paddingHorizontal: 20, gap: 8 }}
+        >
+          {TRACK_CATEGORIES.map((c) => {
+            const on = activeCategory === c.key;
+            return (
+              <Pressable
+                key={c.key}
+                style={[
+                  styles.chip,
+                  on && {
+                    backgroundColor: COLORS.ACCENT,
+                    borderColor: COLORS.ACCENT,
+                  },
+                ]}
+                onPress={() => setActiveCategory(c.key)}
+              >
+                <AppText style={[styles.chipText, ...(on ? [styles.chipTextOn] : [])]}>
+                  {c.label}
+                </AppText>
+              </Pressable>
+            );
+          })}
+        </ScrollView>
+
+        {/* ── TRACK LIST ───────────────────────────────────────────── */}
+        <View style={styles.trackList}>
+          {grouped.map((group) => (
+            <View key={group.key}>
+              <AppText style={styles.groupLabel}>
+                {group.label.toUpperCase()}
+              </AppText>
+              {group.tracks.map((track) => {
+                const isActive = currentTrack?.id === track.id;
+                const th = CAT_THEME[track.category];
+                return (
+                  <Pressable
+                    key={track.id}
+                    style={[
+                      styles.trackRow,
+                      isActive && {
+                        backgroundColor: th.bg,
+                        borderLeftWidth: 2,
+                        borderLeftColor: th.icon,
+                        paddingLeft: 18,
+                      },
+                    ]}
+                    onPress={() => playTrack(track)}
+                  >
+                    <View style={[styles.trackArt, { backgroundColor: th.bg }]}>
+                      <TrackIcon
+                        name={track.iconName}
+                        color={th.icon}
+                        size={18}
+                      />
+                    </View>
+                    <View style={styles.trackInfo}>
+                      <AppText
+                        style={[
+                          styles.trackName,
+                          ...(isActive ? [{ color: th.icon, fontWeight: "600" as const }] : []),
+                        ]}
+                      >
+                        {track.title}
+                      </AppText>
+                      <AppText style={styles.trackMeta}>
+                        {track.artist}
+                        {track.duration ? ` · ${fmt(track.duration)}` : ""}
+                      </AppText>
+                    </View>
+                    <View style={styles.trackRight}>
+                      <AppText style={styles.trackDur}>
+                        {track.duration ? fmt(track.duration) : "∞"}
+                      </AppText>
+                      {isActive ? (
+                        <NowIndicator />
+                      ) : (
+                        <View style={styles.playIcon}>
+                          <Play color={COLORS.TEXT_SECONDARY} size={11} />
+                        </View>
+                      )}
+                    </View>
+                  </Pressable>
+                );
+              })}
+            </View>
+          ))}
+        </View>
       </ScrollView>
     </SafeAreaView>
   );
 }
-
-// ── Styles ───────────────────────────────────────────────────────────────────
-const s = StyleSheet.create({
-  root: { flex: 1, backgroundColor: N.bg },
-  hero: {
-    padding: 20,
-    alignItems: "center",
-    backgroundColor: N.surface,
-    borderBottomWidth: 0.5,
-    borderBottomColor: N.border,
-  },
-  moodPill: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 6,
-    backgroundColor: N.bg,
-    borderRadius: 20,
-    paddingHorizontal: 12,
-    paddingVertical: 5,
-    borderWidth: 0.5,
-    borderColor: N.border,
-    marginBottom: 16,
-  },
-  moodDot: { width: 7, height: 7, borderRadius: 4 },
-  moodPillText: { fontSize: 12, color: N.textSecondary },
-  moodPillBold: { fontWeight: "600" },
-  orbOuter: {
-    width: 120,
-    height: 120,
-    borderRadius: 60,
-    borderWidth: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    marginBottom: 14,
-  },
-  orbInner: {
-    width: 80,
-    height: 80,
-    borderRadius: 40,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  trackTitle: {
-    fontSize: 18,
-    fontWeight: "600",
-    color: N.text,
-    marginBottom: 2,
-  },
-  trackArtist: { fontSize: 12, color: N.textMuted, marginBottom: 12 },
-  progressWrap: { width: "100%" },
-  progressTimes: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    marginTop: -4,
-  },
-  progressTime: { fontSize: 11, color: N.textMuted },
-  controls: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 20,
-    marginTop: 12,
-  },
-  ctrlBtn: {
-    width: 44,
-    height: 44,
-    borderRadius: 22,
-    backgroundColor: N.bg,
-    borderWidth: 0.5,
-    borderColor: N.border,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  playBtn: {
-    width: 60,
-    height: 60,
-    borderRadius: 30,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  volRow: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 10,
-    width: "100%",
-    marginTop: 12,
-  },
-  libraryHeader: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    paddingHorizontal: 16,
-    paddingTop: 14,
-    paddingBottom: 4,
-  },
-  libraryTitle: { fontSize: 14, fontWeight: "600", color: N.text },
-  libraryCount: { fontSize: 12, color: N.textMuted },
-  chipScroll: { flexGrow: 0, paddingVertical: 8 },
-  chip: {
-    paddingHorizontal: 14,
-    paddingVertical: 6,
-    borderRadius: 20,
-    borderWidth: 0.5,
-    borderColor: N.border,
-    backgroundColor: N.surface,
-  },
-  chipActive: { backgroundColor: "#E1F5EE", borderColor: "#5DCAA5" },
-  chipText: { fontSize: 12, color: N.textSecondary },
-  chipTextActive: { color: "#085041", fontWeight: "600" },
-  trackList: { flex: 1 },
-  groupLabel: {
-    fontSize: 10,
-    fontWeight: "600",
-    color: N.textMuted,
-    paddingHorizontal: 16,
-    paddingTop: 12,
-    paddingBottom: 6,
-    letterSpacing: 0.5,
-  },
-  trackRow: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 12,
-    paddingHorizontal: 16,
-    paddingVertical: 10,
-    borderTopWidth: 0.5,
-    borderTopColor: N.border,
-  },
-  trackOrb: {
-    width: 36,
-    height: 36,
-    borderRadius: 18,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  trackInfo: { flex: 1 },
-  trackName: { fontSize: 13, fontWeight: "500", color: N.text },
-  trackMeta: { fontSize: 11, color: N.textMuted, marginTop: 2 },
-  playingBadge: { paddingHorizontal: 8, paddingVertical: 3, borderRadius: 10 },
-  playingBadgeText: { fontSize: 10, color: "#fff", fontWeight: "600" },
-  playIconWrap: {
-    width: 28,
-    height: 28,
-    borderRadius: 14,
-    borderWidth: 0.5,
-    borderColor: N.border,
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: N.surface,
-  },
-});

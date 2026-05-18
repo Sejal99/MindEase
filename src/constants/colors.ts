@@ -152,6 +152,13 @@ export const COLORS = {
   WHITE: '#FFFFFF',
   BLACK: '#000000',
   TRANSPARENT: 'transparent',
+  PURPLE:'#e4d0f08b',
+
+  // Opacity variants
+  ACCENT_ALPHA_20: 'rgba(106,90,205,0.2)',
+  ACCENT_ALPHA_25: 'rgba(106,90,205,0.25)',
+  ACCENT_ALPHA_30: 'rgba(106,90,205,0.3)',
+  BLACK_ALPHA_08: 'rgba(0,0,0,0.08)',
 };
 
 // Color aliases for semantic meaning

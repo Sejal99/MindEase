@@ -9,10 +9,8 @@ import RNHapticFeedback from 'react-native-haptic-feedback';
 import {
   Home,
   Clipboard,
-  Lightbulb,
-  Trophy,
-  Bell,
   Headphones,
+  User,
 } from 'lucide-react-native';
 
 import { ThemeProvider } from '../theme/ThemeProvider';
@@ -33,6 +31,7 @@ import InsightsScreen from '../screens/InsightsScreen/index';
 import AchievementsScreen from '../screens/AchievementsScreen/index';
 import SessionSummaryScreen from '../screens/SessionSummaryScreen/index';
 import NotificationSettingsScreen from '../screens/NotificationSettingsScreen/index';
+import ProfileScreen from '../screens/ProfileScreen/index';
 
 import { ActionType } from '../models/types';
 import useHomeViewModel from '../viewmodels/homeViewModel';
@@ -53,15 +52,16 @@ export type RootStackParamList = {
   PMRScreen: { trigger: string; intensity: number };
   Feedback: { trigger: string; intensity: number; action: ActionType };
   SessionSummary: undefined;
+  Insights: undefined;
+  Achievements: undefined;
+  NotificationSettings: undefined;
 };
 
 export type TabParamList = {
   HomeTab: undefined;
   HistoryTab: undefined;
-  InsightsTab: undefined;
-  AchievementsTab: undefined;
-  NotificationSettingsTab: undefined;
-    AudioTherapyTab: undefined;
+  AudioTherapyTab: undefined;
+  ProfileTab: undefined;
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -75,11 +75,9 @@ const linking = {
       MainTabs: {
         screens: {
           HomeTab: "home",
-          AudioTherapyTab: "therapy",
-          InsightsTab: "insights",
-          AchievementsTab: "awards",
-          NotificationSettingsTab: "alerts",
           HistoryTab: "history",
+          AudioTherapyTab: "therapy",
+          ProfileTab: "profile",
         },
       },
 
@@ -243,6 +241,39 @@ function TabNavigator() {
         }}
       />
 
+      {/* PROFILE */}
+      <Tab.Screen
+        name="ProfileTab"
+        component={ProfileScreen}
+        options={{
+          tabBarLabel: 'Profile',
+
+          tabBarIcon: ({ color, focused }) => (
+            <TabIconWrapper focused={focused}>
+              <User
+                size={focused ? 22 : 20}
+                color={focused ? N.surface : color}
+                strokeWidth={focused ? 2.6 : 2}
+              />
+            </TabIconWrapper>
+          ),
+
+          tabBarButton: (props) => (
+            <Pressable
+              {...props}
+              android_ripple={{
+                color: N.accentLight,
+                borderless: true,
+              }}
+              onPressIn={(e) => {
+                RNHapticFeedback.trigger('impactLight');
+                props.onPressIn?.(e);
+              }}
+            />
+          ),
+        }}
+      />
+
       {/* AUDIO THERAPY */}
 <Tab.Screen
   name="AudioTherapyTab"
@@ -276,104 +307,6 @@ function TabNavigator() {
   }}
 />
 
-      {/* INSIGHTS */}
-      <Tab.Screen
-        name="InsightsTab"
-        component={InsightsScreen}
-        options={{
-          tabBarLabel: 'Insights',
-
-          tabBarIcon: ({ color, focused }) => (
-            <TabIconWrapper focused={focused}>
-              <Lightbulb
-                size={focused ? 22 : 20}
-                color={focused ? N.surface : color}
-                strokeWidth={focused ? 2.6 : 2}
-              />
-            </TabIconWrapper>
-          ),
-
-          tabBarButton: (props) => (
-            <Pressable
-              {...props}
-              android_ripple={{
-                color: N.accentLight,
-                borderless: true,
-              }}
-              onPressIn={(e) => {
-                RNHapticFeedback.trigger('impactLight');
-                props.onPressIn?.(e);
-              }}
-            />
-          ),
-        }}
-      />
-
-      {/* AWARDS */}
-      <Tab.Screen
-        name="AchievementsTab"
-        component={AchievementsScreen}
-        options={{
-          tabBarLabel: 'Awards',
-
-          tabBarIcon: ({ color, focused }) => (
-            <TabIconWrapper focused={focused}>
-              <Trophy
-                size={focused ? 22 : 20}
-                color={focused ? N.surface : color}
-                strokeWidth={focused ? 2.6 : 2}
-              />
-            </TabIconWrapper>
-          ),
-
-          tabBarButton: (props) => (
-            <Pressable
-              {...props}
-              android_ripple={{
-                color: N.accentLight,
-                borderless: true,
-              }}
-              onPressIn={(e) => {
-                RNHapticFeedback.trigger('impactLight');
-                props.onPressIn?.(e);
-              }}
-            />
-          ),
-        }}
-      />
-
-      {/* ALERTS */}
-      <Tab.Screen
-        name="NotificationSettingsTab"
-        component={NotificationSettingsScreen}
-        options={{
-          tabBarLabel: 'Alerts',
-
-          tabBarIcon: ({ color, focused }) => (
-            <TabIconWrapper focused={focused}>
-              <Bell
-                size={focused ? 22 : 20}
-                color={focused ? N.surface : color}
-                strokeWidth={focused ? 2.6 : 2}
-              />
-            </TabIconWrapper>
-          ),
-
-          tabBarButton: (props) => (
-            <Pressable
-              {...props}
-              android_ripple={{
-                color: N.accentLight,
-                borderless: true,
-              }}
-              onPressIn={(e) => {
-                RNHapticFeedback.trigger('impactLight');
-                props.onPressIn?.(e);
-              }}
-            />
-          ),
-        }}
-      />
     </Tab.Navigator>
   );
 }
@@ -509,6 +442,24 @@ const AppNavigator: React.FC = () => {
             component={SessionSummaryScreen}
             options={{ title: 'Session Summary' }}
           />
+
+          <Stack.Screen
+            name="Insights"
+            component={InsightsScreen}
+            options={{ title: 'Insights' }}
+          />
+
+          <Stack.Screen
+            name="Achievements"
+            component={AchievementsScreen}
+            options={{ title: 'Achievements' }}
+          />
+
+          <Stack.Screen
+            name="NotificationSettings"
+            component={NotificationSettingsScreen}
+            options={{ title: 'Notifications' }}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     </ThemeProvider>
@@ -528,31 +479,24 @@ const styles = StyleSheet.create({
 
   tabBarGradient: {
     flex: 1,
-
     borderTopLeftRadius: 24,
     borderTopRightRadius: 24,
-
     borderWidth: 1,
     borderBottomWidth: 0,
-
     borderColor: N.border,
-
     overflow: 'hidden',
   },
 
   iconWrapper: {
     width: 44,
     height: 34,
-
     borderRadius: 17,
-
     alignItems: 'center',
     justifyContent: 'center',
   },
 
   iconWrapperFocused: {
     backgroundColor: N.accent,
-
     borderWidth: 1,
     borderColor: N.accentDeep,
   },
