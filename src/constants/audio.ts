@@ -103,3 +103,9 @@ export const fmt = (s: number) => {
 };
 
 export const wvHeights = [8, 18, 12, 24, 16, 28, 20, 26, 14, 22, 10, 18, 24, 12, 20];
+
+// Animation constants
+export const WAVE_ANIMATION_DURATION = 700;
+export const ORB_ANIMATION_DURATION = 2800;
+export const ORB_SCALE_MAX = 1.06;
+export const WAVE_SCALE_MIN = 0.35;

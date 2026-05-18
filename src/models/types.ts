@@ -64,3 +64,42 @@ export interface SessionData {
   completedExercises: SessionExercise[];
   startTime: string;
 }
+
+// Audio Therapy types
+export interface TrackIconProps {
+  name: string;
+  color: string;
+  size: number;
+}
+
+export interface WaveBarProps {
+  delay: number;
+  height: number;
+  active: boolean;
+}
+
+export interface PlayerCardProps {
+  currentTrack: any;
+  isPlaying: boolean;
+  progress: { position: number; duration: number };
+  volume: number;
+  currentTheme: any;
+  orbAnim: any;
+  onPlayPause: () => void;
+  onSkip: (direction: "next" | "prev") => void;
+  onSeek: (seconds: number) => void;
+  onVolumeChange: (value: number) => void;
+}
+
+export interface MoodTileProps {
+  tile: any;
+  isActive: boolean;
+  onPress: () => void;
+}
+
+export interface TrackRowProps {
+  track: any;
+  isActive: boolean;
+  theme: any;
+  onPress: () => void;
+}

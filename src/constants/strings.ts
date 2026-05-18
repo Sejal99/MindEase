@@ -27,6 +27,7 @@ export const SCREEN_TITLES = {
   PMR: 'Progressive Muscle Relaxation',
   FEEDBACK: 'Session Feedback',
   SESSION_SUMMARY: 'Session Complete',
+  AUDIO_THERAPY: 'Audio therapy',
 };
 
 // Common UI text
@@ -98,6 +99,9 @@ export const UI_STRINGS = {
     TODAY: 'Today',
     YESTERDAY: 'Yesterday',
     TOMORROW: 'Tomorrow',
+    GOOD_MORNING: 'Good morning',
+    GOOD_AFTERNOON: 'Good afternoon',
+    GOOD_EVENING: 'Good evening',
   },
 
   QUANTITIES: {
@@ -110,6 +114,15 @@ export const UI_STRINGS = {
     TOTAL: 'Total',
     REMAINING: 'Remaining',
     PROGRESS: 'Progress',
+    TRACKS: 'tracks',
+  },
+
+  AUDIO_THERAPY: {
+    HERO_SUBTEXT: '{count} tracks matched to your mood',
+    NOW_PLAYING: 'Now playing',
+    LOOP_INFINITY: '∞ loop',
+    LOOPING: 'looping',
+    BROWSE_BY_MOOD: 'Browse by mood',
   },
 };
 
