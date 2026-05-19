@@ -1,10 +1,10 @@
 import { StyleSheet } from "react-native";
-import { N } from "../../theme/warm-colors";
+import { colors } from "../../theme/warm-colors";
 
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: N.bg,
+    backgroundColor: colors.bg,
   },
   content: {
     padding: 24,
@@ -17,7 +17,7 @@ export const styles = StyleSheet.create({
     width: 210,
     height: 210,
     borderRadius: 105,
-    backgroundColor: N.accentLight,
+    backgroundColor: colors.accentLight,
     opacity: 0.28,
   },
   blobBottomLeft: {
@@ -27,7 +27,7 @@ export const styles = StyleSheet.create({
     width: 190,
     height: 190,
     borderRadius: 95,
-    backgroundColor: N.lavenderDim,
+    backgroundColor: colors.lavenderDim,
     opacity: 0.44,
   },
   header: {
@@ -37,12 +37,12 @@ export const styles = StyleSheet.create({
   groupName: {
     fontSize: 24,
     fontWeight: '700',
-    color: N.textPrimary,
+    color: colors.textPrimary,
     marginBottom: 8,
     textAlign: 'center',
   },
   groupInstruction: {
-    color: N.textSecondary,
+    color: colors.textSecondary,
     fontSize: 16,
     lineHeight: 24,
     textAlign: 'center',
@@ -62,7 +62,7 @@ export const styles = StyleSheet.create({
   },
   progressBar: {
     height: 5,
-    backgroundColor: N.surfaceAlt,
+    backgroundColor: colors.surfaceAlt,
     borderRadius: 3,
     marginTop: 8,
     overflow: 'hidden',
@@ -72,7 +72,7 @@ export const styles = StyleSheet.create({
     borderRadius: 3,
   },
   progressText: {
-    color: N.textMuted,
+    color: colors.textMuted,
     fontWeight: "700",
   },
 });

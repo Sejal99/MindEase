@@ -1,8 +1,9 @@
+import { colors } from "../../theme/warm-colors";
 import COLORS from "../../constants/colors";
 import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
-  root: { flex: 1, backgroundColor: COLORS.PURPLE },
+  root: { flex: 1, backgroundColor: colors.bg },
   hero: { padding: 20, paddingBottom: 0 },
   eyebrow: {
     fontSize: 10,
@@ -19,7 +20,7 @@ export const styles = StyleSheet.create({
     lineHeight: 32,
     marginBottom: 3,
   },
-  heroAccent: { fontSize: 26, fontWeight: "700" },
+  heroAccent: { fontSize: 15, fontWeight: "800" },
   heroSub: {
     fontSize: 12,
     color: COLORS.TEXT_DARK_SECONDARY,

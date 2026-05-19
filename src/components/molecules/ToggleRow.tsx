@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Pressable, StyleSheet } from 'react-native';
 import AppText from '../atoms/AppText';
-import { N } from '../../theme/warm-colors';
+import { natureColors as colors } from '../../theme/colors';
 
 interface ToggleRowProps {
   label: string;
@@ -60,39 +60,39 @@ const styles = StyleSheet.create({
     paddingVertical: 16,
     paddingHorizontal: 16,
     borderBottomWidth: 1,
-    borderBottomColor: N.borderSoft,
+    borderBottomColor: colors.borderSoft,
   },
   rowLeft: { flex: 1, marginRight: 16 },
-  rowLabel: { fontSize: 16, fontWeight: '700', color: N.textPrimary, marginBottom: 4 },
-  rowDesc: { fontSize: 13, color: N.textSecondary, lineHeight: 18 },
+  rowLabel: { fontSize: 16, fontWeight: '700', color: colors.textPrimary, marginBottom: 4 },
+  rowDesc: { fontSize: 13, color: colors.textSecondary, lineHeight: 18 },
   rowMeta: { flexDirection: 'row', gap: 8, marginTop: 8 },
   metaChip: {
-    backgroundColor: N.surfaceAlt,
+    backgroundColor: colors.surfaceAlt,
     borderRadius: 8,
     paddingHorizontal: 10,
     paddingVertical: 4,
     borderWidth: 1,
-    borderColor: N.border,
+    borderColor: colors.border,
   },
-  metaChipText: { fontSize: 12, color: N.accentDeep, fontWeight: '700' },
+  metaChipText: { fontSize: 12, color: colors.accentDeep, fontWeight: '700' },
   toggle: {
     width: 50,
     height: 28,
     borderRadius: 14,
-    backgroundColor: N.surfaceAlt,
+    backgroundColor: colors.surfaceAlt,
     borderWidth: 1,
-    borderColor: N.border,
+    borderColor: colors.border,
     justifyContent: 'center',
     paddingHorizontal: 2,
   },
-  toggleActive: { backgroundColor: N.accent, borderColor: N.accent },
+  toggleActive: { backgroundColor: colors.accent, borderColor: colors.accent },
   toggleKnob: {
     width: 22,
     height: 22,
     borderRadius: 11,
-    backgroundColor: N.textMuted,
+    backgroundColor: colors.textMuted,
   },
-  toggleKnobActive: { backgroundColor: N.surface, marginLeft: 22 },
+  toggleKnobActive: { backgroundColor: colors.surface, marginLeft: 22 },
 });
 
 export default ToggleRow;

@@ -5,7 +5,7 @@ import AppText from '../atoms/AppText';
 import TriggerChips from '../molecules/TriggerChips';
 import IntensitySelector from '../molecules/IntensitySelector';
 import { TriggerType } from '../../models/types';
-import { N } from '../../theme/warm-colors';
+import { warmColors as colors } from '../../theme/colors';
 
 interface StressFormProps {
   selectedTrigger: TriggerType | null;
@@ -49,12 +49,12 @@ const StressForm: React.FC<StressFormProps> = ({
 
 const styles = StyleSheet.create({
   card: {
-    backgroundColor: N.surface,
-    borderColor: N.border,
+    backgroundColor: colors.surface,
+    borderColor: colors.border,
     borderRadius: 24,
     padding: 18,
     marginBottom: 16,
-    shadowColor: N.accentDeep,
+    shadowColor: colors.accentDeep,
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.05,
     shadowRadius: 8,
@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
     marginTop: 24,
   },
   stepLabel: {
-    color: N.textMuted,
+    color: colors.textMuted,
     fontSize: 11,
     fontWeight: '800',
     letterSpacing: 1,
@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
     marginBottom: 4,
   },
   title: {
-    color: N.textPrimary,
+    color: colors.textPrimary,
   },
 });
 

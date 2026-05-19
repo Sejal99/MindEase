@@ -6,7 +6,7 @@ import {
   Pressable,
 } from 'react-native';
 import AppText from './AppText';
-import { N } from '../../theme/warm-colors';
+import { colors } from '../../theme/warm-colors';
 
 export interface IntensityLevel {
   value: number;
@@ -61,7 +61,7 @@ const IntensityButton: React.FC<IntensityButtonProps> = ({ level, isSelected, on
   const borderColor = glowAnim.interpolate({
     inputRange: [0, 1],
     outputRange: [
-      isSelected ? level.activeBorder : N.border,
+      isSelected ? level.activeBorder : colors.border,
       level.activeBorder,
     ],
   });
@@ -101,7 +101,7 @@ const IntensityButton: React.FC<IntensityButtonProps> = ({ level, isSelected, on
         <View style={styles.icon}>
           {React.isValidElement(level.icon)
             ? React.cloneElement(level.icon as React.ReactElement, {
-                color: isSelected ? N.surface : level.activeColor,
+                color: isSelected ? colors.surface : level.activeColor,
               })
             : level.icon}
         </View>
@@ -133,7 +133,7 @@ const styles = StyleSheet.create({
     paddingVertical: 14,
     paddingHorizontal: 4,
     borderRadius: 16,
-    backgroundColor: N.surface,
+    backgroundColor: colors.surface,
     overflow: 'visible',
     position: 'relative',
   },
@@ -154,10 +154,10 @@ const styles = StyleSheet.create({
     letterSpacing: 0.3,
   },
   labelDefault: {
-    color: N.textSecondary,
+    color: colors.textSecondary,
   },
   labelSelected: {
-    color: N.surface,
+    color: colors.surface,
   },
   dot: {
     width: 4,

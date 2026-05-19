@@ -10,8 +10,6 @@ import {
   Pause,
   SkipBack,
   SkipForward,
-  Volume2,
-  Volume,
   RotateCcw,
   RotateCw,
 } from "lucide-react-native";
@@ -25,7 +23,6 @@ import {
   fmt,
   ICON_MAP,
   MOOD_TILES,
-  Props,
   wvHeights,
   CAT_THEME,
   WAVE_ANIMATION_DURATION,
@@ -42,6 +39,8 @@ import {
   MoodTileProps,
   TrackRowProps,
 } from "../../models/types";
+import { RouteProp } from "@react-navigation/native";
+import { TabParamList } from "../../navigation/AppNavigator";
 
 const TrackIcon = ({ name, color, size }: TrackIconProps) => {
   const Icon = ICON_MAP[name] ?? Music;
@@ -102,13 +101,11 @@ const PlayerCard = ({
   currentTrack,
   isPlaying,
   progress,
-  volume,
   currentTheme,
   orbAnim,
   onPlayPause,
   onSkip,
-  onSeek,
-  onVolumeChange,
+  onSeek
 }: PlayerCardProps) => (
   <View style={[styles.playerCard, { shadowColor: currentTheme.icon }]}>
     <View style={[styles.blobTR, { backgroundColor: COLORS.ACCENT_LIGHT }]} />
@@ -199,24 +196,6 @@ const PlayerCard = ({
   </View>
 );
 
-const VolumeControl = ({ volume, onVolumeChange }: { volume: number; onVolumeChange: (value: number) => void }) => (
-  <View style={styles.volRow}>
-    <Volume2 color={COLORS.TEXT_TERTIARY} size={14} />
-    <Slider
-      style={{ flex: 1, height: 20 }}
-      minimumValue={0}
-      maximumValue={1}
-      step={0.01}
-      value={volume}
-      onValueChange={onVolumeChange}
-      minimumTrackTintColor={COLORS.ACCENT_DARK}
-      maximumTrackTintColor={COLORS.BLACK_ALPHA_08}
-      thumbTintColor={COLORS.ACCENT_DARK}
-    />
-    <Volume color={COLORS.TEXT_TERTIARY} size={14} />
-  </View>
-);
-
 const MoodTile = ({ tile, isActive, onPress }: MoodTileProps) => (
   <Pressable
     style={[
@@ -275,7 +254,9 @@ const TrackRow = ({ track, isActive, theme, onPress }: TrackRowProps) => (
   </Pressable>
 );
 
-export default function AudioTherapyScreen({ route }: Props) {
+type AudioTherapyRouteProp = RouteProp<TabParamList, "AudioTherapyTab">;
+
+export default function AudioTherapyScreen({ route }: { route: AudioTherapyRouteProp }) {
   const mood = route?.params?.mood ?? "calm";
   const {
     isPlaying,
@@ -329,10 +310,10 @@ export default function AudioTherapyScreen({ route }: Props) {
           <AppText style={styles.eyebrow}>{strings.SCREEN_TITLES.AUDIO_THERAPY}</AppText>
           <AppText style={styles.heroTitle}>
             {greeting},{"\n"}
-            <AppText style={[styles.heroAccent, { color: COLORS.ACCENT }]}>
+            {/* <AppText style={[styles.heroAccent, { color: COLORS.ACCENT }]}>
               {mood}
-            </AppText>
-            <AppText style={styles.heroTitle}> mode</AppText>
+            </AppText> */}
+           <AppText style={[styles.heroAccent, { color: COLORS.ACCENT }]}>Relax, breathe, and feel lighter</AppText>
           </AppText>
           <AppText style={styles.heroSub}>
             {strings.UI_STRINGS.AUDIO_THERAPY.HERO_SUBTEXT.replace('{count}', String(ALL_TRACKS.length))}
@@ -351,7 +332,6 @@ export default function AudioTherapyScreen({ route }: Props) {
             onVolumeChange={handleVolumeChange}
           />
 
-          <VolumeControl volume={volume} onVolumeChange={handleVolumeChange} />
         </View>
 
         {/* ── MOOD TILES ───────────────────────────────────────────── */}

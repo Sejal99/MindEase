@@ -15,7 +15,7 @@ import PMRIntroScreen from "../../components/organisms/PMRIntroScreen";
 import { styles } from './styles';
 import PMRDoneScreen from "../../components/organisms/PMRDoneScreen";
 import { ActionType } from "../../models/types";
-import { N } from "../../theme/warm-colors";
+import { colors } from "../../theme/warm-colors";
 
 type PMRScreenNavigationProp = NativeStackNavigationProp<
   RootStackParamList,
@@ -104,25 +104,25 @@ const PHASES: Record<
   tense: {
     label: "TENSE",
     duration: 5,
-    color: N.amber,
+    color: colors.amber,
     instruction: "Squeeze tight",
   },
   hold: {
     label: "HOLD",
     duration: 3,
-    color: N.amber + '80',
+    color: colors.amber + '80',
     instruction: "Hold it…",
   },
   release: {
     label: "RELEASE",
     duration: 8,
-    color: N.accent,
+    color: colors.accent,
     instruction: "Let go…",
   },
   rest: {
     label: "REST",
     duration: 4,
-    color: N.textMuted,
+    color: colors.textMuted,
     instruction: "Notice…",
   },
 };

@@ -49,7 +49,7 @@ import useHomeViewModel from "../../viewmodels/homeViewModel";
 import { getGreeting } from "../../utils/formatters";
 import { styles } from "./styles";
 import { HomeScreenProps, MoodKey } from "../../models/homestypes";
-import { N } from "../../theme/warm-colors";
+import { colors } from "../../theme/warm-colors";
 import {
   MOODS,
   QUICK_ACTIONS,
@@ -236,11 +236,11 @@ export default function HomeScreen({ navigation }: HomeScreenProps) {
   const intensityColor = intensityWidth.interpolate({
     inputRange: [0.2, 0.4, 0.6, 0.8, 1.0],
     outputRange: [
-      N.moodCalm,
-      N.moodTense,
-      N.moodAnxious,
-      N.moodExhausted,
-      N.moodOverwhelmed,
+      colors.moodCalm,
+      colors.moodTense,
+      colors.moodAnxious,
+      colors.moodExhausted,
+      colors.moodOverwhelmed,
     ],
   });
 
@@ -259,7 +259,7 @@ export default function HomeScreen({ navigation }: HomeScreenProps) {
 
   return (
     <SafeAreaView style={styles.container}>
-      <StatusBar barStyle="dark-content" backgroundColor={N.bg} />
+      <StatusBar barStyle="dark-content" backgroundColor={colors.bg} />
 
       {/* Ambient blobs */}
       <View style={styles.blobTopRight} pointerEvents="none" />
@@ -271,7 +271,7 @@ export default function HomeScreen({ navigation }: HomeScreenProps) {
           <View style={styles.greetingRow}>
             <GreetingIcon
               period={greeting.period}
-              color={N.textMuted}
+              color={colors.textMuted}
               size={13}
             />
             <AppText style={styles.greetingText}>{greeting.text}</AppText>
@@ -285,7 +285,7 @@ export default function HomeScreen({ navigation }: HomeScreenProps) {
           onPress={() => navigation.navigate("AchievementsTab")}
           accessibilityLabel="View your progress"
         >
-          <Sprout color={N.accent} size={13} />
+          <Sprout color={colors.accent} size={13} />
           <AppText style={styles.progressPillText}>
             {sessionLabel}{" "}
             {t("home.progress.thisMonth", { defaultValue: "this month" })}
@@ -296,7 +296,7 @@ export default function HomeScreen({ navigation }: HomeScreenProps) {
       {/* Streak banner — only after 3+ consecutive days */}
       {(userStats?.currentStreak ?? 0) >= 3 && (
         <Animated.View style={[styles.streakBanner, { opacity: headerFade }]}>
-          <Leaf color={N.streakText} size={13} />
+          <Leaf color={colors.streakText} size={13} />
           <AppText style={styles.streakText}>
             {t("home.streak.gentle", {
               count: userStats.currentStreak,
@@ -380,8 +380,8 @@ export default function HomeScreen({ navigation }: HomeScreenProps) {
                         {
                           backgroundColor: isSelected
                             ? mood.dimColor
-                            : N.surface,
-                          borderColor: isSelected ? mood.borderSel : N.border,
+                            : colors.surface,
+                          borderColor: isSelected ? mood.borderSel : colors.border,
                           borderWidth: isSelected ? 1.5 : 1,
                         },
                       ]}
@@ -390,13 +390,13 @@ export default function HomeScreen({ navigation }: HomeScreenProps) {
                     >
                       <MoodIcon
                         moodKey={mood.key}
-                        color={isSelected ? mood.color : N.textMuted}
+                        color={isSelected ? mood.color : colors.textMuted}
                         size={14}
                       />
                       <AppText
                         style={[
                           styles.moodLabel,
-                          { color: isSelected ? mood.color : N.textSecondary },
+                          { color: isSelected ? mood.color : colors.textSecondary },
                         ]}
                       >
                         {t(`home.mood.${mood.key}`, {
@@ -459,7 +459,7 @@ export default function HomeScreen({ navigation }: HomeScreenProps) {
                     { transform: [{ scale: breatheInner }] },
                   ]}
                 >
-                  <Waves color={N.accentDeep} size={28} />
+                  <Waves color={colors.accentDeep} size={28} />
                 </Animated.View>
               </Animated.View>
             </Animated.View>
@@ -479,7 +479,7 @@ export default function HomeScreen({ navigation }: HomeScreenProps) {
               accessibilityLabel="Begin your session"
             >
               <View style={styles.heroIconWrap}>
-                <Feather color={N.accentDeep} size={24} />
+                <Feather color={colors.accentDeep} size={24} />
               </View>
               <View style={styles.heroText}>
                 <AppText style={styles.heroTitle}>
@@ -558,7 +558,7 @@ export default function HomeScreen({ navigation }: HomeScreenProps) {
                     onPress={() => navigation.navigate("HistoryTab")}
                   >
                     <View style={styles.sessionOrb}>
-                      <Waves color={N.accent} size={16} />
+                      <Waves color={colors.accent} size={16} />
                     </View>
                     <AppText style={styles.sessionWhat}>
                       {recentEvent.trigger}

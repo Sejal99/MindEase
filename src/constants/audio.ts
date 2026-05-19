@@ -93,7 +93,7 @@ export const ICON_MAP: Record<string, any> = {
 };
 
 export interface Props {
-  route?: { params?: { mood?: string; intensity?: number } };
+  route: { params?: { mood?: string; intensity?: number } };
 }
 
 export const fmt = (s: number) => {

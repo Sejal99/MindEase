@@ -1,10 +1,10 @@
 import { StyleSheet } from "react-native";
-import { N } from "../../theme/warm-colors";
+import { colors } from "../../theme/warm-colors";
 
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: N.bg,
+    backgroundColor: colors.bg,
   },
 
   content: {
@@ -19,7 +19,7 @@ export const styles = StyleSheet.create({
     width: 210,
     height: 210,
     borderRadius: 105,
-    backgroundColor: N.accentLight,
+    backgroundColor: colors.accentLight,
     opacity: 0.28,
   },
 
@@ -30,20 +30,20 @@ export const styles = StyleSheet.create({
     width: 190,
     height: 190,
     borderRadius: 95,
-    backgroundColor: N.tealDim,
+    backgroundColor: colors.tealDim,
     opacity: 0.42,
   },
 
   loaderContainer: {
     flex: 1,
-    backgroundColor: N.bg,
+    backgroundColor: colors.bg,
     justifyContent: 'center',
     alignItems: 'center',
   },
 
   loadingText: {
     marginTop: 16,
-    color: N.textSecondary,
+    color: colors.textSecondary,
   },
 
   header: {
@@ -54,7 +54,7 @@ export const styles = StyleSheet.create({
   },
 
   title: {
-    color: N.textPrimary,
+    color: colors.textPrimary,
     marginBottom: 6,
     letterSpacing: -0.6,
   },
@@ -67,9 +67,9 @@ export const styles = StyleSheet.create({
     width: 52,
     height: 52,
     borderRadius: 16,
-    backgroundColor: N.surfaceAlt,
+    backgroundColor: colors.surfaceAlt,
     borderWidth: 1,
-    borderColor: N.border,
+    borderColor: colors.border,
     justifyContent: 'center',
     alignItems: 'center',
     marginLeft: 16,
@@ -87,7 +87,7 @@ export const styles = StyleSheet.create({
     paddingVertical: 24,
     alignItems: 'center',
     borderWidth: 1,
-    shadowColor: N.accentDeep,
+    shadowColor: colors.accentDeep,
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.05,
     shadowRadius: 8,
@@ -95,23 +95,23 @@ export const styles = StyleSheet.create({
   },
 
   purpleCard: {
-    backgroundColor: N.heroFill,
-    borderColor: N.heroBorder,
+    backgroundColor: colors.heroFill,
+    borderColor: colors.heroBorder,
   },
 
   blueCard: {
-    backgroundColor: N.tealDim,
-    borderColor: N.border,
+    backgroundColor: colors.tealDim,
+    borderColor: colors.border,
   },
 
   overviewNumber: {
-    color: N.textPrimary,
+    color: colors.textPrimary,
     fontSize: 34,
     fontWeight: '800',
   },
 
   overviewLabel: {
-    color: N.textSecondary,
+    color: colors.textSecondary,
     marginTop: 6,
     fontWeight: '600',
   },
@@ -121,12 +121,12 @@ export const styles = StyleSheet.create({
   },
 
   card: {
-    backgroundColor: N.surface,
+    backgroundColor: colors.surface,
     borderRadius: 22,
     padding: 20,
     marginBottom: 18,
-    borderColor: N.border,
-    shadowColor: N.accentDeep,
+    borderColor: colors.border,
+    shadowColor: colors.accentDeep,
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.05,
     shadowRadius: 8,
@@ -141,12 +141,12 @@ export const styles = StyleSheet.create({
   },
 
   cardTitle: {
-    color: N.textPrimary,
+    color: colors.textPrimary,
   },
 
   triggerItem: {
     borderBottomWidth: 1,
-    borderBottomColor: N.borderSoft,
+    borderBottomColor: colors.borderSoft,
     paddingBottom: 18,
     marginBottom: 18,
   },
@@ -164,7 +164,7 @@ export const styles = StyleSheet.create({
   },
 
   triggerTitle: {
-    color: N.textPrimary,
+    color: colors.textPrimary,
     fontWeight: '600',
   },
 
@@ -173,7 +173,7 @@ export const styles = StyleSheet.create({
   },
 
   triggerPercentage: {
-    color: N.accentDeep,
+    color: colors.accentDeep,
     fontWeight: '700',
     fontSize: 16,
   },
@@ -181,20 +181,20 @@ export const styles = StyleSheet.create({
   progressTrack: {
     width: '100%',
     height: 10,
-    backgroundColor: N.surfaceAlt,
+    backgroundColor: colors.surfaceAlt,
     borderRadius: 20,
     overflow: 'hidden',
   },
 
   progressFill: {
     height: '100%',
-    backgroundColor: N.accent,
+    backgroundColor: colors.accent,
     borderRadius: 20,
   },
 
   motivationCard: {
-    backgroundColor: N.accentDim,
-    borderColor: N.accentLight,
+    backgroundColor: colors.accentDim,
+    borderColor: colors.accentLight,
     borderRadius: 22,
     padding: 20,
   },
@@ -208,16 +208,16 @@ export const styles = StyleSheet.create({
     width: 56,
     height: 56,
     borderRadius: 18,
-    backgroundColor: N.surface,
+    backgroundColor: colors.surface,
     borderWidth: 1,
-    borderColor: N.border,
+    borderColor: colors.border,
     justifyContent: 'center',
     alignItems: 'center',
     marginRight: 16,
   },
 
   motivationTitle: {
-    color: N.textPrimary,
+    color: colors.textPrimary,
     marginBottom: 6,
   },
 
@@ -226,8 +226,8 @@ export const styles = StyleSheet.create({
   },
 
   emptyCard: {
-    backgroundColor: N.surface,
-    borderColor: N.border,
+    backgroundColor: colors.surface,
+    borderColor: colors.border,
     borderRadius: 24,
     padding: 32,
     alignItems: 'center',
@@ -235,7 +235,7 @@ export const styles = StyleSheet.create({
   },
 
   emptyTitle: {
-    color: N.textPrimary,
+    color: colors.textPrimary,
     marginBottom: 12,
   },
 

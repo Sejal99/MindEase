@@ -4,7 +4,7 @@ import Card from '../atoms/Card';
 import AppText from '../atoms/AppText';
 import { InsightData } from '../../models/types';
 import { formatTrigger } from '../../utils/formatters';
-import { N } from '../../theme/warm-colors';
+import { warmColors as colors } from '../../theme/colors';
 
 interface InsightCardProps {
   insights: InsightData;
@@ -23,7 +23,7 @@ const InsightCard: React.FC<InsightCardProps> = ({ insights }) => {
           Most Common Trigger
         </AppText>
         <AppText variant="body" style={styles.value}>
-          {insights.mostCommonTrigger ? formatTrigger(insights.mostCommonTrigger) : 'N/A'}
+          {insights.mostCommonTrigger ? formatTrigger(insights.mostCommonTrigger) : 'colors/A'}
         </AppText>
       </View>
 
@@ -32,7 +32,7 @@ const InsightCard: React.FC<InsightCardProps> = ({ insights }) => {
           Peak Stress Time
         </AppText>
         <AppText variant="body" style={styles.value}>
-          {insights.peakStressTime || 'N/A'}
+          {insights.peakStressTime || 'colors/A'}
         </AppText>
       </View>
 
@@ -41,7 +41,7 @@ const InsightCard: React.FC<InsightCardProps> = ({ insights }) => {
           Most Effective Action
         </AppText>
         <AppText variant="body" style={styles.value}>
-          {insights.mostEffectiveAction || 'N/A'}
+          {insights.mostEffectiveAction || 'colors/A'}
         </AppText>
       </View>
     </Card>
@@ -50,18 +50,18 @@ const InsightCard: React.FC<InsightCardProps> = ({ insights }) => {
 
 const styles = StyleSheet.create({
   card: {
-    backgroundColor: N.surface,
-    borderColor: N.border,
+    backgroundColor: colors.surface,
+    borderColor: colors.border,
     borderRadius: 22,
     marginBottom: 16,
-    shadowColor: N.accentDeep,
+    shadowColor: colors.accentDeep,
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.05,
     shadowRadius: 8,
     elevation: 2,
   },
   title: {
-    color: N.textPrimary,
+    color: colors.textPrimary,
     marginBottom: 16,
   },
   insightRow: {
@@ -70,17 +70,17 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingVertical: 8,
     borderBottomWidth: 1,
-    borderBottomColor: N.borderSoft,
+    borderBottomColor: colors.borderSoft,
   },
   label: {
     flex: 1,
-    color: N.textMuted,
+    color: colors.textMuted,
   },
   value: {
     flex: 1,
     textAlign: 'right',
     fontWeight: '600',
-    color: N.textPrimary,
+    color: colors.textPrimary,
   },
 });
 

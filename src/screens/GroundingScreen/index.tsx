@@ -18,7 +18,7 @@ import EntryItem from '../../components/molecules/EntryItem';
 import ProgressDots, { Step } from '../../components/molecules/ProgressDots';
 import { ActionType } from '../../models/types';
 import { Eye, Hand, Volume2, Wind, Droplets } from 'lucide-react-native';
-import { N } from '../../theme/warm-colors';
+import { natureColors as colors } from '../../theme/colors';
 
 type GroundingScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'GroundingScreen'>;
 type GroundingScreenRouteProp = RouteProp<RootStackParamList, 'GroundingScreen'>;
@@ -33,40 +33,40 @@ const STEPS: Step[] = [
     id: 1, count: 5,
     label: 'SEE', verb: 'see',
     instruction: 'Look around slowly. Name each thing you notice.',
-    icon: <Eye color={N.accent} size={14} />,
-    color: N.accent, dimColor: N.accentDim,
+    icon: <Eye color={colors.accent} size={14} />,
+    color: colors.accent, dimColor: colors.accentDim,
     placeholder: (n) => ['A light on the ceiling...', 'Your hands...', 'Something blue...', 'A shadow...', 'Text on a screen...'][n - 1],
   },
   {
     id: 2, count: 4,
     label: 'TOUCH', verb: 'feel',
     instruction: 'What textures, temperatures, or surfaces can you feel?',
-    icon: <Hand color={N.teal} size={14} />,
-    color: N.teal, dimColor: N.tealDim,
+    icon: <Hand color={colors.teal} size={14} />,
+    color: colors.teal, dimColor: colors.tealDim,
     placeholder: (n) => ['The fabric on your seat...', 'Air on your skin...', 'Your feet on the floor...', 'Your phone in your hands...'][n - 1],
   },
   {
     id: 3, count: 3,
     label: 'HEAR', verb: 'hear',
     instruction: 'Close your eyes. What sounds reach you?',
-    icon: <Volume2 color={N.amber} size={14} />,
-    color: N.amber, dimColor: N.amberDim,
+    icon: <Volume2 color={colors.amber} size={14} />,
+    color: colors.amber, dimColor: colors.amberDim,
     placeholder: (n) => ['A distant hum...', 'Your own breathing...', 'Something outside...'][n - 1],
   },
   {
     id: 4, count: 2,
     label: 'SMELL', verb: 'smell',
     instruction: 'Take a slow breath. What do you notice?',
-    icon: <Wind color={N.lavender} size={14} />,
-    color: N.lavender, dimColor: N.lavenderDim,
+    icon: <Wind color={colors.lavender} size={14} />,
+    color: colors.lavender, dimColor: colors.lavenderDim,
     placeholder: (n) => ['Fresh air...', 'Something nearby...'][n - 1],
   },
   {
     id: 5, count: 1,
     label: 'TASTE', verb: 'taste',
     instruction: "What's the faintest taste in your mouth right now?",
-    icon: <Droplets color={N.blush} size={14} />,
-    color: N.blush, dimColor: N.blushDim,
+    icon: <Droplets color={colors.blush} size={14} />,
+    color: colors.blush, dimColor: colors.blushDim,
     placeholder: () => 'Something subtle...',
   },
 ];

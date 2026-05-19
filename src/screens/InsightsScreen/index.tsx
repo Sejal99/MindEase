@@ -6,7 +6,7 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import { useTranslation } from 'react-i18next';
-import { N } from '../../theme/warm-colors';
+import { colors } from '../../theme/warm-colors';
 import {
   Sparkles,
   Sprout,
@@ -56,7 +56,7 @@ const InsightsScreen: React.FC = () => {
   if (loading) {
     return (
       <View style={styles.loaderContainer}>
-        <ActivityIndicator size="large" color={N.accent} />
+        <ActivityIndicator size="large" color={colors.accent} />
 
         <AppText variant="body" style={styles.loadingText}>
           {t('insights.loading')}
@@ -83,7 +83,7 @@ const InsightsScreen: React.FC = () => {
 
             <AppText
               variant="body"
-              color={N.textSecondary}
+              color={colors.textSecondary}
               style={styles.subtitle}
             >
               {t('insights.subtitle')}
@@ -91,7 +91,7 @@ const InsightsScreen: React.FC = () => {
           </View>
 
           <TouchableOpacity activeOpacity={0.8} style={styles.headerBadge}>
-            <Sparkles color={N.accentDeep} size={22} />
+            <Sparkles color={colors.accentDeep} size={22} />
           </TouchableOpacity>
         </View>
 
@@ -99,7 +99,7 @@ const InsightsScreen: React.FC = () => {
         {events.length === 0 ? (
           <Card style={styles.emptyCard}>
             <View style={{ marginBottom: 20 }}>
-              <Sprout color={N.accent} size={56} />
+              <Sprout color={colors.accent} size={56} />
             </View>
 
             <AppText variant="h2" style={styles.emptyTitle}>
@@ -108,7 +108,7 @@ const InsightsScreen: React.FC = () => {
 
             <AppText
               variant="body"
-              color={N.textSecondary}
+              color={colors.textSecondary}
               style={styles.emptyDescription}
             >
               {t('insights.empty.description')}
@@ -120,7 +120,7 @@ const InsightsScreen: React.FC = () => {
             <View style={styles.statsRow}>
               <Card style={[styles.overviewCard, styles.purpleCard]}>
                 <View style={{ marginBottom: 10 }}>
-                  <BarChart3 color={N.accentDeep} size={28} />
+                  <BarChart3 color={colors.accentDeep} size={28} />
                 </View>
 
                 <AppText variant="h1" style={styles.overviewNumber}>
@@ -134,7 +134,7 @@ const InsightsScreen: React.FC = () => {
 
               <Card style={[styles.overviewCard, styles.blueCard]}>
                 <View style={{ marginBottom: 10 }}>
-                  <Brain color={N.teal} size={28} />
+                  <Brain color={colors.teal} size={28} />
                 </View>
 
                 <AppText variant="h1" style={styles.overviewNumber}>
@@ -159,7 +159,7 @@ const InsightsScreen: React.FC = () => {
                   {t('insights.triggers.title')}
                 </AppText>
 
-                <TrendingUp color={N.accent} size={22} />
+                <TrendingUp color={colors.accent} size={22} />
               </View>
 
               {triggerDistribution.map(
@@ -177,7 +177,7 @@ const InsightsScreen: React.FC = () => {
                     <View style={styles.triggerTop}>
                       <View style={styles.triggerLeft}>
                         <View style={{ marginRight: 12 }}>
-                          {getTriggerIcon(trigger, N.accent, 24)}
+                          {getTriggerIcon(trigger, colors.accent, 24)}
                         </View>
 
                         <View>
@@ -190,7 +190,7 @@ const InsightsScreen: React.FC = () => {
 
                           <AppText
                             variant="caption"
-                            color={N.textMuted}
+                            color={colors.textMuted}
                             style={styles.triggerSubtitle}
                           >
                             {t('insights.triggers.events', { count })}
@@ -221,7 +221,7 @@ const InsightsScreen: React.FC = () => {
             <Card style={styles.motivationCard}>
               <View style={styles.motivationRow}>
                 <View style={styles.motivationEmojiContainer}>
-                  <Heart color={N.accentDeep} size={28} />
+                  <Heart color={colors.accentDeep} size={28} />
                 </View>
 
                 <View style={{ flex: 1 }}>
@@ -231,7 +231,7 @@ const InsightsScreen: React.FC = () => {
 
                   <AppText
                     variant="body"
-                    color={N.textSecondary}
+                    color={colors.textSecondary}
                     style={styles.motivationText}>
                     {t('insights.motivation.text')}
                   </AppText>

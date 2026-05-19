@@ -21,7 +21,7 @@ import { useTranslation } from "react-i18next";
 import AppText from "../../components/atoms/AppText";
 import useHomeViewModel from "../../viewmodels/homeViewModel";
 import { RootStackParamList } from "../../navigation/AppNavigator";
-import { N } from "../../theme/warm-colors";
+import { colors } from "../../theme/warm-colors";
 import { styles } from "./styles";
 
 type OnboardingScreenNavigationProp = NativeStackNavigationProp<
@@ -52,8 +52,8 @@ const SLIDES: Slide[] = [
     description:
       "Check in with your body and name what is happening before it builds up.",
     note: "A calmer first step",
-    color: N.accent,
-    soft: N.accentDim,
+    color: colors.accent,
+    soft: colors.accentDim,
     icon: Leaf,
   },
   {
@@ -62,8 +62,8 @@ const SLIDES: Slide[] = [
     description:
       "Capture your trigger and intensity with a simple flow made for real moments.",
     note: "Quick, private, useful",
-    color: N.teal,
-    soft: N.tealDim,
+    color: colors.teal,
+    soft: colors.tealDim,
     icon: PenLine,
   },
   {
@@ -72,8 +72,8 @@ const SLIDES: Slide[] = [
     description:
       "Breathing, grounding, movement, reflection, and sound are ready when you need them.",
     note: "Tools for the moment",
-    color: N.lavender,
-    soft: N.lavenderDim,
+    color: colors.lavender,
+    soft: colors.lavenderDim,
     icon: Wind,
   },
   {
@@ -82,8 +82,8 @@ const SLIDES: Slide[] = [
     description:
       "Gentle insights help you understand what supports you over time.",
     note: "Progress without pressure",
-    color: N.blush,
-    soft: N.blushDim,
+    color: colors.blush,
+    soft: colors.blushDim,
     icon: BarChart3,
   },
 ];
@@ -228,7 +228,7 @@ const OnboardingScreen: React.FC<OnboardingScreenProps> = ({ navigation }) => {
                           { backgroundColor: slide.color },
                         ]}
                       >
-                        <Icon color={N.surface} size={34} strokeWidth={2.2} />
+                        <Icon color={colors.surface} size={34} strokeWidth={2.2} />
                       </View>
                     </View>
                   </Animated.View>
@@ -266,7 +266,7 @@ const OnboardingScreen: React.FC<OnboardingScreenProps> = ({ navigation }) => {
           style={[styles.cta, { backgroundColor: currentSlide.color }]}
         >
           {currentIndex === SLIDES.length - 1 ? (
-            <CheckCircle2 color={N.surface} size={19} />
+            <CheckCircle2 color={colors.surface} size={19} />
           ) : null}
           <AppText style={styles.ctaText}>
             {currentIndex === SLIDES.length - 1
@@ -274,7 +274,7 @@ const OnboardingScreen: React.FC<OnboardingScreenProps> = ({ navigation }) => {
               : t("onboarding.next")}
           </AppText>
           {currentIndex === SLIDES.length - 1 ? null : (
-            <ArrowRight color={N.surface} size={19} />
+            <ArrowRight color={colors.surface} size={19} />
           )}
         </Pressable>
       </View>

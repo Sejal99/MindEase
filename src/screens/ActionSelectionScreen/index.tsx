@@ -20,7 +20,7 @@ import {
   Wind,
 } from 'lucide-react-native';
 import { styles } from './styles';
-import { N } from '../../theme/warm-colors';
+import { colors } from '../../theme/warm-colors';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 type ActionSelectionScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'ActionSelection'>;
@@ -43,40 +43,40 @@ const ACTIONS: {
     id: 'breathing',
     title: 'Breathing Exercise',
     description: 'Calm your mind with guided breathing',
-    icon: <Wind color={N.accent} size={24} />,
-    completedIcon: <CheckCircle2 color={N.streakText} size={24} />,
+    icon: <Wind color={colors.accent} size={24} />,
+    completedIcon: <CheckCircle2 color={colors.streakText} size={24} />,
     duration: '2 min',
   },
   {
     id: 'grounding',
     title: '5-4-3-2-1 Grounding',
     description: 'Instant anxiety control using your senses',
-    icon: <Leaf color={N.teal} size={24} />,
-    completedIcon: <CheckCircle2 color={N.streakText} size={24} />,
+    icon: <Leaf color={colors.teal} size={24} />,
+    completedIcon: <CheckCircle2 color={colors.streakText} size={24} />,
     duration: '3 min',
   },
   {
     id: 'brainDump',
     title: 'Brain Dump',
     description: 'Mental unload - write everything down',
-    icon: <PenLine color={N.lavender} size={24} />,
-    completedIcon: <CheckCircle2 color={N.streakText} size={24} />,
+    icon: <PenLine color={colors.lavender} size={24} />,
+    completedIcon: <CheckCircle2 color={colors.streakText} size={24} />,
     duration: '2 min',
   },
   {
     id: 'movement',
     title: 'Movement Reset',
     description: 'Release stress through body movement',
-    icon: <Activity color={N.amber} size={24} />,
-    completedIcon: <CheckCircle2 color={N.streakText} size={24} />,
+    icon: <Activity color={colors.amber} size={24} />,
+    completedIcon: <CheckCircle2 color={colors.streakText} size={24} />,
     duration: '2 min',
   },
   {
     id: 'pmr',
     title: 'Progressive Muscle Relaxation',
     description: 'Release tension by tensing and relaxing muscle groups',
-    icon: <Dumbbell color={N.blush} size={24} />,
-    completedIcon: <CheckCircle2 color={N.streakText} size={24} />,
+    icon: <Dumbbell color={colors.blush} size={24} />,
+    completedIcon: <CheckCircle2 color={colors.streakText} size={24} />,
     duration: '5 min',
   },
 ];
@@ -153,7 +153,7 @@ const ActionSelectionScreen: React.FC<ActionSelectionScreenProps> = ({ navigatio
           </View>
 
           <View style={styles.headerBadge}>
-            <Sparkles color={N.accentDeep} size={24} />
+            <Sparkles color={colors.accentDeep} size={24} />
           </View>
         </View>
 
@@ -231,7 +231,7 @@ const ActionSelectionScreen: React.FC<ActionSelectionScreenProps> = ({ navigatio
 
                   <View style={styles.metaRow}>
                     <View style={styles.durationChip}>
-                      <Clock color={N.textSecondary} size={12} />
+                      <Clock color={colors.textSecondary} size={12} />
                       <AppText variant="caption" style={styles.duration}>
                         {t(actionDurationMap[action.title], {
                           defaultValue: action.duration,

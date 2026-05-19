@@ -1,10 +1,10 @@
 import { StyleSheet } from "react-native";
-import { N } from "../../theme/warm-colors";
+import { colors } from "../../theme/warm-colors";
 
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: N.bg,
+    backgroundColor: colors.bg,
   },
   content: {
     padding: 20,
@@ -17,7 +17,7 @@ export const styles = StyleSheet.create({
     width: 210,
     height: 210,
     borderRadius: 105,
-    backgroundColor: N.accentLight,
+    backgroundColor: colors.accentLight,
     opacity: 0.28,
   },
   blobBottomLeft: {
@@ -27,7 +27,7 @@ export const styles = StyleSheet.create({
     width: 190,
     height: 190,
     borderRadius: 95,
-    backgroundColor: N.tealDim,
+    backgroundColor: colors.tealDim,
     opacity: 0.42,
   },
   header: {
@@ -38,11 +38,11 @@ export const styles = StyleSheet.create({
   },
   headerText: { flex: 1 },
   title: {
-    color: N.textPrimary,
+    color: colors.textPrimary,
     letterSpacing: -0.6,
   },
   subtitle: {
-    color: N.textSecondary,
+    color: colors.textSecondary,
     marginTop: 6,
     lineHeight: 22,
   },
@@ -50,20 +50,20 @@ export const styles = StyleSheet.create({
     width: 52,
     height: 52,
     borderRadius: 16,
-    backgroundColor: N.surfaceAlt,
+    backgroundColor: colors.surfaceAlt,
     borderWidth: 1,
-    borderColor: N.border,
+    borderColor: colors.border,
     justifyContent: "center",
     alignItems: "center",
     marginLeft: 16,
   },
   promptCard: {
-    backgroundColor: N.heroFill,
-    borderColor: N.heroBorder,
+    backgroundColor: colors.heroFill,
+    borderColor: colors.heroBorder,
     borderRadius: 24,
     padding: 18,
     marginBottom: 14,
-    shadowColor: N.accentDeep,
+    shadowColor: colors.accentDeep,
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.08,
     shadowRadius: 12,
@@ -78,21 +78,21 @@ export const styles = StyleSheet.create({
     width: 42,
     height: 42,
     borderRadius: 14,
-    backgroundColor: N.surface,
+    backgroundColor: colors.surface,
     borderWidth: 1,
-    borderColor: N.border,
+    borderColor: colors.border,
     justifyContent: "center",
     alignItems: "center",
   },
   promptText: { flex: 1 },
   promptTitle: {
-    color: N.textPrimary,
+    color: colors.textPrimary,
     fontSize: 16,
     fontWeight: "800",
     marginBottom: 3,
   },
   promptBody: {
-    color: N.textSecondary,
+    color: colors.textSecondary,
     fontSize: 13,
     lineHeight: 19,
   },
@@ -103,15 +103,15 @@ export const styles = StyleSheet.create({
   },
   summaryItem: {
     flex: 1,
-    backgroundColor: N.surface,
+    backgroundColor: colors.surface,
     borderWidth: 1,
-    borderColor: N.border,
+    borderColor: colors.border,
     borderRadius: 18,
     paddingHorizontal: 14,
     paddingVertical: 12,
   },
   summaryLabel: {
-    color: N.textMuted,
+    color: colors.textMuted,
     fontSize: 11,
     fontWeight: "800",
     letterSpacing: 0.8,
@@ -119,12 +119,12 @@ export const styles = StyleSheet.create({
     marginBottom: 3,
   },
   summaryValue: {
-    color: N.textPrimary,
+    color: colors.textPrimary,
     fontSize: 14,
     fontWeight: "800",
   },
   summaryMuted: {
-    color: N.textMuted,
+    color: colors.textMuted,
   },
   buttonContainer: {
     marginTop: 8,
@@ -132,30 +132,30 @@ export const styles = StyleSheet.create({
   continueButton: {
     minHeight: 56,
     borderRadius: 18,
-    backgroundColor: N.accent,
+    backgroundColor: colors.accent,
     alignItems: "center",
     justifyContent: "center",
     flexDirection: "row",
     gap: 8,
-    shadowColor: N.accentDeep,
+    shadowColor: colors.accentDeep,
     shadowOffset: { width: 0, height: 3 },
     shadowOpacity: 0.14,
     shadowRadius: 10,
     elevation: 4,
   },
   continueButtonDisabled: {
-    backgroundColor: N.surfaceAlt,
+    backgroundColor: colors.surfaceAlt,
     borderWidth: 1,
-    borderColor: N.border,
+    borderColor: colors.border,
     shadowOpacity: 0,
     elevation: 0,
   },
   continueText: {
-    color: N.surface,
+    color: colors.surface,
     fontSize: 16,
     fontWeight: "800",
   },
   continueTextDisabled: {
-    color: N.textMuted,
+    color: colors.textMuted,
   },
 });

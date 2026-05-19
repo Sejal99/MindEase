@@ -1,8 +1,8 @@
 import { StyleSheet } from "react-native";
-import { N } from "../../theme/warm-colors";
+import { colors } from "../../theme/warm-colors";
 
 export const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: N.bg },
+  container: { flex: 1, backgroundColor: colors.bg },
   blobTopRight: {
     position: "absolute",
     top: -70,
@@ -10,7 +10,7 @@ export const styles = StyleSheet.create({
     width: 210,
     height: 210,
     borderRadius: 105,
-    backgroundColor: N.accentLight,
+    backgroundColor: colors.accentLight,
     opacity: 0.28,
   },
   blobBottomLeft: {
@@ -20,7 +20,7 @@ export const styles = StyleSheet.create({
     width: 190,
     height: 190,
     borderRadius: 95,
-    backgroundColor: N.tealDim,
+    backgroundColor: colors.tealDim,
     opacity: 0.42,
   },
   content: {
@@ -30,12 +30,12 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
   },
   title: {
-    color: N.textPrimary,
+    color: colors.textPrimary,
     textAlign: 'center',
     marginBottom: 8,
   },
   subtitle: {
-    color: N.textSecondary,
+    color: colors.textSecondary,
     textAlign: 'center',
     marginBottom: 40,
   },
@@ -51,9 +51,9 @@ export const styles = StyleSheet.create({
     width: 150,
     height: 150,
     borderRadius: 75,
-    backgroundColor: N.heroFill,
+    backgroundColor: colors.heroFill,
     borderWidth: 1,
-    borderColor: N.heroBorder,
+    borderColor: colors.heroBorder,
     opacity: 0.72,
   },
   phaseTextContainer: {
@@ -61,32 +61,32 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
   },
   phaseText: {
-    color: N.accentDeep,
+    color: colors.accentDeep,
   },
   instructionCard: {
-    backgroundColor: N.surface,
-    borderColor: N.border,
+    backgroundColor: colors.surface,
+    borderColor: colors.border,
     borderRadius: 22,
     marginBottom: 28,
     width: '100%',
-    shadowColor: N.accentDeep,
+    shadowColor: colors.accentDeep,
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.05,
     shadowRadius: 8,
     elevation: 2,
   },
   instruction: {
-    color: N.textPrimary,
+    color: colors.textPrimary,
     textAlign: 'center',
     fontWeight: '700',
   },
   doneButton: {
     width: '100%',
-    backgroundColor: N.accent,
+    backgroundColor: colors.accent,
     borderRadius: 18,
   },
   doneButtonText: {
-    color: N.surface,
+    color: colors.surface,
     fontWeight: '800',
   },
 });

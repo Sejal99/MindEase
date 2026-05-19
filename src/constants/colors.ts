@@ -5,7 +5,6 @@
 
 // Base color palette
 export const COLORS = {
-  // Background colors
   BACKGROUND_DARK: '#0D1117',
   BACKGROUND_DARKER: '#080D18',
   BACKGROUND_DARKEST: '#0C1220',
@@ -13,8 +12,6 @@ export const COLORS = {
   BACKGROUND_SECONDARY: '#F5EDE4',
   BACKGROUND_CARD: '#FFFFFF',
   BACKGROUND_CARD_WARM: '#FFF9F5',
-
-  // Text colors
   TEXT_PRIMARY: '#F9FAFB',
   TEXT_SECONDARY: '#D1D5DB',
   TEXT_TERTIARY: '#9CA3AF',
@@ -23,30 +20,20 @@ export const COLORS = {
   TEXT_DARK: '#4A403A',
   TEXT_DARK_SECONDARY: '#8C7F74',
   TEXT_DARK_MUTED: '#B5A99B',
-
-  // Primary brand colors
   PRIMARY: '#6366F1',
   PRIMARY_DARK: '#4F46E5',
   PRIMARY_LIGHT: '#818CF8',
-
-  // Accent colors
   ACCENT: '#8B5CF6',
   ACCENT_DARK: '#7C3AED',
   ACCENT_LIGHT: '#F3EFF5',
   ACCENT_DEEP: '#6366F1',
   ACCENT_DIM: '#E8E8F0',
-
-  // Success colors
   SUCCESS: '#10B981',
   SUCCESS_LIGHT: '#34D399',
   SUCCESS_DARK: '#059669',
-
-  // Warning colors
   WARNING: '#F59E0B',
   WARNING_LIGHT: '#FCD34D',
   WARNING_DARK: '#D97706',
-
-  // Error colors
   ERROR: '#EF4444',
   ERROR_LIGHT: '#F87171',
   ERROR_DARK: '#DC2626',

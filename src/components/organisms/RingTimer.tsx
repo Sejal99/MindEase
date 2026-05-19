@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Animated, StyleSheet } from 'react-native';
 import AppText from '../atoms/AppText';
-import { N } from '../../theme/warm-colors';
+import { warmColors as colors } from '../../theme/colors';
 
 interface RingTimerProps {
   timeLeft: number;
@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
     fontWeight: "800",
   },
   label: {
-    color: N.textSecondary,
+    color: colors.textSecondary,
     marginTop: 2,
   },
 });

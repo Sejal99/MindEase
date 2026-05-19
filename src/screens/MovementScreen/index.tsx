@@ -14,7 +14,7 @@ import RingTimer from "../../components/organisms/RingTimer";
 import { ActionType } from '../../models';
 import { styles } from './styles';
 import { PersonStanding, Sun, RotateCcw, User, Dumbbell } from 'lucide-react-native';
-import { N } from '../../theme/warm-colors';
+import { colors } from '../../theme/warm-colors';
 
 type MovementScreenNavigationProp = NativeStackNavigationProp<
   RootStackParamList,
@@ -45,9 +45,9 @@ const EXERCISES: Exercise[] = [
     title: "Quick Walk",
     description: "Reset your nervous system with movement",
     durationSecs: 120,
-    icon: <PersonStanding color={N.accent} size={20} />,
-    color: N.accent,
-    dimColor: N.accentDim,
+    icon: <PersonStanding color={colors.accent} size={20} />,
+    color: colors.accent,
+    dimColor: colors.accentDim,
     tag: "2 min",
     steps: [
       "Stand up and find a clear space.",
@@ -64,9 +64,9 @@ const EXERCISES: Exercise[] = [
     title: "Full Stretch",
     description: "Open your chest, spine, and sides",
     durationSecs: 120,
-    icon: <Sun color={N.teal} size={20} />,
-    color: N.teal,
-    dimColor: N.tealDim,
+    icon: <Sun color={colors.teal} size={20} />,
+    color: colors.teal,
+    dimColor: colors.tealDim,
     tag: "2 min",
     steps: [
       "Reach both arms high above your head.",
@@ -83,9 +83,9 @@ const EXERCISES: Exercise[] = [
     title: "Neck Release",
     description: "Melt the tension in your neck & jaw",
     durationSecs: 60,
-    icon: <RotateCcw color={N.amber} size={20} />,
-    color: N.amber,
-    dimColor: N.amberDim,
+    icon: <RotateCcw color={colors.amber} size={20} />,
+    color: colors.amber,
+    dimColor: colors.amberDim,
     tag: "1 min",
     steps: [
       "Sit upright. Drop your shoulders away from your ears.",
@@ -102,9 +102,9 @@ const EXERCISES: Exercise[] = [
     title: "Shoulder Shrugs",
     description: "Release trapped stress from your shoulders",
     durationSecs: 60,
-    icon: <User color={N.lavender} size={20} />,
-    color: N.lavender,
-    dimColor: N.lavenderDim,
+    icon: <User color={colors.lavender} size={20} />,
+    color: colors.lavender,
+    dimColor: colors.lavenderDim,
     tag: "1 min",
     steps: [
       "Stand or sit with arms relaxed at your sides.",
@@ -120,9 +120,9 @@ const EXERCISES: Exercise[] = [
     title: "Power Squats",
     description: "Ground yourself with a full-body reset",
     durationSecs: 60,
-    icon: <Dumbbell color={N.accent} size={20} />,
-    color: N.accent,
-    dimColor: N.accentDim,
+    icon: <Dumbbell color={colors.accent} size={20} />,
+    color: colors.accent,
+    dimColor: colors.accentDim,
     tag: "1 min",
     steps: [
       "Stand with feet shoulder-width apart.",

@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { View, Animated, StyleSheet, Pressable } from 'react-native';
 import AppText from '../atoms/AppText';
-import { N } from '../../theme/warm-colors';
+import { warmColors as colors } from '../../theme/colors';
 
 interface PMRIntroScreenProps {
   onStart: () => void;
@@ -52,7 +52,7 @@ const PMRIntroScreen: React.FC<PMRIntroScreenProps> = ({ onStart }) => {
 const styles = StyleSheet.create({
   introContainer: {
     flex: 1,
-    backgroundColor: N.bg,
+    backgroundColor: colors.bg,
     justifyContent: 'center',
     alignItems: 'center',
     padding: 24,
@@ -64,13 +64,13 @@ const styles = StyleSheet.create({
   introTitle: {
     fontSize: 32,
     fontWeight: '800',
-    color: N.textPrimary,
+    color: colors.textPrimary,
     marginBottom: 16,
     textAlign: 'center',
   },
   introDesc: {
     fontSize: 16,
-    color: N.textSecondary,
+    color: colors.textSecondary,
     lineHeight: 24,
     textAlign: 'center',
     marginBottom: 32,
@@ -81,18 +81,18 @@ const styles = StyleSheet.create({
   },
   stepText: {
     fontSize: 16,
-    color: N.textPrimary,
+    color: colors.textPrimary,
     lineHeight: 24,
   },
   startButton: {
-    backgroundColor: N.accent,
+    backgroundColor: colors.accent,
     paddingHorizontal: 32,
     paddingVertical: 16,
     borderRadius: 16,
     alignItems: 'center',
   },
   startButtonText: {
-    color: N.surface,
+    color: colors.surface,
     fontSize: 18,
     fontWeight: '700',
   },

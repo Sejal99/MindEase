@@ -9,7 +9,7 @@ import {
 } from 'lucide-react-native';
 import AppText from '../atoms/AppText';
 import { TriggerType } from '../../models/types';
-import { N } from '../../theme/warm-colors';
+import { colors } from '../../theme/warm-colors';
 
 interface TriggerChipsProps {
   selectedTrigger: TriggerType | null;
@@ -39,7 +39,7 @@ const TriggerChips: React.FC<TriggerChipsProps> = ({ selectedTrigger, onSelect }
           activeOpacity={0.7}
         >
           {React.cloneElement(trigger.icon as React.ReactElement, {
-            color: selectedTrigger === trigger.value ? N.surface : N.accent,
+            color: selectedTrigger === trigger.value ? colors.surface : colors.accent,
           })}
           <AppText
             variant="body"
@@ -69,21 +69,21 @@ const styles = StyleSheet.create({
     paddingHorizontal: 13,
     paddingVertical: 10,
     borderRadius: 18,
-    backgroundColor: N.surface,
+    backgroundColor: colors.surface,
     borderWidth: 1,
-    borderColor: N.border,
+    borderColor: colors.border,
   },
   chipSelected: {
-    backgroundColor: N.accent,
-    borderColor: N.accentDeep,
+    backgroundColor: colors.accent,
+    borderColor: colors.accentDeep,
   },
   chipText: {
-    color: N.textSecondary,
+    color: colors.textSecondary,
     fontSize: 14,
     fontWeight: '700',
   },
   chipTextSelected: {
-    color: N.surface,
+    color: colors.surface,
   },
 });
 

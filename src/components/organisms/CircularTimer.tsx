@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { View, Animated, StyleSheet } from 'react-native';
 import AppText from '../atoms/AppText';
-import { N } from '../../theme/warm-colors';
+import { natureColors as colors } from '../../theme/colors';
 
 const SIZE = 130;
 const STROKE = 8;
@@ -40,7 +40,7 @@ const CircularTimer: React.FC<CircularTimerProps> = ({ timeLeft, total, phase })
   }, [phase]);
 
   const color =
-    phase === 'done' ? N.accent : phase === 'urgent' ? N.blush : N.accent;
+    phase === 'done' ? colors.accent : phase === 'urgent' ? colors.blush : colors.accent;
 
   const mins = Math.floor(timeLeft / 60);
   const secs = timeLeft % 60;
@@ -49,7 +49,7 @@ const CircularTimer: React.FC<CircularTimerProps> = ({ timeLeft, total, phase })
     <Animated.View
       style={[styles.orbContainer, { transform: [{ scale: pulseAnim }] }]}
     >
-      <View style={[styles.ringOuter, { borderColor: N.border }]}>
+      <View style={[styles.ringOuter, { borderColor: colors.border }]}>
         <View style={[styles.ringInner, { borderColor: color + '30' }]} />
       </View>
 
@@ -127,7 +127,7 @@ const styles = StyleSheet.create({
   timerDigits: { fontSize: 25, fontWeight: '800', letterSpacing: -1 },
   timerCaption: {
     fontSize: 10,
-    color: N.textSecondary,
+    color: colors.textSecondary,
     fontWeight: '600',
     letterSpacing: 0.5,
   },

@@ -10,7 +10,7 @@ import useStressFlowViewModel from '../../viewmodels/stressFlowViewModel';
 import useSessionViewModel from '../../viewmodels/sessionViewModel';
 import { useTranslation } from 'react-i18next';
 import { styles } from './styles';
-import { N } from '../../theme/warm-colors';
+import { colors } from '../../theme/warm-colors';
 
 type StressFlowScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'StressFlow'>;
 
@@ -53,14 +53,14 @@ const StressFlowScreen: React.FC<StressFlowScreenProps> = ({ navigation }) => {
           </View>
 
           <View style={styles.headerBadge}>
-            <HeartPulse color={N.accentDeep} size={24} />
+            <HeartPulse color={colors.accentDeep} size={24} />
           </View>
         </View>
 
         <View style={styles.promptCard}>
           <View style={styles.promptTop}>
             <View style={styles.promptIcon}>
-              <HeartPulse color={N.accentDeep} size={22} />
+              <HeartPulse color={colors.accentDeep} size={22} />
             </View>
             <View style={styles.promptText}>
               <AppText style={styles.promptTitle}>{t('stressFlow.promptTitle')}</AppText>
@@ -121,7 +121,7 @@ const StressFlowScreen: React.FC<StressFlowScreenProps> = ({ navigation }) => {
             >
               {t('stressFlow.continue')}
             </AppText>
-            <ArrowRight color={isReady ? N.surface : N.textMuted} size={19} />
+            <ArrowRight color={isReady ? colors.surface : colors.textMuted} size={19} />
           </Pressable>
         </View>
       </ScrollView>

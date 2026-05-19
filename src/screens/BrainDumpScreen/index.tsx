@@ -17,7 +17,7 @@ import NudgeChip from "../../components/molecules/NudgeChip";
 import MilestoneToast from "../../components/molecules/MilestoneToast";
 import DoneSummary from "../../components/organisms/DoneSummary";
 import { ActionType } from "../../models/types";
-import { N } from "../../theme/warm-colors";
+import { colors } from "../../theme/warm-colors";
 
 type BrainDumpScreenNavigationProp = NativeStackNavigationProp<
   RootStackParamList,
@@ -206,13 +206,13 @@ const BrainDumpScreen: React.FC<BrainDumpScreenProps> = ({
             placeholder={
               "Just start typing...\n\nIt doesn't need to make sense."
             }
-            placeholderTextColor={N.textMuted}
+            placeholderTextColor={colors.textMuted}
             multiline
             autoFocus
             value={text}
             onChangeText={handleTextChange}
             textAlignVertical="top"
-            selectionColor={N.accent}
+            selectionColor={colors.accent}
           />
         </View>
 

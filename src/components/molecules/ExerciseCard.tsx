@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import { View, Animated, Pressable, StyleSheet } from 'react-native';
 import AppText from '../atoms/AppText';
-import { N } from '../../theme/warm-colors';
+import { colors } from '../../theme/warm-colors';
 
 interface Exercise {
   id: string;
@@ -66,7 +66,7 @@ const ExerciseCard: React.FC<ExerciseCardProps> = ({ exercise, onPress }) => {
 
 const styles = StyleSheet.create({
   exerciseCard: {
-    backgroundColor: N.surface,
+    backgroundColor: colors.surface,
     borderRadius: 20,
     padding: 16,
     borderWidth: 1,
@@ -89,12 +89,12 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 16,
     fontWeight: "600",
-    color: N.textPrimary,
+    color: colors.textPrimary,
     marginBottom: 4,
   },
   description: {
     fontSize: 13,
-    color: N.textSecondary,
+    color: colors.textSecondary,
     lineHeight: 18,
   },
   tag: {

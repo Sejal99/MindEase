@@ -1,10 +1,10 @@
 import { StyleSheet } from "react-native";
-import { N } from "../../theme/warm-colors";
+import { colors } from "../../theme/warm-colors";
 
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: N.bg,
+    backgroundColor: colors.bg,
   },
   header: {
     paddingHorizontal: 24,
@@ -18,13 +18,13 @@ export const styles = StyleSheet.create({
     fontSize: 17,
     lineHeight: 22,
     fontWeight: "900",
-    color: N.textPrimary,
+    color: colors.textPrimary,
   },
   skip: {
     fontSize: 14,
     lineHeight: 18,
     fontWeight: "700",
-    color: N.textMuted,
+    color: colors.textMuted,
   },
   slider: {
     flex: 1,
@@ -75,7 +75,7 @@ export const styles = StyleSheet.create({
     fontSize: 12,
     lineHeight: 16,
     fontWeight: "800",
-    color: N.textMuted,
+    color: colors.textMuted,
     textTransform: "uppercase",
     letterSpacing: 0.7,
     marginBottom: 10,
@@ -84,7 +84,7 @@ export const styles = StyleSheet.create({
     fontSize: 34,
     lineHeight: 40,
     fontWeight: "900",
-    color: N.textPrimary,
+    color: colors.textPrimary,
     textAlign: "center",
     marginBottom: 14,
   },
@@ -92,7 +92,7 @@ export const styles = StyleSheet.create({
     fontSize: 16,
     lineHeight: 24,
     fontWeight: "500",
-    color: N.textSecondary,
+    color: colors.textSecondary,
     textAlign: "center",
   },
   footer: {
@@ -112,7 +112,7 @@ export const styles = StyleSheet.create({
     width: 8,
     height: 8,
     borderRadius: 4,
-    backgroundColor: N.border,
+    backgroundColor: colors.border,
   },
   cta: {
     minHeight: 58,
@@ -121,7 +121,7 @@ export const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     gap: 8,
-    shadowColor: N.accentDeep,
+    shadowColor: colors.accentDeep,
     shadowOffset: { width: 0, height: 5 },
     shadowOpacity: 0.14,
     shadowRadius: 12,
@@ -131,6 +131,6 @@ export const styles = StyleSheet.create({
     fontSize: 16,
     lineHeight: 20,
     fontWeight: "900",
-    color: N.surface,
+    color: colors.surface,
   },
 });

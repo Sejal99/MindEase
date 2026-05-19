@@ -1,8 +1,8 @@
 import { StyleSheet } from "react-native";
-import { N } from "../../theme/warm-colors";
+import { natureColors as colors } from "../../theme/colors";
 
 export const styles = StyleSheet.create({
-  root: { flex: 1, backgroundColor: N.bg },
+  root: { flex: 1, backgroundColor: colors.bg },
   container: { flex: 1 },
   content: { padding: 24, paddingBottom: 100 },
   blobTopRight: {
@@ -12,7 +12,7 @@ export const styles = StyleSheet.create({
     width: 210,
     height: 210,
     borderRadius: 105,
-    backgroundColor: N.accentLight,
+    backgroundColor: colors.accentLight,
     opacity: 0.28,
   },
   blobBottomLeft: {
@@ -22,23 +22,23 @@ export const styles = StyleSheet.create({
     width: 190,
     height: 190,
     borderRadius: 95,
-    backgroundColor: N.tealDim,
+    backgroundColor: colors.tealDim,
     opacity: 0.42,
   },
 
   header: { marginBottom: 24 },
   techniqueLabel: { fontSize: 11, fontWeight: '800', letterSpacing: 1.4, marginBottom: 10 },
-  title: { fontSize: 28, fontWeight: '800', color: N.textPrimary, lineHeight: 36 },
+  title: { fontSize: 28, fontWeight: '800', color: colors.textPrimary, lineHeight: 36 },
   dotsRow: { flexDirection: 'row', alignItems: 'center', gap: 6, marginBottom: 24 },
 
   stepCard: {
-    backgroundColor: N.surface,
+    backgroundColor: colors.surface,
     borderRadius: 24,
     padding: 20,
     borderWidth: 1,
-    borderColor: N.border,
+    borderColor: colors.border,
     marginBottom: 24,
-    shadowColor: N.accentDeep,
+    shadowColor: colors.accentDeep,
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.05,
     shadowRadius: 8,
@@ -58,18 +58,18 @@ export const styles = StyleSheet.create({
     gap: 5,
   },
   sensePillText: { fontSize: 12, fontWeight: '800', letterSpacing: 0.2 },
-  instruction: { fontSize: 14, lineHeight: 20, color: N.textSecondary },
+  instruction: { fontSize: 14, lineHeight: 20, color: colors.textSecondary },
   entriesBlock: { gap: 4, marginBottom: 20 },
   inCardProgress: { flexDirection: 'row', alignItems: 'center', gap: 10 },
   inCardTrack: {
     flex: 1,
     height: 5,
-    backgroundColor: N.surfaceAlt,
+    backgroundColor: colors.surfaceAlt,
     borderRadius: 3,
     overflow: 'hidden',
   },
   inCardFill: { height: '100%', borderRadius: 3 },
   progressLabel: { fontSize: 11, fontWeight: '800', minWidth: 56, textAlign: 'right' },
   cta: { borderRadius: 18, marginBottom: 14 },
-  tip: { textAlign: 'center', fontSize: 12, color: N.textMuted },
+  tip: { textAlign: 'center', fontSize: 12, color: colors.textMuted },
 });

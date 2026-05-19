@@ -10,7 +10,7 @@ import { NotificationService } from '../../services/NotificationService';
 import { useNotificationStore } from '../../store/notificationStore';
 import { useTranslation } from 'react-i18next';
 import { styles } from './styles';
-import { N } from '../../theme/warm-colors';
+import { colors } from '../../theme/warm-colors';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 const NotificationSettingsScreen: React.FC = () => {
@@ -88,7 +88,7 @@ const NotificationSettingsScreen: React.FC = () => {
           </View>
 
           <View style={styles.headerBadge}>
-            <Bell color={N.accentDeep} size={24} />
+            <Bell color={colors.accentDeep} size={24} />
           </View>
         </View>
 

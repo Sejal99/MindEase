@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { View, Animated, StyleSheet, Pressable } from 'react-native';
 import AppText from '../atoms/AppText';
-import { N } from '../../theme/warm-colors';
+import { warmColors as colors } from '../../theme/colors';
 
 interface PMRDoneScreenProps {
   onContinue: () => void;
@@ -52,7 +52,7 @@ const PMRDoneScreen: React.FC<PMRDoneScreenProps> = ({ onContinue }) => {
 const styles = StyleSheet.create({
   doneContainer: {
     flex: 1,
-    backgroundColor: N.bg,
+    backgroundColor: colors.bg,
     justifyContent: 'center',
     alignItems: 'center',
     padding: 24,
@@ -64,26 +64,26 @@ const styles = StyleSheet.create({
   doneTitle: {
     fontSize: 32,
     fontWeight: '800',
-    color: N.textPrimary,
+    color: colors.textPrimary,
     marginBottom: 16,
     textAlign: 'center',
   },
   doneDesc: {
     fontSize: 16,
-    color: N.textSecondary,
+    color: colors.textSecondary,
     lineHeight: 24,
     textAlign: 'center',
     marginBottom: 32,
   },
   continueButton: {
-    backgroundColor: N.accent,
+    backgroundColor: colors.accent,
     paddingHorizontal: 32,
     paddingVertical: 16,
     borderRadius: 16,
     alignItems: 'center',
   },
   continueButtonText: {
-    color: N.surface,
+    color: colors.surface,
     fontSize: 18,
     fontWeight: '700',
   },

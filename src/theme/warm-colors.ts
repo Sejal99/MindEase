@@ -48,7 +48,7 @@ export const warmColors = {
 // Soft Nature palette — sage, mint, forest, off-white base.
 // Drop-in replacement for warm-colors.ts
 
-export const N = {
+export const colors = {
   // Backgrounds
   bg:          "#F4F8F4",
   surface:     "#FFFFFF",

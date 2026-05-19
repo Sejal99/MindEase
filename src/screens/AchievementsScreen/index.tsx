@@ -17,7 +17,7 @@ import { useTranslation } from 'react-i18next';
 import useHomeViewModel from '../../viewmodels/homeViewModel';
 import { styles } from './styles';
 import { ACHIEVEMENT_STRINGS } from '../../constants/strings';
-import { N } from '../../theme/warm-colors';
+import { natureColors as colors } from '../../theme/colors';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 const AchievementsScreen: React.FC = () => {
@@ -33,10 +33,10 @@ const AchievementsScreen: React.FC = () => {
   };
 
   const categories = [
-    { id: 'streak', title: t(categoryTitleMap.streak) || ACHIEVEMENT_STRINGS.CATEGORIES.STREAK, color: N.amber },
-    { id: 'milestone', title: t(categoryTitleMap.milestone) || ACHIEVEMENT_STRINGS.CATEGORIES.MILESTONE, color: N.accent },
-    { id: 'explorer', title: t(categoryTitleMap.explorer) || ACHIEVEMENT_STRINGS.CATEGORIES.EXPLORER, color: N.teal },
-    { id: 'master', title: t(categoryTitleMap.master) || ACHIEVEMENT_STRINGS.CATEGORIES.MASTER, color: N.lavender },
+    { id: 'streak', title: t(categoryTitleMap.streak) || ACHIEVEMENT_STRINGS.CATEGORIES.STREAK, color: colors.amber },
+    { id: 'milestone', title: t(categoryTitleMap.milestone) || ACHIEVEMENT_STRINGS.CATEGORIES.MILESTONE, color: colors.accent },
+    { id: 'explorer', title: t(categoryTitleMap.explorer) || ACHIEVEMENT_STRINGS.CATEGORIES.EXPLORER, color: colors.teal },
+    { id: 'master', title: t(categoryTitleMap.master) || ACHIEVEMENT_STRINGS.CATEGORIES.MASTER, color: colors.lavender },
   ];
 
   const unlockedCount = achievements.filter((a: Achievement) => a.unlockedAt).length;
@@ -79,7 +79,7 @@ const AchievementsScreen: React.FC = () => {
           </View>
 
           <View style={styles.headerBadge}>
-            <Trophy color={N.accentDeep} size={24} />
+            <Trophy color={colors.accentDeep} size={24} />
           </View>
         </View>
 
@@ -161,7 +161,7 @@ const AchievementsScreen: React.FC = () => {
           {nextAchievement && (
             <View style={styles.nextAwardRow}>
               <View style={styles.nextIconContainer}>
-                <Lock color={N.accentDeep} size={18} />
+                <Lock color={colors.accentDeep} size={18} />
               </View>
               <View style={styles.nextAwardText}>
                 <AppText variant="body" style={styles.nextAwardTitle}>
@@ -212,7 +212,7 @@ const AchievementsScreen: React.FC = () => {
                             {achievement.icon}
                           </AppText>
                         ) : (
-                          <Lock color={N.textMuted} size={22} />
+                          <Lock color={colors.textMuted} size={22} />
                         )}
                       </View>
                       <View style={styles.achievementDetails}>

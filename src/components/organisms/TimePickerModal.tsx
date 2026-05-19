@@ -7,7 +7,7 @@ import {
   StyleSheet,
 } from 'react-native';
 import AppText from '../atoms/AppText';
-import { N } from '../../theme/warm-colors';
+import { warmColors as colors } from '../../theme/colors';
 
 interface TimePickerModalProps {
   visible: boolean;
@@ -102,18 +102,18 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   modalContent: {
-    backgroundColor: N.surface,
+    backgroundColor: colors.surface,
     borderRadius: 20,
     padding: 20,
     width: 300,
     maxHeight: '70%',
     borderWidth: 1,
-    borderColor: N.border,
+    borderColor: colors.border,
   },
-  modalTitle: { marginBottom: 16, textAlign: 'center', color: N.textPrimary },
+  modalTitle: { marginBottom: 16, textAlign: 'center', color: colors.textPrimary },
   pickerRow: { flexDirection: 'row', justifyContent: 'center', marginBottom: 16 },
   pickerColumn: { flex: 1, alignItems: 'center' },
-  pickerLabel: { fontSize: 12, color: N.textSecondary, marginBottom: 8, fontWeight: '600' },
+  pickerLabel: { fontSize: 12, color: colors.textSecondary, marginBottom: 8, fontWeight: '600' },
   pickerList: { maxHeight: 200 },
   pickerItem: {
     paddingVertical: 10,
@@ -121,18 +121,18 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     marginVertical: 2,
   },
-  pickerItemActive: { backgroundColor: N.accentDim },
-  pickerItemText: { fontSize: 16, color: N.textSecondary },
-  pickerItemTextActive: { color: N.accentDeep, fontWeight: '700' },
+  pickerItemActive: { backgroundColor: colors.accentDim },
+  pickerItemText: { fontSize: 16, color: colors.textSecondary },
+  pickerItemTextActive: { color: colors.accentDeep, fontWeight: '700' },
   pickerSeparator: { justifyContent: 'center', paddingHorizontal: 8 },
-  pickerColon: { fontSize: 20, color: N.textPrimary, fontWeight: '700' },
+  pickerColon: { fontSize: 20, color: colors.textPrimary, fontWeight: '700' },
   confirmBtn: {
-    backgroundColor: N.accent,
+    backgroundColor: colors.accent,
     borderRadius: 12,
     paddingVertical: 12,
     alignItems: 'center',
   },
-  confirmBtnText: { color: N.surface, fontSize: 16, fontWeight: '700' },
+  confirmBtnText: { color: colors.surface, fontSize: 16, fontWeight: '700' },
 });
 
 export default TimePickerModal;

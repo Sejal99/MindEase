@@ -1,10 +1,10 @@
 import { StyleSheet } from "react-native";
-import { N } from "../../theme/warm-colors";
+import { natureColors as colors } from "../../theme/colors";
 
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: N.bg,
+    backgroundColor: colors.bg,
   },
   content: {
     padding: 24,
@@ -17,7 +17,7 @@ export const styles = StyleSheet.create({
     width: 210,
     height: 210,
     borderRadius: 105,
-    backgroundColor: N.accentLight,
+    backgroundColor: colors.accentLight,
     opacity: 0.28,
   },
   blobBottomLeft: {
@@ -27,7 +27,7 @@ export const styles = StyleSheet.create({
     width: 190,
     height: 190,
     borderRadius: 95,
-    backgroundColor: N.amberDim,
+    backgroundColor: colors.amberDim,
     opacity: 0.44,
   },
   header: {
@@ -36,11 +36,11 @@ export const styles = StyleSheet.create({
   title: {
     fontSize: 28,
     fontWeight: "800",
-    color: N.textPrimary,
+    color: colors.textPrimary,
     marginBottom: 8,
   },
   subtitle: {
-    color: N.textSecondary,
+    color: colors.textSecondary,
     fontSize: 16,
     lineHeight: 24,
   },
@@ -51,11 +51,11 @@ export const styles = StyleSheet.create({
   exerciseTitle: {
     fontSize: 24,
     fontWeight: "700",
-    color: N.textPrimary,
+    color: colors.textPrimary,
     marginBottom: 8,
   },
   exerciseSubtitle: {
-    color: N.textSecondary,
+    color: colors.textSecondary,
     fontSize: 16,
     lineHeight: 24,
     textAlign: "center",
@@ -64,13 +64,13 @@ export const styles = StyleSheet.create({
     marginBottom: 32,
   },
   stepContainer: {
-    backgroundColor: N.surface,
+    backgroundColor: colors.surface,
     borderRadius: 24,
     padding: 24,
     borderWidth: 1,
-    borderColor: N.border,
+    borderColor: colors.border,
     marginBottom: 24,
-    shadowColor: N.accentDeep,
+    shadowColor: colors.accentDeep,
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.05,
     shadowRadius: 8,
@@ -86,16 +86,16 @@ export const styles = StyleSheet.create({
     width: 8,
     height: 8,
     borderRadius: 4,
-    backgroundColor: N.accent,
+    backgroundColor: colors.accent,
   },
   stepMeta: {
-    color: N.textMuted,
+    color: colors.textMuted,
     fontWeight: "700",
   },
   stepText: {
     fontSize: 18,
     lineHeight: 26,
-    color: N.textPrimary,
+    color: colors.textPrimary,
     marginBottom: 24,
   },
   stepActions: {
@@ -110,38 +110,38 @@ export const styles = StyleSheet.create({
     alignItems: "center",
   },
   backButton: {
-    backgroundColor: N.surfaceAlt,
+    backgroundColor: colors.surfaceAlt,
   },
   backButtonText: {
-    color: N.textSecondary,
+    color: colors.textSecondary,
   },
   startButton: {
-    backgroundColor: N.accent,
+    backgroundColor: colors.accent,
   },
   pauseButton: {
-    backgroundColor: N.amber,
+    backgroundColor: colors.amber,
   },
   nextButton: {
-    backgroundColor: N.accent,
+    backgroundColor: colors.accent,
   },
   actionText: {
-    color: N.surface,
+    color: colors.surface,
     fontSize: 16,
     fontWeight: "600",
   },
   doneSection: {
     alignItems: "center",
     padding: 32,
-    backgroundColor: N.surface,
+    backgroundColor: colors.surface,
     borderRadius: 20,
     borderWidth: 1,
-    borderColor: N.border,
+    borderColor: colors.border,
     marginBottom: 24,
   },
   doneTitle: {
     fontSize: 24,
     fontWeight: "700",
-    color: N.textPrimary,
+    color: colors.textPrimary,
     marginBottom: 8,
     textAlign: "center",
   },
@@ -150,7 +150,7 @@ export const styles = StyleSheet.create({
     lineHeight: 24,
     textAlign: "center",
     marginBottom: 24,
-    color: N.textSecondary,
+    color: colors.textSecondary,
   },
   continueButton: {
     paddingHorizontal: 32,
@@ -158,7 +158,7 @@ export const styles = StyleSheet.create({
     borderRadius: 16,
   },
   continueButtonText: {
-    color: N.surface,
+    color: colors.surface,
     fontSize: 18,
     fontWeight: "700",
   },

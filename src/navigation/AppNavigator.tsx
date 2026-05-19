@@ -14,7 +14,7 @@ import {
 } from 'lucide-react-native';
 
 import { ThemeProvider } from '../theme/ThemeProvider';
-import { N } from '../theme/warm-colors';
+import { colors } from '../theme/warm-colors';
 
 import OnboardingScreen from '../screens/OnboardingScreen/index';
 import HomeScreen from '../screens/HomeScreen/index';
@@ -60,7 +60,7 @@ export type RootStackParamList = {
 export type TabParamList = {
   HomeTab: undefined;
   HistoryTab: undefined;
-  AudioTherapyTab: undefined;
+  AudioTherapyTab: { mood?: string; intensity?: number } | undefined;
   ProfileTab: undefined;
 };
 
@@ -139,7 +139,7 @@ function TabNavigator() {
 
           borderTopWidth: 0,
 
-          shadowColor: N.accentDeep,
+          shadowColor: colors.accentDeep,
           shadowOffset: {
             width: 0,
             height: -4,
@@ -151,15 +151,15 @@ function TabNavigator() {
 
         tabBarBackground: () => (
           <LinearGradient
-            colors={[N.surface, N.surfaceAlt]}
+            colors={[colors.surface, colors.surfaceAlt]}
             start={{ x: 0, y: 0 }}
             end={{ x: 1, y: 1 }}
             style={styles.tabBarGradient}
           />
         ),
 
-        tabBarActiveTintColor: N.accentDeep,
-        tabBarInactiveTintColor: N.textMuted,
+        tabBarActiveTintColor: colors.accentDeep,
+        tabBarInactiveTintColor: colors.textMuted,
         tabBarActiveBackgroundColor: 'transparent',
 
         tabBarLabelStyle: {
@@ -186,7 +186,7 @@ function TabNavigator() {
             <TabIconWrapper focused={focused}>
               <Home
                 size={focused ? 22 : 20}
-                color={focused ? N.surface : color}
+                color={focused ? colors.surface : color}
                 strokeWidth={focused ? 2.6 : 2}
               />
             </TabIconWrapper>
@@ -196,7 +196,7 @@ function TabNavigator() {
             <Pressable
               {...props}
               android_ripple={{
-                color: N.accentLight,
+                color: colors.accentLight,
                 borderless: true,
               }}
               onPressIn={(e) => {
@@ -219,7 +219,7 @@ function TabNavigator() {
             <TabIconWrapper focused={focused}>
               <Clipboard
                 size={focused ? 22 : 20}
-                color={focused ? N.surface : color}
+                color={focused ? colors.surface : color}
                 strokeWidth={focused ? 2.6 : 2}
               />
             </TabIconWrapper>
@@ -229,7 +229,7 @@ function TabNavigator() {
             <Pressable
               {...props}
               android_ripple={{
-                color: N.accentLight,
+                color: colors.accentLight,
                 borderless: true,
               }}
               onPressIn={(e) => {
@@ -252,7 +252,7 @@ function TabNavigator() {
             <TabIconWrapper focused={focused}>
               <User
                 size={focused ? 22 : 20}
-                color={focused ? N.surface : color}
+                color={focused ? colors.surface : color}
                 strokeWidth={focused ? 2.6 : 2}
               />
             </TabIconWrapper>
@@ -262,7 +262,7 @@ function TabNavigator() {
             <Pressable
               {...props}
               android_ripple={{
-                color: N.accentLight,
+                color: colors.accentLight,
                 borderless: true,
               }}
               onPressIn={(e) => {
@@ -285,7 +285,7 @@ function TabNavigator() {
       <TabIconWrapper focused={focused}>
         <Headphones
           size={focused ? 22 : 20}
-          color={focused ? N.surface : color}
+          color={focused ? colors.surface : color}
           strokeWidth={focused ? 2.6 : 2}
         />
       </TabIconWrapper>
@@ -295,7 +295,7 @@ function TabNavigator() {
       <Pressable
         {...props}
         android_ripple={{
-          color: N.accentLight,
+          color: colors.accentLight,
           borderless: true,
         }}
         onPressIn={(e) => {
@@ -330,7 +330,7 @@ const AppNavigator: React.FC = () => {
       <View style={styles.loadingContainer}>
         <AppText
           variant="h2"
-          style={{ color: N.textPrimary }}
+          style={{ color: colors.textPrimary }}
         >
           Stress Guide
         </AppText>
@@ -347,7 +347,7 @@ const AppNavigator: React.FC = () => {
       >
         <StatusBar
           barStyle="dark-content"
-          backgroundColor={N.bg}
+          backgroundColor={colors.bg}
         />
 
         <Stack.Navigator
@@ -358,20 +358,20 @@ const AppNavigator: React.FC = () => {
           }
           screenOptions={{
             headerStyle: {
-              backgroundColor: N.surface,
+              backgroundColor: colors.surface,
             },
 
             headerShadowVisible: false,
 
-            headerTintColor: N.textPrimary,
+            headerTintColor: colors.textPrimary,
 
             headerTitleStyle: {
               fontWeight: '700',
-              color: N.textPrimary,
+              color: colors.textPrimary,
             },
 
             contentStyle: {
-              backgroundColor: N.bg,
+              backgroundColor: colors.bg,
             },
           }}
         >
@@ -472,7 +472,7 @@ const AppNavigator: React.FC = () => {
 const styles = StyleSheet.create({
   loadingContainer: {
     flex: 1,
-    backgroundColor: N.bg,
+    backgroundColor: colors.bg,
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -483,7 +483,7 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 24,
     borderWidth: 1,
     borderBottomWidth: 0,
-    borderColor: N.border,
+    borderColor: colors.border,
     overflow: 'hidden',
   },
 
@@ -496,9 +496,9 @@ const styles = StyleSheet.create({
   },
 
   iconWrapperFocused: {
-    backgroundColor: N.accent,
+    backgroundColor: colors.accent,
     borderWidth: 1,
-    borderColor: N.accentDeep,
+    borderColor: colors.accentDeep,
   },
 });
 
